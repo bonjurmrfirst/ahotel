@@ -21,5 +21,9 @@ module.exports = [{
 	{
 		domain: 'assets/vendor/css3-mediaqueries.js',
 		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/livingston-css3-mediaqueries-js/1.0.0/css3-mediaqueries.min.js'
+	},
+	{
+		domain: '../bower_components/html5shiv/dist/html5shiv.js',
+		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js'
 	}
 ];

@@ -4,7 +4,8 @@ module.exports = {
 	app: 'src/app/**/*.js',
 	vendorList: [
 		'./src/assets/vendor/html5shiv.angular.js',
-		'./src/assets/vendor/placeholder.js'
+		'./src/assets/vendor/placeholder.js',
+		'./src/assets/vendor/angularShiv.js'
 	],
 	sass: './src/sass/**/*.sass',
 	sassMainFile: './src/sass/styles.sass',
@@ -26,6 +27,16 @@ module.exports = {
 		vendor: './dist/assets/vendor',
 		css: './dist/styles',
 		temp: './dist/tmp'
+	},
+
+	copyAsIs: {
+		from: [
+			'./src/assets/images/**/*.*',
+			'./src/assets/fonts/**/*.*'
+		],
+		toDev: './dist.dev/assets',
+		toDist: './dist/assets',
+		base: './src/assets'
 	},
 
 	htmlValidatorDist: './htmlValidator'

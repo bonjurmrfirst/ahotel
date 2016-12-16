@@ -63,6 +63,7 @@ gulp.task('app-js', function() {
 gulp.task('vendor', function() {
 	return gulp.src(SRC_PATH.vendorList)
 		.pipe(gulp.dest(SRC_PATH.dev.vendor))
+		.pipe(browserSync.stream());
 });
 
 gulp.task('styles', function() {
@@ -78,11 +79,17 @@ gulp.task('styles', function() {
 		.pipe(browserSync.stream());
 });
 
+gulp.task('copy', function() {
+	return gulp.src(SRC_PATH.copyAsIs.from, {base: SRC_PATH.copyAsIs.base})
+		.pipe(gulp.dest(SRC_PATH.copyAsIs.toDev))
+});
+
 gulp.task('watch', function() {
 	gulp.watch(SRC_PATH.index, gulp.series('index'));
 	gulp.watch(SRC_PATH.templates, gulp.series('templates'));
 	gulp.watch(SRC_PATH.app, gulp.series('app-js'));
 	gulp.watch(SRC_PATH.sass, gulp.series('styles'));
+	gulp.watch(SRC_PATH.vendorList, gulp.series('vendor'));
 });
 // Dev END
 
@@ -162,6 +169,11 @@ gulp.task('styles:build', function() {
 		}))
 		.pipe(gulp.dest(SRC_PATH.dist.css))
 });
+
+gulp.task('copy:build', function() {
+	return gulp.src(SRC_PATH.copyAsIs.from)
+		.pipe(gulp.dest(SRC_PATH.copyAsIs.toDist))
+});
 // Build END
 
 /*
@@ -192,6 +204,7 @@ gulp.task('dev',
 		'app-js',
 		'vendor',
 		'styles',
+		'copy',
 		gulp.parallel([
 			'watch',
 			'browser-sync-server'
@@ -208,7 +221,8 @@ gulp.task('build',
 			'htmlValidator:build',
 			'app-js:build',
 			'vendor:build',
-			'styles:build'
+			'styles:build',
+			'copy:build'
 		)
 	)
 );

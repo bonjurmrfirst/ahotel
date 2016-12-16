@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Ahotel</title>
     <!--[if lte IE 9]>
-        <script src="assets/vendor/html5shiv.angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+        <script>
+            document.createElement('ah-header');
+            document.createElement('ng-include');
+        </script>
     <![endif]-->
     <link href="styles/styles.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -14,9 +18,10 @@
     <script src="app/app.js"></script>
 </head>
 <body>
-    {{3 + 0.14159265359}}!
-    <ng-include src="'app/templates/footer/footer.html'"></ng-include>
-
+    <div class="l-wrapper">
+        <ah-header></ah-header>
+        <ng-include src="'app/templates/footer/footer.html'"></ng-include>
+    </div>
     <!--[if (gte IE 6)&(lte IE 8)]>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.1/selectivizr.min.js"></script>
     <![endif]-->
@@ -24,5 +29,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/livingston-css3-mediaqueries-js/1.0.0/css3-mediaqueries.min.js"></script>
         <script src="assets/vendor/placeholder.js"></script>
     <![endif]-->
+    <div style="position:absolute; bottom: 0; right: 0; font-size: 10px">{{3 + 0.14159265359}}</div>
 </body>
 </html>
