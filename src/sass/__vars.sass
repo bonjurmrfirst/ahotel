@@ -1,0 +1,49 @@
+/*
+    Main colors
+    */
+$color_green: #C1CD23
+$color_light_green: #DCE657
+$color_dark_green: #939A3A
+
+$color_reverse: #AF1E60
+$color_light_reverse: #D7518E
+$color_dark_reverse: #833257
+
+$color_reverse2: #6F1C8A
+$color_light_reverse2: #A84FC4
+$color_dark_reverse2: #582967
+// Main colors END
+
+/*
+    Text colors
+    */
+$color_text_black: #605C5B
+// Text colors END
+
+/*
+    Background colors
+    */
+$color_background: #FFFFFF
+$color_background_gray: #F2F2F2
+// Background colors END
+
+/*
+    Mixins
+    */
+
+@mixin remFallback($sizeRem)
+    font-size: $sizeRem * 16 + px
+    font-size: $sizeRem + rem
+
+@mixin remToPx($property, $sizeRem)
+    #{$property}: $sizeRem * 16 + px
+
+@mixin fontStyleRegular
+    font-family: 'cabR', Helvetica, Arial, sans-serif
+
+@mixin fontStyleMedium
+    font-family: 'cabM', Helvetica, Arial, sans-serif
+
+@mixin fontStyleExtraBold
+    font-family: 'cabEB', Helvetica, Arial, sans-serif
+// Mixins END
