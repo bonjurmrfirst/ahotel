@@ -1,0 +1,1 @@
+angular.module("ahotelApp",["ui.router"]),angular.module("ahotelApp").config(["$stateProvider","$urlRouterProvider",function(e,t){t.otherwise("/"),e.state("template",{url:"/template",templateUrl:"templates/template.html"})}]);
