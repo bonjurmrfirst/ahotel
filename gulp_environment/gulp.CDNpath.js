@@ -9,5 +9,17 @@ module.exports = [{
 	{
 		domain: '../bower_components/angular-ui-router/release/angular-ui-router.js',
 		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js'
+	},
+	{
+		domain: '../bower_components/es5-shim/es5-shim.js',
+		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js'
+	},
+	{
+		domain: '../bower_components/selectivizr/selectivizr.js',
+		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.1/selectivizr.min.js'
+	},
+	{
+		domain: 'assets/vendor/css3-mediaqueries.js',
+		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/livingston-css3-mediaqueries-js/1.0.0/css3-mediaqueries.min.js'
 	}
 ];

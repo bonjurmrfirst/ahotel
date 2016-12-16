@@ -3,7 +3,8 @@ module.exports = {
 	templates: './src/app/templates/**/*.html',
 	app: 'src/app/**/*.js',
 	vendorList: [
-		'./src/assets/vendor/html5shiv.angular.js'
+		'./src/assets/vendor/html5shiv.angular.js',
+		'./src/assets/vendor/placeholder.js'
 	],
 	sass: './src/sass/**/*.sass',
 	sassMainFile: './src/sass/styles.sass',

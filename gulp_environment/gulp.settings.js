@@ -1,6 +1,7 @@
 module.exports = {
 	build: {
 		minifyIndex: false,
+		removeCommentsIndex: false,
 		cleanDistFolder: true
 	},
 	dev: {

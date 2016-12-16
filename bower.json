@@ -18,6 +18,9 @@
   "dependencies": {
     "angular": "1.2.32",
     "jquery": "1.9.1",
-    "angular-ui-router": "0.3.1"
+    "angular-ui-router": "0.3.1",
+    "es5-shim": "^4.5.9",
+    "selectivizr": "^1.0.2",
+    "input-placeholder-polyfill": "^1.0.0"
   }
 }

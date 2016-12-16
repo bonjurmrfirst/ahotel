@@ -98,7 +98,7 @@ gulp.task('index:build', function() {
 	return gulp.src(SRC_PATH.index)
 		.pipe(plugins.cdn(CDN_PATH))
 		.pipe(SETTINGS.build.minifyIndex ? plugins.htmlmin({collapseWhitespace: true}) : plugins.empty())
-		.pipe(plugins.stripComments({safe: true}))
+		.pipe(SETTINGS.build.removeCommentsIndex ? plugins.stripComments({safe: true}) : plugins.empty())
 		.pipe(gulp.dest(SRC_PATH.dist.root))
 });
 
