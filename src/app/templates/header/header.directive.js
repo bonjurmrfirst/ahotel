@@ -4,7 +4,7 @@ angular.module('ahotelApp')
 		"use strict";
 		console.log(13);
 		return {
-			restrict: "E",
+			restrict: "EAC",
 			templateUrl: 'app/templates/header/header.html'
 		}
 	});

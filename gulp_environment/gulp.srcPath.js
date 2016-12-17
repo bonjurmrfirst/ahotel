@@ -3,7 +3,6 @@ module.exports = {
 	templates: './src/app/templates/**/*.html',
 	app: 'src/app/**/*.js',
 	vendorList: [
-		'./src/assets/vendor/html5shiv.angular.js',
 		'./src/assets/vendor/placeholder.js',
 		'./src/assets/vendor/angularShiv.js'
 	],
