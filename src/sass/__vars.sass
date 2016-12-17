@@ -28,9 +28,21 @@ $color_background_gray: #F2F2F2
 // Background colors END
 
 /*
+    Media
+    */
+$mw1024: "all and (max-width: 640px)"
+$mw1024: "all and (max-width: 667px)"
+$mw1024: "all and (max-width: 736px)"
+$mw1024: "all and (max-width: 768px)"
+$mw1024: "all and (max-width: 800px)"
+$mw1024: "all and (max-width: 1024px)"
+$mw1024: "all and (max-width: 1200px)"
+$mw1024: "all and (max-width: 1680px)"
+// Media END
+
+/*
     Mixins
     */
-
 @mixin remFallback($sizeRem)
     font-size: $sizeRem * 16 + px
     font-size: $sizeRem + rem
@@ -38,12 +50,7 @@ $color_background_gray: #F2F2F2
 @mixin remToPx($property, $sizeRem)
     #{$property}: $sizeRem * 16 + px
 
-@mixin fontStyleRegular
-    font-family: 'cabR', Helvetica, Arial, sans-serif
-
-@mixin fontStyleMedium
-    font-family: 'cabM', Helvetica, Arial, sans-serif
-
-@mixin fontStyleExtraBold
-    font-family: 'cabEB', Helvetica, Arial, sans-serif
+@mixin fontStyle($fnt)
+    font-family: $fnt, Helvetica, Arial, sans-serif
 // Mixins END
+

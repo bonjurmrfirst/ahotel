@@ -3,9 +3,8 @@
 /bower_components
 /aside
 /htmlValidator
-/tmp
 
 /gulp_environment/gulp.FTPpath.js
 
 
-*.woff2
+**/*.woff2
