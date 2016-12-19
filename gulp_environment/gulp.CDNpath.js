@@ -15,15 +15,15 @@ module.exports = [{
 		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js'
 	},
 	{
-		domain: '../bower_components/selectivizr/selectivizr.js',
-		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.1/selectivizr.min.js'
-	},
-	{
 		domain: 'assets/vendor/css3-mediaqueries.js',
 		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/livingston-css3-mediaqueries-js/1.0.0/css3-mediaqueries.min.js'
 	},
 	{
 		domain: '../bower_components/html5shiv/dist/html5shiv.js',
 		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js'
+	},
+	{
+		domain: '../bower_components/console-polyfill/index.js',
+		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/console-polyfill/0.2.3/index.min.js'
 	}
 ];

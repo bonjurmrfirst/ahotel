@@ -10,7 +10,7 @@ module.exports = {
 	},
 	ftp: {
 		FTPpathIsPresent: true,
-		cleanDestBeforeUpload: true
+		cleanFTPfolder: true
 	},
 	js: {
 		babelConfig: {

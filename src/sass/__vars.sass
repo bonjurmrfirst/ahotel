@@ -18,6 +18,7 @@ $color_dark_reverse2: #582967
     Text colors
     */
 $color_text_black: #605C5B
+$color_text_white: #ffffff
 // Text colors END
 
 /*
@@ -30,14 +31,16 @@ $color_background_gray: #F2F2F2
 /*
     Media
     */
-$mw1024: "all and (max-width: 640px)"
-$mw1024: "all and (max-width: 667px)"
-$mw1024: "all and (max-width: 736px)"
-$mw1024: "all and (max-width: 768px)"
-$mw1024: "all and (max-width: 800px)"
+$mw640: "all and (max-width: 640px)"
+$mw667: "all and (max-width: 667px)"
+$mw736: "all and (max-width: 736px)"
+$mw768: "all and (max-width: 768px)"
+$mw800: "all and (max-width: 800px)"
+$mw850: "all and (max-width: 850px)"
+$mw900: "all and (max-width: 900px)"
 $mw1024: "all and (max-width: 1024px)"
-$mw1024: "all and (max-width: 1200px)"
-$mw1024: "all and (max-width: 1680px)"
+$mw1200: "all and (max-width: 1200px)"
+$mw1680: "all and (max-width: 1680px)"
 // Media END
 
 /*
@@ -52,5 +55,12 @@ $mw1024: "all and (max-width: 1680px)"
 
 @mixin fontStyle($fnt)
     font-family: $fnt, Helvetica, Arial, sans-serif
+
+$default_transition_time: 0.5s
+@mixin transition($time: null)
+    @if ($time)
+        transition: $time
+    @else
+        transition: $default_transition_time
 // Mixins END
 

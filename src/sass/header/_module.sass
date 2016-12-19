@@ -3,24 +3,225 @@
     */
 .logo
     float: left
+
+    @media #{$mw850}
+        float: none
+
+        &:before
+            content: ' '
+            position: absolute
+            top: 105px
+            left: 0
+            right: 0
+            display: block
+            height: 3px
+            background-color: $color_green
+            z-index: 1
 // Logo END
 
 /*
     Nav
-    /*
+    */
 .nav
     margin-left: 220px
+
+    @media #{$mw850}
+        margin-left: 0
+        //width: 100%
 
     &__container
         text-align: center
         @include remFallback(0)
 
     &__item-container
+        position: relative
         display: inline-block
+        height: 105px
         width: 20%
 
+        &:hover .nav__item
+            color: $color_green
+            border-color: $color_green
+
+        &:hover .nav__item--login
+            color: $color_light_green
+
+        &:hover .nav__item--search
+            color: $color_light_reverse
+            border-color: $color_reverse
+
+        &:hover .sub-nav
+            display: block
+
     &__item
+        display: block
+        border-left: 3px solid transparent
+        @include fontStyle(cabM)
         line-height: 105px
         @include remFallback(1.1)
+        text-transform: uppercase
+        cursor: default
 
+        // Modifiers
+        &--right
+            right: 0
+            left: auto
+            border-left: 0
+            border-right: 3px solid transparent
+
+        &--login
+            color: $color_green
+
+            &:after
+                content: '.'
+                position: absolute
+                display: block
+                top: 0
+                right: 3%
+                width: 18px
+                font-size: 1px
+                background: transparent url("../assets/images/icons.png") no-repeat
+                background-position: left center
+                background-size: auto
+
+                //@media #{$mw900}
+                //    content: ''
+
+        &--search
+            color: $color_reverse
+
+            &:after
+                content: '.'
+                position: absolute
+                display: block
+                top: 0
+                right: 3%
+                width: 18px
+                font-size: 1px
+                background: transparent url("../assets/images/icons.png") no-repeat
+                background-position: -18px center
+                background-size: auto
+
+                //@media #{$mw900}
+                //        content: ''
+        // Modifiers END
 // Nav END
+
+/*
+    Sub nav
+    */
+.sub-nav
+    display: none
+    position: absolute
+    width: 300px
+    left: 0
+    border-left: 3px solid $color_green
+    background-color: $color_background
+    box-shadow: -5px 5px 10px 5px rgba(50, 50, 50, 0.05)
+
+    &__item
+        margin: 20px 0 0 25px
+        text-align: left
+        @include remFallback(0)
+
+        // Modifiers
+        &--last
+            margin-bottom: 20px
+        // Modifiers END
+
+    &__link
+        position: relative
+        border-bottom: 2px solid transparent
+        @include transition()
+
+        &:hover
+            border-bottom: 2px solid $color_green
+            @include transition()
+
+    &__btn
+        position: absolute
+        display: block
+        right: 0
+        bottom: 80px
+        left: 0
+        margin: 0 auto
+        width: 150px
+        height: 38px
+        color: $color_text_white
+        border: 2px solid #ffffff
+        z-index: 1
+
+        &:hover
+            color: $color_text_black
+            background-color: $color_text_white
+
+        &:hover ~ .sub-nav__img-bg
+            opacity: 0.5
+            filter: alpha(opacity=50)
+            @include transition()
+
+        &:active
+            color: $color_text_white
+            border-color: $color_green
+            background-color: $color_green
+
+        // Modifiers
+        &--dest
+            color: $color_green
+            border-color: $color_green
+
+            &:hover
+                border-color: transparent
+        // Modifiers END
+
+    &__img
+        margin-left: -25px
+
+    &__img-bg
+        position: absolute
+        left: 0
+        bottom: 1px
+        opacity: 0
+        filter: alpha(opacity=0)
+        @include transition()
+
+    // Modifiers
+    &--right
+        right: 0
+        left: auto
+        border-left: 0
+        border-right: 3px solid $color_green
+
+    &--search
+        border-right: 3px solid $color_reverse
+    // Modifiers END
+
+/*
+    Search form
+    */
+.formSearch__query
+    display: block
+    width: 250px
+    height: 30px
+    margin-top: 20px
+    margin-left: 25px
+    color: $color_reverse
+    border: 0
+    border-bottom: 1px solid $color_dark_reverse
+    background-color: transparent
+
+.formSearch__submit
+    display: block
+    width: 250px
+    height: 38px
+    margin: 20px 0 20px 25px
+    color: $color_background
+    background-color: $color_reverse
+
+    &:hover
+        background-color: $color_light_reverse
+
+    &:active
+        background-color: $color_dark_reverse
+//Search form
+// Sub nav END
