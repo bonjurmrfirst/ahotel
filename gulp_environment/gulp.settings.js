@@ -1,6 +1,7 @@
 module.exports = {
 	build: {
 		minifyIndex: false,
+		minifyAppJs: false,
 		removeCommentsIndex: false,
 		cleanDistFolder: true
 	},
@@ -16,16 +17,6 @@ module.exports = {
 		babelConfig: {
 			presets: ['es2015']
 		},
-		ngAnnotate: false
+		ngAnnotate: true
 	}
-};
-
-const gutil = require('gulp-util');
-
-module.exports.errorHandler = function (title) {
-	return function (err) {
-		gutil.log(gutil.colors.red(`[${title}]`), err.toString());
-		//TODO
-		this.emit('end');
-	};
 };

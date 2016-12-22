@@ -25,5 +25,9 @@ module.exports = [{
 	{
 		domain: '../bower_components/console-polyfill/index.js',
 		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/console-polyfill/0.2.3/index.min.js'
+	},
+	{
+		domain: '../bower_components/es6-promise-polyfill/promise.js',
+		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.0.5/es6-promise.min.js'
 	}
 ];

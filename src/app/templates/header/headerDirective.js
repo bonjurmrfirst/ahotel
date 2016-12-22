@@ -1,6 +1,6 @@
 angular.module('ahotelApp')
 
-	.directive('ahHeader', function() {
+	.directive('ahtlHeader', function() {
 		"use strict";
 
 		return {

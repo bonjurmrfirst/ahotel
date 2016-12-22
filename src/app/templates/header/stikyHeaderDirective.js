@@ -26,6 +26,7 @@ angular.module('ahotelApp')
 
 		return {
 			restrict: "A",
+			scope: {},
 			link: link
 		}
 	}]);

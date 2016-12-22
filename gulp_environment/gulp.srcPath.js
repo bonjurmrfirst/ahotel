@@ -1,11 +1,19 @@
 module.exports = {
+	src: './src/**/*.*',
 	index: './src/index.html',
 	templates: './src/app/templates/**/*.html',
 	app: 'src/app/**/*.js',
-	vendorList: [
-		'./src/assets/vendor/placeholder.js',
-		'./src/assets/vendor/angularShiv.js'
-	],
+	vendorList: {
+		root: './src/assets/vendor/**/*.*',
+		notMinified: [
+			'**/angularShiv.js',
+			'**/html5shiv.js'
+		],
+		minified: [
+			'./src/assets/vendor/placeholder.js',
+			'./src/assets/vendor/promise.js'
+		]
+	},
 	sass: './src/sass/**/*.sass',
 	sassMainFile: './src/sass/styles.sass',
 

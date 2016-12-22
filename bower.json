@@ -21,7 +21,8 @@
     "angular-ui-router": "0.3.1",
     "es5-shim": "^4.5.9",
     "input-placeholder-polyfill": "^1.0.0",
-    "html5shiv": "^3.7.3"
+    "html5shiv": "^3.7.3",
+    "es6-promise-polyfill": "^1.1.1"
   },
   "devDependencies": {
     "console-polyfill": "^0.2.3"
