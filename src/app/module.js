@@ -1,1 +1,1 @@
-angular.module('ahotelApp', ['ui.router']);
+angular.module('ahotelApp', ['ui.router', 'ngAnimate']);

@@ -1,23 +1,58 @@
 angular.module('ahotelApp')
 
-	.directive('ahtlSlider', ['SliderService', function(SliderService) {
+	.directive('ahtlSlider', ['sliderService', function(sliderService) {
 		"use strict";
 
-		function ahtlSliderController() {
-			let imageList = [
-				'assets/images/slider/slider1.jpg',
-				'assets/images/slider/slider2.jpg',
-				'assets/images/slider/slider3.jpg'
-			];
+		function ahtlSliderController($scope) {
+			$scope.slider = sliderService;
+			$scope.slidingDirection = null;
 
-			this.slider = new SliderService(imageList);
+			$scope.nextSlide = function() {
+				$scope.slidingDirection = 'left';
+				$scope.slider.getNextSlide();
+			};
+
+			$scope.prevSlide = function() {
+				$scope.slidingDirection = 'right';
+				$scope.slider.getPrevSlide();
+			};
+
+			$scope.setSlide = function(index) {
+				$scope.slidingDirection = index > $scope.slider.getCurrentSlide(true) ? 'right' : 'left';
+				$scope.slider.setCurrentSlide(index);
+			};
+		}
+
+		function link(scope, elem) {
+			let arrows = $(elem).find('.slider__arrow');
+
+			arrows.click(function () {
+				// fixing IE8 png-background bug with 2 bg images
+				if ($(this).hasClass('slider__arrow-right')) {
+					$(this).css('background-image', 'url("../assets/images/slider/arrow_right_opacity.png")');
+				} else {
+					$(this).css('background-image', 'url("../assets/images/slider/arrow_left_opacity.png")');
+				}
+
+				this.disabled = true;
+
+				setTimeout(() => {
+					this.disabled = false;
+					if ($(this).hasClass('slider__arrow-right')) {
+						$(this).css('background-image', 'url("../assets/images/slider/arrow_right.png")');
+					} else {
+						$(this).css('background-image', 'url("../assets/images/slider/arrow_left.png")');
+					}
+				}, 500)
+			});
 		}
 
 		return {
 			restrict: 'EA',
 			scope: {},
 			controller: ahtlSliderController,
-			controllerAs: 'slider',
-			templateUrl: 'app/templates/header/slider/slider.html'
+			templateUrl: 'app/templates/header/slider/slider.html',
+			link: link
 		}
 	}]);
+

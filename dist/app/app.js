@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ahotelApp', ['ui.router']);
+angular.module('ahotelApp', ['ui.router', 'ngAnimate']);
 'use strict';
 
 angular.module('ahotelApp').factory('PreloadImages', function () {
@@ -220,51 +220,126 @@ angular.module('ahotelApp').directive('ahtlStikyHeader', ['HeaderTransitionsServ
 }]);
 'use strict';
 
-angular.module('ahotelApp').directive('ahtlSlider', ['SliderService', function (SliderService) {
+angular.module('ahotelApp').directive('ahtlSlider', ['sliderService', function (sliderService) {
 	"use strict";
 
-	function ahtlSliderController() {
-		var imageList = ['assets/images/slider/slider1.jpg', 'assets/images/slider/slider2.jpg', 'assets/images/slider/slider3.jpg'];
+	ahtlSliderController.$inject = ["$scope"];
+	function ahtlSliderController($scope) {
+		$scope.slider = sliderService;
+		$scope.slidingDirection = null;
 
-		this.slider = new SliderService(imageList);
+		$scope.nextSlide = function () {
+			$scope.slidingDirection = 'left';
+			$scope.slider.getNextSlide();
+		};
+
+		$scope.prevSlide = function () {
+			$scope.slidingDirection = 'right';
+			$scope.slider.getPrevSlide();
+		};
+
+		$scope.setSlide = function (index) {
+			$scope.slidingDirection = index > $scope.slider.getCurrentSlide(true) ? 'right' : 'left';
+			$scope.slider.setCurrentSlide(index);
+		};
+	}
+
+	function link(scope, elem) {
+		var arrows = $(elem).find('.slider__arrow');
+
+		arrows.click(function () {
+			var _this = this;
+
+			// fixing IE8 png-background bug with 2 bg images
+			if ($(this).hasClass('slider__arrow-right')) {
+				$(this).css('background-image', 'url("../assets/images/slider/arrow_right_opacity.png")');
+			} else {
+				$(this).css('background-image', 'url("../assets/images/slider/arrow_left_opacity.png")');
+			}
+
+			this.disabled = true;
+
+			setTimeout(function () {
+				_this.disabled = false;
+				if ($(_this).hasClass('slider__arrow-right')) {
+					$(_this).css('background-image', 'url("../assets/images/slider/arrow_right.png")');
+				} else {
+					$(_this).css('background-image', 'url("../assets/images/slider/arrow_left.png")');
+				}
+			}, 500);
+		});
 	}
 
 	return {
 		restrict: 'EA',
 		scope: {},
 		controller: ahtlSliderController,
-		controllerAs: 'slider',
-		templateUrl: 'app/templates/header/slider/slider.html'
+		templateUrl: 'app/templates/header/slider/slider.html',
+		link: link
 	};
 }]);
 'use strict';
 
-angular.module('ahotelApp').service('SliderService', ['PreloadImages', function (PreloadImages) {
-			"use strict";
+angular.module('ahotelApp').animation('.slider__img', function () {
+	return {
+		beforeAddClass: function beforeAddClass(element, className, done) {
+			var slidingDirection = element.scope().slidingDirection;
+			$(element).css('z-index', '1');
 
-			function Slider(sliderImageList) {
-						PreloadImages.call(this, sliderImageList);
-						this._currentSlideSrc = 0;
+			if (slidingDirection === 'right') {
+				$(element).animate({ 'left': '100%' }, 500, done);
+			} else {
+				$(element).animate({ 'left': '-200%' }, 500, done); //why 200? $)
 			}
+		},
+		addClass: function addClass(element, className, done) {
+			var an = new Promise(function (res) {
+				"use strict";
 
-			Slider.prototype = Object.create(PreloadImages.prototype);
-			Slider.prototype.constructor = Slider;
+				$(element).css('z-index', '0');
+				$(element).css('left', '0');
+				res();
+			});
 
-			Slider.prototype.getCurrentSlide = function () {
-						return this._imageSrcList[this._currentSlideSrc];
-			};
+			an.then(function () {
+				done();
+			});
+		}
+	};
+});
+'use strict';
 
-			Slider.prototype.getNextSlide = function () {
-						this._currentSlideSrc === this._imageSrcList.length ? this._currentSlideSrc = 0 : this._currentSlideSrc++;
+angular.module('ahotelApp').factory('sliderService', [function () {
+	"use strict";
 
-						this.getCurrentSlide();
-			};
+	function Slider(sliderImageList) {
+		this._imageSrcList = sliderImageList;
+		this._currentSlide = 0;
+	}
 
-			Slider.prototype.getPrevSlide = function () {
-						this._currentSlideSrc === 0 ? this._currentSlideSrc = this._imageSrcList.length - 1 : this._currentSlideSrc--;
+	Slider.prototype.getImageSrcList = function () {
+		return this._imageSrcList;
+	};
 
-						this.getCurrentSlide();
-			};
+	Slider.prototype.getCurrentSlide = function (getIndex) {
+		return getIndex == true ? this._currentSlide : this._imageSrcList[this._currentSlide];
+	};
 
-			return Slider;
+	Slider.prototype.setCurrentSlide = function (slide) {
+		this._currentSlide = slide;
+	};
+
+	Slider.prototype.getNextSlide = function () {
+		this._currentSlide === this._imageSrcList.length - 1 ? this._currentSlide = 0 : this._currentSlide++;
+
+		this.getCurrentSlide();
+	};
+
+	Slider.prototype.getPrevSlide = function () {
+		this._currentSlide === 0 ? this._currentSlide = this._imageSrcList.length - 1 : this._currentSlide--;
+
+		this.getCurrentSlide();
+	};
+
+	return new Slider(['assets/images/slider/slider1.jpg', 'assets/images/slider/slider2.jpg', 'assets/images/slider/slider3.jpg']);
 }]);

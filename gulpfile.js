@@ -27,6 +27,24 @@ var postcssProcessors = [
 					value: '"progid:DXImageTransform.Microsoft.Alpha(Opacity=' + (parseFloat(decl.value) * 100) + ')"'});
 			}
 		});
+	},
+	function (css, opts) {
+		css.eachDecl(function(decl) {
+			if (decl.prop === 'fixIE8PngBlackBackground') {
+				decl.parent.insertAfter(decl, {
+					prop: '-ms-filter',
+					value: '"progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)"'
+				});
+				decl.parent.insertAfter(decl, {
+					prop: 'filter',
+					value: 'progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)'
+				});
+				decl.parent.insertAfter(decl, {
+					prop: 'zoom',
+					value: '1'
+				});
+			}
+		});
 	}
 ];
 
@@ -197,7 +215,7 @@ gulp.task('vendor:build', function() {
 gulp.task('styles:build', function() {
 	return gulp.src(SRC_PATH.sassMainFile)
 		.pipe(plugins.sass().on('error', plugins.sass.logError))
-		.pipe(plugins.postcss(postcssProcessors).on('error', errorHandler('Error: Build postCss')))
+		.pipe(plugins.postcss(postcssProcessors).on('error', errorHandler('Error: Dev postCss')))
 		.pipe(plugins.autoprefixer({
 			browsers: ['>0%'],
 			cascade: false
