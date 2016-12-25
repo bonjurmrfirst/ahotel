@@ -18,7 +18,7 @@ angular.module('ahotelApp')
 			};
 
 			$scope.setSlide = function(index) {
-				$scope.slidingDirection = index > $scope.slider.getCurrentSlide(true) ? 'right' : 'left';
+				$scope.slidingDirection = index > $scope.slider.getCurrentSlide(true) ? 'left' : 'right';
 				$scope.slider.setCurrentSlide(index);
 			};
 		}

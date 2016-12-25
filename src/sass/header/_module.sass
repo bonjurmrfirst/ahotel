@@ -16,7 +16,6 @@
             display: block
             height: 3px
             background-color: $color_green
-            z-index: 1
 // Logo END
 
 /*
@@ -24,9 +23,20 @@
     */
 .nav
     margin-left: 220px
+    background-color: $color_background
 
     @media #{$mw850}
         margin-left: 0
+
+        &:before
+            content: ' '
+            position: absolute
+            display: block
+            height: 105px
+            left: -100px
+            right: -100px
+            background-color: $color_background
+
         //width: 100%
 
     &__container
@@ -225,3 +235,28 @@
         background-color: $color_dark_reverse
 // Search form
 // Sub nav END
+
+.where-to-go
+    position: absolute
+    top: 362px
+    width: 100%
+    height: 70px
+    text-align: center
+    background-color: black
+    opacity: 0.5
+
+    &__header
+        display: inline-block
+        margin-top: 15px
+        padding: 0 10px
+        @include fontStyle(cabM)
+        @include remFallback(1.3)
+        color: $color_text_white
+
+    &__btn
+        position: static
+        display: inline-block
+        margin-top: 15px
+        padding: 0 10px
+        color: $color_text_white
+        border-color: $color_text_white

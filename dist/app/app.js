@@ -94,9 +94,9 @@ angular.module('ahotelApp').config(["$stateProvider", "$urlRouterProvider", func
 
 	$urlRouterProvider.otherwise('/');
 
-	$stateProvider.state('template', {
-		url: '/template',
-		templateUrl: 'templates/template.html'
+	$stateProvider.state('home', {
+		url: '/home',
+		templateUrl: 'templates/home/home.html'
 	});
 }]);
 'use strict';
@@ -239,7 +239,7 @@ angular.module('ahotelApp').directive('ahtlSlider', ['sliderService', function (
 		};
 
 		$scope.setSlide = function (index) {
-			$scope.slidingDirection = index > $scope.slider.getCurrentSlide(true) ? 'right' : 'left';
+			$scope.slidingDirection = index > $scope.slider.getCurrentSlide(true) ? 'left' : 'right';
 			$scope.slider.setCurrentSlide(index);
 		};
 	}
