@@ -61,7 +61,8 @@ gulp.task('browser-sync-server', function() {
 		server: {
 			baseDir: SRC_PATH.dev.root,
 			routes: {
-				"/bower_components": "bower_components"
+				"/bower_components": "bower_components",
+				"/node_modules": "node_modules"
 			}
 		},
 		logLevel: 'info',
@@ -155,6 +156,7 @@ gulp.task('clean:build', function() {
 
 gulp.task('index:build', function() {
 	return gulp.src(SRC_PATH.index)
+		.pipe(plugins.replace('<script src="../node_modules/notification-logger/notification-logger.js"></script>', ''))
 		.pipe(plugins.cdn(CDN_PATH))
 		.pipe(SETTINGS.build.minifyIndex ? plugins.htmlmin({collapseWhitespace: true}) : plugins.empty())
 		.pipe(SETTINGS.build.removeCommentsIndex ? plugins.stripComments({safe: true}) : plugins.empty())

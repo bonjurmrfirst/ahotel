@@ -95,8 +95,8 @@ angular.module('ahotelApp').config(["$stateProvider", "$urlRouterProvider", func
 	$urlRouterProvider.otherwise('/');
 
 	$stateProvider.state('home', {
-		url: '/home',
-		templateUrl: 'templates/home/home.html'
+		url: '/',
+		templateUrl: 'app/templates/home/home.html'
 	});
 }]);
 'use strict';

@@ -8,8 +8,8 @@ angular.module('ahotelApp')
 		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
-			.state('template', {
-				url: '/template',
-				templateUrl: 'templates/template.html'
+			.state('home', {
+				url: '/',
+				templateUrl: 'app/templates/home/home.html'
 			})
 	}]);

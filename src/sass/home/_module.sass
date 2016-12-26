@@ -1,0 +1,124 @@
+.intro
+    position: relative
+    margin: 0 3%
+    text-align: center
+    background-color: $color_background_gray
+
+    &__primary-header
+        position: relative
+        @include fontStyle(cabEB)
+        @include remFallback(1.4)
+        padding: 15px 3%
+        color: $color_text_black
+
+        &:before
+            content: '\201C'
+            @include remFallback(2)
+
+        &:after
+            content: '\201D'
+            @include remFallback(2)
+
+
+    &__secondary-header
+        @include fontStyle(cabM)
+        @include remFallback(1.2)
+        padding-bottom: 15px
+        color: $color_text_black
+
+.about
+    margin: 60px 6% 0 6%
+    width: 70%
+
+    &__primary-header
+        @include fontStyle(cabM)
+        @include remFallback(3)
+        color: $color_green
+        text-transform: uppercase
+
+    &__secondary-header
+        margin-top: 20px
+        @include fontStyle(cabR)
+        @include remFallback(1.2)
+        @include remLineHeightFallback(1.3)
+        color: $color_reverse
+        text-transform: uppercase
+
+    &__lead
+        margin-top: 20px
+        @include fontStyle(cabEB)
+
+    &__content
+        margin-top: 20px
+        @include remLineHeightFallback(1.2)
+
+    &__btn
+        width: 250px
+        height: 38px
+        margin-top: 20px
+        color: $color_background
+        background-color: $color_green
+
+        &:hover
+            background-color: $color_light_green
+
+        &:active
+            background-color: $color_dark_green
+
+.trending
+    margin-top: 40px
+    padding: 3%
+    text-align: center
+    background-color: $color_background_gray
+
+    &__header
+        @include fontStyle(cabM)
+        @include remFallback(1.4)
+
+    &__content
+        margin: 5px 0
+
+.img-group
+    position: relative
+    margin: 15px auto 0 auto
+    width: 100%
+    max-width: 1200px
+    @include remFallback(0)
+
+    &__item
+        position: relative
+        display: inline-block
+        margin: 0.5%
+        width: 32.3333%
+        height: auto
+        vertical-align: top
+        text-align: center
+        overflow: hidden
+
+        @media #{$mw768}
+            width: 49%
+
+    &__img
+        position: relative
+        display: inline-block
+        margin-top: 3px
+        width: 100%
+        height: auto
+        left: 0
+        border-top: 3px solid transparent
+        border-left: 3px solid transparent
+
+    &__link
+        @include remFallback(0.8)
+        line-height: 100%
+
+        &:hover
+            color: $color_green
+
+    &__caption
+        display: inline-block
+
+    &__caption:hover + &__img
+        border-top: 3px solid $color_green
+        border-left: 3px solid $color_green
+        transition: 0.5s

@@ -25,7 +25,7 @@ $color_text_white: #ffffff
     Background colors
     */
 $color_background: #FFFFFF
-$color_background_gray: #F2F2F2
+$color_background_gray: #f2f2f2
 // Background colors END
 
 /*
@@ -49,6 +49,10 @@ $mw1680: "all and (max-width: 1680px)"
 @mixin remFallback($sizeRem)
     font-size: $sizeRem * 16 + px
     font-size: $sizeRem + rem
+
+@mixin remLineHeightFallback($sizeRem)
+    line-height: $sizeRem * 16 + px
+    line-height: $sizeRem + rem
 
 @mixin remToPx($property, $sizeRem)
     #{$property}: $sizeRem * 16 + px
