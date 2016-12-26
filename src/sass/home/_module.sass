@@ -122,3 +122,52 @@
         border-top: 3px solid $color_green
         border-left: 3px solid $color_green
         transition: 0.5s
+
+.celebrations
+    margin-top: 40px
+    padding: 40px 3%
+    background-color: $color_green
+    text-align: center
+    vertical-align: middle
+
+    &:after
+        content: ' '
+        display: block
+        clear: both
+
+    &__img
+        display: inline-block
+        width: 33%
+
+    &__content
+        position: relative
+        display: inline-block
+        vertical-align: top
+        width: 33%
+
+        &:after
+            content: ' '
+            display: block
+            position: absolute
+            left: 0
+            right: 0
+            margin: 0 auto
+            height: 60px
+            width: 60px
+            background-image: url('../assets/images/icons2.png')
+
+    &__header
+        padding: 0 3%
+        @include fontStyle(cabEB)
+        color: $color_reverse
+        text-transform: uppercase
+
+    &__about
+        margin-top: 10px
+        padding: 0 3%
+
+    &__about--emphasis
+        margin-top: 10px
+        @include fontStyle(cabM)
+        color: $color_text_white
+        text-transform: uppercase
