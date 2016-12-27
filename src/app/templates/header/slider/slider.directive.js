@@ -28,21 +28,20 @@ angular.module('ahotelApp')
 
 			arrows.click(function () {
 				// fixing IE8 png-background bug with 2 bg images
-				if ($(this).hasClass('slider__arrow-right')) {
-					$(this).css('background-image', 'url("../assets/images/slider/arrow_right_opacity.png")');
-				} else {
-					$(this).css('background-image', 'url("../assets/images/slider/arrow_left_opacity.png")');
-				}
+				$(this).css('opacity', '0.5');
+				$(this).css('-ms-filter', "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)");
+				$(this).css('filter', 'progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)');
+				$(this).css('zoom', '1');
+
 
 				this.disabled = true;
 
 				setTimeout(() => {
 					this.disabled = false;
-					if ($(this).hasClass('slider__arrow-right')) {
-						$(this).css('background-image', 'url("../assets/images/slider/arrow_right.png")');
-					} else {
-						$(this).css('background-image', 'url("../assets/images/slider/arrow_left.png")');
-					}
+					$(this).css('opacity', '1');
+					$(this).css('-ms-filter', "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)");
+					$(this).css('filter', 'progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)');
+					$(this).css('zoom', '1');
 				}, 500)
 			});
 		}

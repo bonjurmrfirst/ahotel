@@ -156,7 +156,8 @@ gulp.task('clean:build', function() {
 
 gulp.task('index:build', function() {
 	return gulp.src(SRC_PATH.index)
-		.pipe(plugins.replace('<script src="../node_modules/notification-logger/notification-logger.js"></script>', ''))
+		//.pipe(plugins.replace('<script src="../node_modules/notification-logger/notification-logger.js"></script>', ''))
+		//.pipe(plugins.replace('<script>logger.init();</script>', ''))
 		.pipe(plugins.cdn(CDN_PATH))
 		.pipe(SETTINGS.build.minifyIndex ? plugins.htmlmin({collapseWhitespace: true}) : plugins.empty())
 		.pipe(SETTINGS.build.removeCommentsIndex ? plugins.stripComments({safe: true}) : plugins.empty())

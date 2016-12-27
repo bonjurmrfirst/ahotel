@@ -14,14 +14,14 @@ angular.module('ahotelApp')
 			);
 
 			header.fixHeaderElement(
-					'.nav',
-					'js_nav--fixed',
-					'js_l-header--relative',
-					{
-						onMinScrolltop: 88,
-						onMaxWindowWidth: 850
-					}
-				)
+				'.nav',
+				'js_nav--fixed',
+				'js_l-header--relative',
+                {
+                    onMinScrolltop: 88,
+					onMaxWindowWidth: 850
+				}
+			);
 		}
 
 		return {
