@@ -25,16 +25,16 @@
         left: 0
         margin: auto
         opacity: 0.7
-        transition: 0.5s
+        z-index: 2
 
         &:hover
             opacity: 1
             fixIE8PngBlackBackground: fix
-            transition: 0.5s
 
     &__arrow-right
         margin-right: 3%
-        background-image: url('../assets/images/slider/arrow_right.png')
+        background-image: url('../assets/images/icons.png')
+        background-position: right -90px
         fixIE8PngBlackBackground: fix
         height: 45px
         width: 45px
@@ -44,7 +44,8 @@
 
     &__arrow-left
         margin-left: 3%
-        background-image: url('../assets/images/slider/arrow_left.png')
+        background-image: url('../assets/images/icons.png')
+        background-position: right 0
         fixIE8PngBlackBackground: fix
         height: 45px
         width: 45px
