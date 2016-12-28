@@ -1,10 +1,12 @@
-'use strict';
+(function() {
+	'use strict';
 
-angular.module('ahotelApp')
+	angular.module('ahotelApp')
+		.config(config);
 
-	.config(["$stateProvider","$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
-		'use strict';
+	config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
+	function config($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
@@ -12,4 +14,5 @@ angular.module('ahotelApp')
 				url: '/',
 				templateUrl: 'app/templates/home/home.html'
 			})
-	}]);
+	}
+})();

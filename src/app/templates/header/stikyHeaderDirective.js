@@ -1,8 +1,13 @@
-angular.module('ahotelApp')
+(function() {
+	'use strict';
 
-	.directive('ahtlStikyHeader', ['HeaderTransitionsService', function(HeaderTransitionsService) {
-		"use strict";
+	angular
+		.module('ahotelApp')
+		.directive('ahtlStikyHeader', ahtlStikyHeader);
 
+	ahtlStikyHeader.$inject = ['HeaderTransitionsService'];
+
+	function ahtlStikyHeader(HeaderTransitionsService) {
 		function link() {
 			let header = new HeaderTransitionsService('.l-header', '.nav__item-container');
 
@@ -16,9 +21,8 @@ angular.module('ahotelApp')
 			header.fixHeaderElement(
 				'.nav',
 				'js_nav--fixed',
-				'js_l-header--relative',
-                {
-                    onMinScrolltop: 88,
+				'js_l-header--relative', {
+					onMinScrolltop: 88,
 					onMaxWindowWidth: 850
 				}
 			);
@@ -29,4 +33,5 @@ angular.module('ahotelApp')
 			scope: {},
 			link: link
 		}
-	}]);
+	}
+})();

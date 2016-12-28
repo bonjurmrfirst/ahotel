@@ -1,13 +1,19 @@
-angular.module('ahotelApp')
+(function() {
+	'use strict';
 
-	.service('HeaderTransitionsService', ['$timeout', function($timeout) {
-		"use strict";
-			function UItransitions(containerQuery) {
+	angular
+		.module('ahotelApp')
+		.service('HeaderTransitionsService', HeaderTransitionsService);
+
+	HeaderTransitionsService.$inject = ['$timeout'];
+
+	function HeaderTransitionsService($timeout) {
+		function UItransitions(containerQuery) {
 			//todo errors
 			this.container = $(containerQuery);
 		}
 
-		UItransitions.prototype.elementTransition = function(targetElementsQuery,
+		UItransitions.prototype.elementTransition = function (targetElementsQuery,
 			{cssEnumerableRule = 'width', from = 0, to = 'auto', delay = 100}) {
 			//todo errors
 			this.container.mouseenter(
@@ -35,8 +41,7 @@ angular.module('ahotelApp')
 		HeaderTransitions.prototype = Object.create(UItransitions.prototype);
 		HeaderTransitions.prototype.constructor = HeaderTransitions;
 
-		HeaderTransitions.prototype.fixHeaderElement = function(
-			_fixElement, fixClassName, unfixClassName, options) {
+		HeaderTransitions.prototype.fixHeaderElement = function (_fixElement, fixClassName, unfixClassName, options) {
 			let self = this;
 			let fixElement = $(_fixElement);
 
@@ -58,7 +63,7 @@ angular.module('ahotelApp')
 					self.header.addClass(unfixClassName);
 
 					$(window).off("scroll");
-					$(window).scroll(function() {
+					$(window).scroll(function () {
 						if (!timer) {
 							timer = $timeout(fixUnfixMenuOnScroll, 150);
 						}
@@ -75,5 +80,5 @@ angular.module('ahotelApp')
 		};
 
 		return HeaderTransitions
-
-	}]);
+	}
+})();

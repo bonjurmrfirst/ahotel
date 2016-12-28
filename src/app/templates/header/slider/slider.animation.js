@@ -1,6 +1,11 @@
-angular.module('ahotelApp')
+(function() {
+	'use strict';
 
-	.animation('.slider__img', function () {
+	angular
+		.module('ahotelApp')
+		.animation('.slider__img', animationFunction);
+
+	function animationFunction() {
 		return {
 			beforeAddClass: function (element, className, done) {
 				let slidingDirection = element.scope().slidingDirection;
@@ -12,18 +17,12 @@ angular.module('ahotelApp')
 					$(element).animate({'left': '-200%'}, 500, done); //why 200? $)
 				}
 			},
-			addClass: function (element, className, done) {
-				let an = new Promise(function (res) {
-					"use strict";
-					$(element).css('z-index', '0');
-					$(element).css('left', '0');
-					res();
-				});
 
-				an.then(function () {
-					done();
-				});
+			addClass: function (element, className, done) {
+				$(element).css('z-index', '0');
+				$(element).css('left', '0');
+				done();
 			}
 		}
-	});
-
+	}
+})();
