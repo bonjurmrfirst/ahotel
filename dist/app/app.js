@@ -13,42 +13,37 @@
 	angular.module('ahotelApp').factory('PreloadImages', PreloadImages);
 
 	function PreloadImages() {
-		function PreloadImages(imageList) {
-			this._imageSrcList = imageList;
+		this._imageSrcList = imageList;
 
-			function preLoad(imageList) {
+		function preLoad(imageList) {
 
-				var promises = [];
+			var promises = [];
 
-				function loadImage(src) {
-					return new Promise(function (resolve, reject) {
-						var image = new Image();
-						image.src = src;
-						image.onload = function () {
-							console.log("loaded image: " + src);
-							resolve(image);
-						};
-						image.onerror = function (e) {
-							reject(e);
-						};
-					});
-				}
-
-				for (var i = 0; i < imageList.length; i++) {
-					promises.push(loadImage(imageList[i]));
-				}
-
-				return Promise.all(promises).then(function (results) {
-					console.log('promises array all resolved');
-					console.dir(results);
-					return results;
+			function loadImage(src) {
+				return new Promise(function (resolve, reject) {
+					var image = new Image();
+					image.src = src;
+					image.onload = function () {
+						resolve(image);
+					};
+					image.onerror = function (e) {
+						reject(e);
+					};
 				});
 			}
 
-			preLoad(this._imageSrcList);
+			for (var i = 0; i < imageList.length; i++) {
+				promises.push(loadImage(imageList[i]));
+			}
+
+			return Promise.all(promises).then(function (results) {
+				return results;
+			});
 		}
 
-		return PreloadImages;
+		preLoad(this._imageSrcList);
+
+		return preLoad;
 	}
 })();
 'use strict';
@@ -66,6 +61,9 @@
 		$stateProvider.state('home', {
 			url: '/',
 			templateUrl: 'app/templates/home/home.html'
+		}).state('bungalows', {
+			url: '/bungalows',
+			templateUrl: 'app/templates/resorts/bungalows.html'
 		});
 	}
 })();
@@ -78,7 +76,7 @@
 
 	function ahtlHeader() {
 		return {
-			restrict: "EAC",
+			restrict: 'EAC',
 			templateUrl: 'app/templates/header/header.html'
 		};
 	}
@@ -153,7 +151,7 @@
 					fixUnfixMenuOnScroll();
 					self.header.addClass(unfixClassName);
 
-					$(window).off("scroll");
+					$(window).off('scroll');
 					$(window).scroll(function () {
 						if (!timer) {
 							timer = $timeout(fixUnfixMenuOnScroll, 150);
@@ -162,7 +160,7 @@
 				} else {
 					self.header.removeClass(unfixClassName);
 					fixElement.removeClass(fixClassName);
-					$(window).off("scroll");
+					$(window).off('scroll');
 				}
 			}
 
@@ -198,7 +196,7 @@
 		}
 
 		return {
-			restrict: "A",
+			restrict: 'A',
 			transclude: false,
 			scope: {},
 			link: link
@@ -240,9 +238,9 @@
 
 	angular.module('ahotelApp').directive('ahtlSlider', ahtlSlider);
 
-	ahtlSlider.$inject = ['sliderService'];
+	ahtlSlider.$inject = ['sliderService', '$timeout'];
 
-	function ahtlSlider(sliderService) {
+	function ahtlSlider(sliderService, $timeout) {
 		ahtlSliderController.$inject = ["$scope"];
 		function ahtlSliderController($scope) {
 			$scope.slider = sliderService;
@@ -254,12 +252,12 @@
 
 			function nextSlide() {
 				$scope.slidingDirection = 'left';
-				$scope.slider.getNextSlide();
+				$scope.slider.setNextSlide();
 			}
 
 			function prevSlide() {
 				$scope.slidingDirection = 'right';
-				$scope.slider.getPrevSlide();
+				$scope.slider.setPrevSlide();
 			}
 
 			function setSlide(index) {
@@ -269,7 +267,7 @@
 		}
 
 		function fixIE8pngBlackBg(element) {
-			$(element).css('-ms-filter', "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)").css('filter', 'progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)').css('zoom', '1');
+			$(element).css('-ms-filter', 'progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)').css('filter', 'progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)').css('zoom', '1');
 		}
 
 		function link(scope, elem) {
@@ -283,7 +281,7 @@
 
 				this.disabled = true;
 
-				setTimeout(function () {
+				$timeout(function () {
 					_this.disabled = false;
 					$(_this).css('opacity', '1');
 					fixIE8pngBlackBg($(_this));
@@ -325,16 +323,22 @@
 		};
 
 		Slider.prototype.setCurrentSlide = function (slide) {
+			slide = parseInt(slide);
+
+			if (!slide || isNaN(slide) || slide < 0 || slide > this._imageSrcList.length - 1) {
+				return;
+			}
+
 			this._currentSlide = slide;
 		};
 
-		Slider.prototype.getNextSlide = function () {
+		Slider.prototype.setNextSlide = function () {
 			this._currentSlide === this._imageSrcList.length - 1 ? this._currentSlide = 0 : this._currentSlide++;
 
 			this.getCurrentSlide();
 		};
 
-		Slider.prototype.getPrevSlide = function () {
+		Slider.prototype.setPrevSlide = function () {
 			this._currentSlide === 0 ? this._currentSlide = this._imageSrcList.length - 1 : this._currentSlide--;
 
 			this.getCurrentSlide();
