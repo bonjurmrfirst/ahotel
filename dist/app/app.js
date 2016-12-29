@@ -199,6 +199,7 @@
 
 		return {
 			restrict: "A",
+			transclude: false,
 			scope: {},
 			link: link
 		};
@@ -247,20 +248,24 @@
 			$scope.slider = sliderService;
 			$scope.slidingDirection = null;
 
-			$scope.nextSlide = function () {
+			$scope.nextSlide = nextSlide;
+			$scope.prevSlide = prevSlide;
+			$scope.setSlide = setSlide;
+
+			function nextSlide() {
 				$scope.slidingDirection = 'left';
 				$scope.slider.getNextSlide();
-			};
+			}
 
-			$scope.prevSlide = function () {
+			function prevSlide() {
 				$scope.slidingDirection = 'right';
 				$scope.slider.getPrevSlide();
-			};
+			}
 
-			$scope.setSlide = function (index) {
+			function setSlide(index) {
 				$scope.slidingDirection = index > $scope.slider.getCurrentSlide(true) ? 'left' : 'right';
 				$scope.slider.setCurrentSlide(index);
-			};
+			}
 		}
 
 		function fixIE8pngBlackBg(element) {
@@ -288,6 +293,7 @@
 
 		return {
 			restrict: 'EA',
+			transclude: false,
 			scope: {},
 			controller: ahtlSliderController,
 			templateUrl: 'app/templates/header/slider/slider.html',
@@ -302,7 +308,9 @@
 
 	angular.module('ahotelApp').factory('sliderService', sliderService);
 
-	function sliderService() {
+	sliderService.$inject = ['sliderImgPathConstant'];
+
+	function sliderService(sliderImgPathConstant) {
 		function Slider(sliderImageList) {
 			this._imageSrcList = sliderImageList;
 			this._currentSlide = 0;
@@ -332,6 +340,13 @@
 			this.getCurrentSlide();
 		};
 
-		return new Slider(['assets/images/slider/slider1.jpg', 'assets/images/slider/slider2.jpg', 'assets/images/slider/slider3.jpg']);
+		return new Slider(sliderImgPathConstant);
 	}
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').constant('sliderImgPathConstant', ['assets/images/slider/slider1.jpg', 'assets/images/slider/slider2.jpg', 'assets/images/slider/slider3.jpg']);
 })();

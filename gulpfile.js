@@ -1,6 +1,7 @@
 "use strict";
 
-const gulp = require('gulp'),
+const
+	gulp = require('gulp'),
 	plugins = require('gulp-load-plugins')({ //TODO config gulp-plugins
 		pattern: ['gulp-*', 'gulp.*'],
 		lazy: true,
@@ -10,7 +11,8 @@ const gulp = require('gulp'),
 	ftp = require( 'vinyl-ftp');
 
 
-const SETTINGS = require('./gulp_environment/gulp.settings'),
+const
+	SETTINGS = require('./gulp_environment/gulp.settings'),
 	SRC_PATH = require('./gulp_environment/gulp.srcPath'),
 	CDN_PATH = require('./gulp_environment/gulp.CDNpath'),
 	FTP_PATH = SETTINGS.ftp.FTPpathIsPresent ? require('./gulp_environment/gulp.FTPpath') : null;
