@@ -3,7 +3,7 @@
 
 	angular
 		.module('ahotelApp')
-		.animation('.slider__img', animationFunction);
+		.animation('.slider__img',animationFunction)
 
 	function animationFunction() {
 		return {
@@ -23,6 +23,6 @@
 				$(element).css('left', '0');
 				done();
 			}
-		}
+		};
 	}
 })();

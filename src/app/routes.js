@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('ahotelApp')
-		.config(config);
+		.config(config)
 
 	config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
@@ -13,6 +13,6 @@
 			.state('home', {
 				url: '/',
 				templateUrl: 'app/templates/home/home.html'
-			})
+			});
 	}
 })();

@@ -3,7 +3,7 @@
 
 	angular
 		.module('ahotelApp')
-		.service('HeaderTransitionsService', HeaderTransitionsService);
+		.service('HeaderTransitionsService',HeaderTransitionsService)
 
 	HeaderTransitionsService.$inject = ['$timeout'];
 
@@ -62,7 +62,7 @@
 					fixUnfixMenuOnScroll();
 					self.header.addClass(unfixClassName);
 
-					$(window).off("scroll");
+					$(window).off('scroll');
 					$(window).scroll(function () {
 						if (!timer) {
 							timer = $timeout(fixUnfixMenuOnScroll, 150);
@@ -71,7 +71,7 @@
 				} else {
 					self.header.removeClass(unfixClassName);
 					fixElement.removeClass(fixClassName);
-					$(window).off("scroll");
+					$(window).off('scroll');
 				}
 			}
 
@@ -79,6 +79,6 @@
 			$(window).on('resize', onWidthChangeHandler);
 		};
 
-		return HeaderTransitions
+		return HeaderTransitions;
 	}
 })();

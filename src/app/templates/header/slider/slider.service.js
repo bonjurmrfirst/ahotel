@@ -3,7 +3,7 @@
 
 	angular
 		.module('ahotelApp')
-		.factory('sliderService', sliderService);
+		.factory('sliderService',sliderService)
 
 	sliderService.$inject = ['sliderImgPathConstant'];
 
@@ -28,7 +28,7 @@
 				return;
 			}
 
-			this._currentSlide = slide
+			this._currentSlide = slide;
 		};
 
 		Slider.prototype.setNextSlide = function () {
@@ -43,6 +43,6 @@
 			this.getCurrentSlide();
 		};
 
-		return new Slider(sliderImgPathConstant)
+		return new Slider(sliderImgPathConstant);
 	}
 })();

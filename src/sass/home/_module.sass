@@ -5,20 +5,19 @@
     background-color: $color_background_gray
 
     &__primary-header
-        position: relative
         @include fontStyle(cabEB)
         @include remFallback(1.4)
+        position: relative
         padding: 15px 3%
         color: $color_text_black
 
         &:before
-            content: '\201C'
             @include remFallback(2)
+            content: '\201C'
 
         &:after
-            content: '\201D'
             @include remFallback(2)
-
+            content: '\201D'
 
     &__secondary-header
         @include fontStyle(cabM)
@@ -37,20 +36,20 @@
         text-transform: uppercase
 
     &__secondary-header
-        margin-top: 20px
         @include fontStyle(cabR)
         @include remFallback(1.2)
         @include remLineHeightFallback(1.3)
+        margin-top: 20px
         color: $color_reverse
         text-transform: uppercase
 
     &__lead
-        margin-top: 20px
         @include fontStyle(cabEB)
+        margin-top: 20px
 
     &__content
-        margin-top: 20px
         @include remLineHeightFallback(1.2)
+        margin-top: 20px
 
     &__btn
         width: 250px
@@ -79,11 +78,11 @@
         margin: 5px 0
 
 .img-group
+    @include remFallback(0)
     position: relative
     margin: 15px auto 0 auto
     width: 100%
     max-width: 1200px
-    @include remFallback(0)
 
     &__item
         position: relative
@@ -168,8 +167,8 @@
             background-image: url('../assets/images/icons2.png')
 
     &__header
-        padding: 0 3%
         @include fontStyle(cabEB)
+        padding: 0 3%
         color: $color_reverse
         text-transform: uppercase
 
@@ -178,7 +177,7 @@
         padding: 0 3%
 
     &__about--emphasis
-        margin-top: 10px
         @include fontStyle(cabM)
+        margin-top: 10px
         color: $color_text_white
         text-transform: uppercase

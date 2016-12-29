@@ -3,7 +3,7 @@
 
 	angular
 		.module('ahotelApp')
-		.directive('ahtlStikyHeader', ahtlStikyHeader);
+		.directive('ahtlStikyHeader',ahtlStikyHeader)
 
 	ahtlStikyHeader.$inject = ['HeaderTransitionsService'];
 
@@ -29,10 +29,10 @@
 		}
 
 		return {
-			restrict: "A",
+			restrict: 'A',
 			transclude: false,
 			scope: {},
 			link: link
-		}
+		};
 	}
 })();

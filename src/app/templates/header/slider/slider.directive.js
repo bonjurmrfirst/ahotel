@@ -3,11 +3,11 @@
 
 	angular
 		.module('ahotelApp')
-		.directive('ahtlSlider', ahtlSlider);
+		.directive('ahtlSlider',ahtlSlider)
 
-	ahtlSlider.$inject = ['sliderService'];
+	ahtlSlider.$inject = ['sliderService', '$timeout'];
 
-	function ahtlSlider(sliderService) {
+	function ahtlSlider(sliderService, $timeout) {
 		function ahtlSliderController($scope) {
 			$scope.slider = sliderService;
 			$scope.slidingDirection = null;
@@ -34,7 +34,7 @@
 
 		function fixIE8pngBlackBg(element) {
 			$(element)
-				.css('-ms-filter', "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)")
+				.css('-ms-filter', 'progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)')
 				.css('filter', 'progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)')
 				.css('zoom', '1');
 		}
@@ -48,11 +48,11 @@
 
 				this.disabled = true;
 
-				setTimeout(() => {
+				$timeout(() => {
 					this.disabled = false;
 					$(this).css('opacity', '1');
 					fixIE8pngBlackBg($(this));
-				}, 500)
+				}, 500);
 			});
 		}
 
@@ -63,7 +63,7 @@
 			controller: ahtlSliderController,
 			templateUrl: 'app/templates/header/slider/slider.html',
 			link: link
-		}
+		};
 	}
 })();
 
