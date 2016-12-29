@@ -2,17 +2,19 @@ var express = require('express');
 var app = express();
 var engine = require('consolidate');
 
-app.set('port', (process.env.PORT || 5000));
+var development = true;
+var port = development ? 5000 : process.env.PORT;
+var appRoot = development ? '/dist.dev' : '/dist';
 
-app.use(express.static(__dirname + '/dist'));
+app.set('port', port);
 
-// views is directory for all template files
-app.set('views', __dirname);
+app.use(express.static(__dirname + appRoot));
+
 app.engine('html', engine.mustache);
 app.set('view engine', 'html');
 
 app.get('/', function(request, response) {
-    response.render('dist/index');
+    response.render(appRoot + '/index');
 });
 
 app.listen(app.get('port'), function() {

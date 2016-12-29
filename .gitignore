@@ -1,6 +1,6 @@
 /.idea
 /node_modules
-/bower_components
+/dist.dev/bower_components
 /aside
 /htmlValidator
 
