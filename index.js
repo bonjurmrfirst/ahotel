@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var engine = require('consolidate');
 
-var development = true;
+var development = false;
 var port = development ? 5000 : process.env.PORT;
 var appRoot = development ? '/dist.dev' : '/dist';
 
