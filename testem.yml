@@ -1,0 +1,11 @@
+{
+  "framework": "jasmine",
+  "src_files": [
+    "./test/lib/angular.js",
+    "./test/lib/angular-ui-router.js",
+    "./test/lib/angular-animate.js",
+    "./test/lib/angular-mocks.js",
+    "./src/app/**/*.js",
+    "./test/spec/**/*.js"
+  ]
+}

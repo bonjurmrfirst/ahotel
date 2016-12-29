@@ -12,20 +12,24 @@
 			$scope.slider = sliderService;
 			$scope.slidingDirection = null;
 
-			$scope.nextSlide = function () {
+			$scope.nextSlide = nextSlide;
+			$scope.prevSlide = prevSlide;
+			$scope.setSlide = setSlide;
+
+			function nextSlide() {
 				$scope.slidingDirection = 'left';
-				$scope.slider.getNextSlide();
-			};
+				$scope.slider.setNextSlide();
+			}
 
-			$scope.prevSlide = function () {
+			function prevSlide() {
 				$scope.slidingDirection = 'right';
-				$scope.slider.getPrevSlide();
-			};
+				$scope.slider.setPrevSlide();
+			}
 
-			$scope.setSlide = function (index) {
+			function setSlide(index) {
 				$scope.slidingDirection = index > $scope.slider.getCurrentSlide(true) ? 'left' : 'right';
 				$scope.slider.setCurrentSlide(index);
-			};
+			}
 		}
 
 		function fixIE8pngBlackBg(element) {
@@ -54,6 +58,7 @@
 
 		return {
 			restrict: 'EA',
+			transclude: false,
 			scope: {},
 			controller: ahtlSliderController,
 			templateUrl: 'app/templates/header/slider/slider.html',

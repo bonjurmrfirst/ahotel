@@ -5,7 +5,9 @@
 		.module('ahotelApp')
 		.factory('sliderService', sliderService);
 
-	function sliderService() {
+	sliderService.$inject = ['sliderImgPathConstant'];
+
+	function sliderService(sliderImgPathConstant) {
 		function Slider(sliderImageList) {
 			this._imageSrcList = sliderImageList;
 			this._currentSlide = 0;
@@ -20,25 +22,27 @@
 		};
 
 		Slider.prototype.setCurrentSlide = function (slide) {
+			slide = parseInt(slide);
+
+			if (!slide || isNaN(slide) || slide < 0 || slide > this._imageSrcList.length - 1) {
+				return;
+			}
+
 			this._currentSlide = slide
 		};
 
-		Slider.prototype.getNextSlide = function () {
+		Slider.prototype.setNextSlide = function () {
 			(this._currentSlide === this._imageSrcList.length - 1) ? this._currentSlide = 0 : this._currentSlide++;
 
 			this.getCurrentSlide();
 		};
 
-		Slider.prototype.getPrevSlide = function () {
+		Slider.prototype.setPrevSlide = function () {
 			(this._currentSlide === 0) ? this._currentSlide = this._imageSrcList.length - 1 : this._currentSlide--;
 
 			this.getCurrentSlide();
 		};
 
-		return new Slider([
-			'assets/images/slider/slider1.jpg',
-			'assets/images/slider/slider2.jpg',
-			'assets/images/slider/slider3.jpg'
-		])
+		return new Slider(sliderImgPathConstant)
 	}
 })();

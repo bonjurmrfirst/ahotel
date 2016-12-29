@@ -30,6 +30,7 @@
 
 		return {
 			restrict: "A",
+			transclude: false,
 			scope: {},
 			link: link
 		}
