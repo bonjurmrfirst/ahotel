@@ -3,7 +3,7 @@
 
 	angular
 		.module('ahotelApp')
-		.factory('sliderService',sliderService)
+		.factory('sliderService',sliderService);
 
 	sliderService.$inject = ['sliderImgPathConstant'];
 

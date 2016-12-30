@@ -21,31 +21,15 @@
     <p class="bungalows__reviewed">Reviewed by John Smith</p>
 </article>
 
-<article class="top3" ahtl-top3>
-    <section class="top3__item">
-        <img class="top3__img" src="" width="400" height="200">
-        <h3 class="top3__header">Bungalow 1</h3>
-        <p class="top3__about"></p>
-        <ul class="top3__description">
-            <li class="top3__spec">
-            </li>
-        </ul>
-    </section>
-    <section class="top3__item">
-        <img class="top3__img" src="" width="400" height="200">
-        <h3 class="top3__header">Bungalow 2</h3>
-        <p class="top3__about"></p>
-        <ul class="top3__description">
-            <li class="top3__spec">
-            </li>
-        </ul>
-    </section>
-    <section class="top3__item">
-        <img class="top3__img" src="" width="400" height="200">
-        <h3 class="top3__header">Bungalow 3</h3>
-        <p class="top3__about"></p>
-        <ul class="top3__description">
-            <li class="top3__spec">
+<article class="top3" ahtl-top3="bungalows">
+    <section class="top3__item" ng-repeat="item in top3.resort">
+        <img class="top3__img" ng-src="{{top3.getImgSrc($index)}}"
+             width="400" height="200">
+        <h3 class="top3__header">{{item.main.name}}</h3>
+        <p class="top3__desc">{{item.desc}}</p>
+        <ul class="top3__details">
+            <li class="top3__detail" ng-repeat="detail in item.details">
+                {{detail}}
             </li>
         </ul>
     </section>

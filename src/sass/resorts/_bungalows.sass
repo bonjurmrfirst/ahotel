@@ -1,27 +1,43 @@
 .bungalows
-    margin: 60px 6% 0 6%
-    width: 70%
+	margin: 60px 6% 0 6%
+	width: 70%
 
-    &__text
-         @include remLineHeightFallback(1.3)
-         margin-top: 20px
+	&__text
+		 @include remLineHeightFallback(1.3)
+		 margin-top: 20px
 
-    &__reviewed
-      @include fontStyle(cabEB)
-      @include remLineHeightFallback(1.3)
-      margin-top: 20px
-      text-align: justify
-      text-align-last: right
+	&__reviewed
+	    @include fontStyle(cabEB)
+	    @include remLineHeightFallback(1.3)
+	    margin-top: 20px
+	    text-align: justify
+	    text-align-last: right
 
 .top3
-  margin: 0 3%
-  font-size: 0
+    margin: 0 3%
+    font-size: 0
+    padding: 0 3%
 
-  &:after
-    content: ' '
-    display: block
-    clear: both
+    &:after
+        content: ' '
+        display: block
+        clear: both
 
-  &__item
-    width: 33%
-    float: left
+    &__item
+        float: left
+        margin-top: 40px
+        width: 33%
+
+    &__header
+        @include fontStyle(cabEB)
+        @include remFallback(0.9)
+
+    &__desc
+        @include fontStyle(cabR)
+        @include remFallback(1)
+
+    &__details
+
+    &__detail
+        @include fontStyle(cabR)
+        @include remFallback(0.8)

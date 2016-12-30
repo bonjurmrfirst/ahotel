@@ -6,8 +6,17 @@
     "node": "5.9.1"
   },
   "main": "index.js",
+  "watch": {
+    "start": {
+      "patterns": ["./", "./backend"],
+      "extensions": "js,json",
+      "ignore": "src/vendor/external.min.js",
+      "quiet": true
+    }
+  },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "watch": "npm-watch"
   },
   "author": "",
   "license": "ISC",

@@ -1,0 +1,92 @@
+[
+  {
+    "main": {
+      "name": "Joining of Adam and Eve",
+      "type": "Bungalow",
+      "price": "100",
+      "min": "1",
+      "max": "5"
+    },
+    "details": {
+      "restourant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air conditioning",
+      "guest lounge": "yes",
+      "terrace": "no",
+      "garden": "yes",
+      "gym": "no",
+      "bicycles": "available"
+    },
+    "desc": "A bungalow is a type of building, originally from Bengal region in South Asia, but now found throughout the world.",
+    "img": {
+      "filename": "bungalow1.jpg"
+    }
+  },
+  {
+    "main": {
+      "name": "The Garden of Earthly Delights",
+      "type": "Bungalow",
+      "price": "100",
+      "min": "1",
+      "max": "5"
+    },
+    "details": {
+      "restourant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air conditioning",
+      "guest lounge": "yes",
+      "terrace": "no",
+      "garden": "yes",
+      "gym": "no",
+      "bicycles": "available"
+    },
+    "desc": "A bungalow is a type of building, originally from Bengal region in South Asia, but now found throughout the world.",
+    "img": {
+      "filename": "bungalow1.jpg"
+    }
+  },
+  {
+    "main": {
+      "name": "Music H.",
+      "type": "Bungalow",
+      "price": "100",
+      "min": "1",
+      "max": "5"
+    },
+    "details": {
+      "restourant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air conditioning",
+      "guest lounge": "yes",
+      "terrace": "no",
+      "garden": "yes",
+      "gym": "no",
+      "bicycles": "available"
+    },
+    "desc": "A bungalow is a type of building, originally from Bengal region in South Asia, but now found throughout the world.",
+    "img": {
+      "filename": "bungalow1.jpg"
+    }
+  }
+]

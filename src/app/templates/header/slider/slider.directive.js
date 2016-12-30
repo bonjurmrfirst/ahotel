@@ -3,7 +3,7 @@
 
 	angular
 		.module('ahotelApp')
-		.directive('ahtlSlider',ahtlSlider)
+		.directive('ahtlSlider',ahtlSlider);
 
 	ahtlSlider.$inject = ['sliderService', '$timeout'];
 
