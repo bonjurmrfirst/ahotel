@@ -210,20 +210,68 @@
 
     angular.module('ahotelApp').directive('ahtlTop3', ahtlTop3Directive);
 
-    function ahtlTop3Directive() {
-        function AhtlTop3Controller() {}
+    ahtlTop3Directive.$inject = ['top3Service'];
 
+    function ahtlTop3Directive(top3Service) {
+
+        ahtlTop3Controller.$inject = ["$scope", "$element", "$attrs"];
         return {
             restrict: 'A',
-            transclude: true,
-            scope: {},
-            controller: AhtlTop3Controller,
-            controllerAs: 'top3' /*,
-                                 templateUrl: 'app/templates/header/slider/slider.html',
-                                 link: link*/
+            controller: ahtlTop3Controller,
+            controllerAs: 'top3'
         };
+
+        function ahtlTop3Controller($scope, $element, $attrs) {
+            var _this = this;
+
+            this.resortType = $attrs.ahtlTop3;
+            this.resort = null;
+
+            this.getImgSrc = function (index) {
+                return 'assets/images/' + this.resortType + '/' + this.resort[index].img.filename;
+            };
+
+            top3Service.getTop3Places(this.resortType).then(function (response) {
+                _this.resort = response.data;
+                console.log(_this.resort);
+            });
+        }
     }
-});
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').factory('top3Service', top3Service);
+
+    top3Service.$inject = ['$http'];
+
+    function top3Service($http) {
+        return {
+            getTop3Places: getTop3Places
+        };
+
+        function getTop3Places(type) {
+            return $http({
+                method: 'GET',
+                url: '/api/top3',
+                params: {
+                    action: 'get',
+                    type: type
+                }
+            }).then(onResolve, onReject);
+        }
+
+        function onResolve(response) {
+            return response;
+        }
+
+        function onReject(response) {
+            return response;
+        }
+    }
+})();
 'use strict';
 
 (function () {
