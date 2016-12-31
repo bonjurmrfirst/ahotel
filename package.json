@@ -10,8 +10,7 @@
     "start": {
       "patterns": ["./", "./backend"],
       "extensions": "js,json",
-      "ignore": "src/vendor/external.min.js",
-      "quiet": true
+      "quiet": false
     }
   },
   "scripts": {

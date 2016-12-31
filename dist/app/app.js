@@ -8,6 +8,11 @@
 'use strict';
 
 (function () {
+    angular.module('ahotelApp').constant('hotelDetailsConstant', ["restourant", "kids", "pool", "spa", "wifi", "pet", "disable", "beach", "parking", "conditioning", "guest lounge", "terrace", "garden", "gym", "bicycles"]);
+})();
+'use strict';
+
+(function () {
 	'use strict';
 
 	angular.module('ahotelApp').factory('PreloadImages', PreloadImages);
@@ -210,9 +215,9 @@
 
     angular.module('ahotelApp').directive('ahtlTop3', ahtlTop3Directive);
 
-    ahtlTop3Directive.$inject = ['top3Service'];
+    ahtlTop3Directive.$inject = ['top3Service', 'hotelDetailsConstant'];
 
-    function ahtlTop3Directive(top3Service) {
+    function ahtlTop3Directive(top3Service, hotelDetailsConstant) {
 
         ahtlTop3Controller.$inject = ["$scope", "$element", "$attrs"];
         return {
@@ -224,6 +229,7 @@
         function ahtlTop3Controller($scope, $element, $attrs) {
             var _this = this;
 
+            this.details = hotelDetailsConstant;
             this.resortType = $attrs.ahtlTop3;
             this.resort = null;
 

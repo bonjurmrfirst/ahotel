@@ -14,30 +14,117 @@
 	    text-align-last: right
 
 .top3
-    margin: 0 3%
+    margin-bottom: 40px
+    padding:  0 3%
     font-size: 0
-    padding: 0 3%
+    text-align: center
 
     &:after
         content: ' '
         display: block
         clear: both
+        height: 40px
 
     &__item
         float: left
         margin-top: 40px
-        width: 33%
+        width: 33.3333%
+        height: auto
 
     &__header
         @include fontStyle(cabEB)
         @include remFallback(0.9)
+        margin-top: 20px
+        color: $color_reverse
 
     &__desc
-        @include fontStyle(cabR)
+        @include fontStyle(cabM)
         @include remFallback(1)
+        margin-top: 20px
 
     &__details
+        margin-top: 20px
+
+    &__detail-container
+        position: relative
+        margin-top: 50px
+        height: 60px
+        background-image: url('../assets/images/icons_details.png')
+        background-repeat: no-repeat
+        background-position: center 20px
+
+        &--has
+            opacity: 0.35
+
+        &--restourant
+            background-position: center 0
+
+        &--kids
+            background-position: center -60px
+
+        &--pool
+            background-position: center -120px
+
+        &--spa
+            background-position: center -180px
+
+        &--wifi
+            background-position: center -240px
+
+        &--pet
+            background-position: center -300px
+
+        &--disable
+            background-position: center -360px
+
+        &--beach
+            background-position: center -420px
+
+        &--parking
+            background-position: center -480px
+
+        &--conditioning
+            background-position: center -540px
+
+        &--lounge
+            background-position: center -600px
+
+        &--terrace
+            background-position: center -660px
+
+        &--garden
+            background-position: center -720px
+
+        &--gym
+            background-position: center -780px
+
+        &--bicycles
+            background-position: center -840px
 
     &__detail
         @include fontStyle(cabR)
-        @include remFallback(0.8)
+        @include remFallback(1)
+        position: absolute
+        margin: 0 auto
+        right: 0
+        bottom: -25px
+        left: 0
+        text-transform: capitalize
+
+        &--own
+            @include fontStyle(cabEB)
+            @include remFallback(0.8)
+            position: absolute
+            margin: 0 auto
+            right: 0
+            bottom: -40px
+            left: 0
+            text-transform: capitalize
+
+    &__img-container
+        width: 100%
+
+    &__img
+        padding: 0 3%
+        width: 97%
+        height: auto

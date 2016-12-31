@@ -60,12 +60,15 @@ let errorHandler = function (title) {
 
 gulp.task('browser-sync-server', function() {
 	browserSync.init({
-		server: {
+		/*server: {
 			baseDir: SRC_PATH.dev.root,
 			routes: {
 				"/bower_components": "bower_components",
 				"/node_modules": "node_modules"
 			}
+		},*/
+		proxy: {
+			target: 'localhost:5000' // original port
 		},
 		logLevel: 'info',
 		logFileChanges: true,
@@ -317,3 +320,39 @@ gulp.task('upload',
 	)
 );
 // Chains END
+
+var nodemon = require('gulp-nodemon');
+
+gulp.task('nodemon', function (cb) {
+
+	var started = false;
+
+	return nodemon({
+		script: 'index.js'
+	}).on('start', function () {
+		// to avoid nodemon being started multiple times
+		// thanks @matthisk
+		if (!started) {
+			cb();
+			started = true;
+		}
+	});
+});
+
+
+
+gulp.task('browser-sync', function () {
+	browserSync.init({
+		port: 3007, // you can specify the port here
+		// can't use the same port that nodemon uses.
+		proxy: {
+			target: 'localhost:5000' // original port
+		}
+	});
+
+	browserSync.watch('./dist.dev/**/*.*').on('change', browserSync.reload);
+});
+
+gulp.task('default', gulp.series('browser-sync'), function () {
+	gulp.watch('dist.dev/**/*.*', browserSync.reload);
+});
