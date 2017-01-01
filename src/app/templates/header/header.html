@@ -1,5 +1,5 @@
 <!--[if lte IE 9]>
-<script src="assets/vendor/placeholder.js"></script>
+    <script src="assets/vendor/placeholder.js"></script>
 <![endif]-->
 
 <header ahtl-stiky-header class="l-header">
@@ -16,10 +16,10 @@
                 <div class="sub-nav">
                     <ul>
                         <li class="sub-nav__item">
-                            <a  class="sub-nav__link" href="">Hotels</a>
+                            <a  class="sub-nav__link" ui-sref="hotels">Hotels</a>
                         </li>
                         <li class="sub-nav__item">
-                            <a class="sub-nav__link" href="">Villas</a>
+                            <a class="sub-nav__link" ui-sref="villas">Villas</a>
                         </li>
                         <li class="sub-nav__item">
                             <a class="sub-nav__link" ui-sref="bungalows">Bungalows</a>
@@ -76,10 +76,10 @@
                 <div class="sub-nav sub-nav--right">
                     <ul>
                         <li class="sub-nav__item">
-                            <a  class="sub-nav__link" href="">Login</a>
+                            <a  class="sub-nav__link" ui-sref="auth({type: 'login'})">Login</a>
                         </li>
                         <li class="sub-nav__item sub-nav__item--last">
-                            <a class="sub-nav__link" href="">Join</a>
+                            <a class="sub-nav__link"  ui-sref="auth({type: 'join'})">Join</a>
                         </li>
                     </ul>
                 </div>
@@ -97,10 +97,12 @@
     </nav>
 </header>
 
-<ahtl-slider></ahtl-slider>
+<div ng-hide="$currentStateName === 'auth'">
+    <ahtl-slider></ahtl-slider>
 
-<div class="where-to-go">
-    <h4 class="where-to-go__header">No idea where to go?</h4>
-    <button class="where-to-go__btn sub-nav__btn sub-nav__btn--dest">destinations</button>
+    <div class="where-to-go">
+        <h4 class="where-to-go__header">No idea where to go?</h4>
+        <button class="where-to-go__btn sub-nav__btn sub-nav__btn--dest">destinations</button>
+    </div>
 </div>
 

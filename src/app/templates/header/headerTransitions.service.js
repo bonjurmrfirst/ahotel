@@ -3,7 +3,7 @@
 
 	angular
 		.module('ahotelApp')
-		.service('HeaderTransitionsService',HeaderTransitionsService)
+		.service('HeaderTransitionsService', HeaderTransitionsService);
 
 	HeaderTransitionsService.$inject = ['$timeout'];
 

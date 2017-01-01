@@ -8,7 +8,7 @@
   "main": "index.js",
   "watch": {
     "start": {
-      "patterns": ["./", "./backend"],
+      "patterns": ["index.js", "./backend"],
       "extensions": "js,json",
       "quiet": false
     }

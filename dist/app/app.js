@@ -8,7 +8,7 @@
 'use strict';
 
 (function () {
-    angular.module('ahotelApp').constant('hotelDetailsConstant', ["restourant", "kids", "pool", "spa", "wifi", "pet", "disable", "beach", "parking", "conditioning", "guest lounge", "terrace", "garden", "gym", "bicycles"]);
+    angular.module('ahotelApp').constant('hotelDetailsConstant', ["restourant", "kids", "pool", "spa", "wifi", "pet", "disable", "beach", "parking", "conditioning", "lounge", "terrace", "garden", "gym", "bicycles"]);
 })();
 'use strict';
 
@@ -221,20 +221,28 @@
 
         ahtlTop3Controller.$inject = ["$scope", "$element", "$attrs"];
         return {
-            restrict: 'A',
+            restrict: 'E',
             controller: ahtlTop3Controller,
-            controllerAs: 'top3'
+            controllerAs: 'top3',
+            templateUrl: 'app/templates/resorts/top3.template.html'
         };
 
         function ahtlTop3Controller($scope, $element, $attrs) {
             var _this = this;
 
             this.details = hotelDetailsConstant;
-            this.resortType = $attrs.ahtlTop3;
+            this.resortType = $attrs.ahtlTop3type;
             this.resort = null;
 
             this.getImgSrc = function (index) {
                 return 'assets/images/' + this.resortType + '/' + this.resort[index].img.filename;
+            };
+
+            this.isResortIncludeDetail = function (item, detail) {
+                var detailClassName = 'top3__detail-container--' + detail,
+                    isResortIncludeDetailClassName = !item.details[detail] ? ' top3__detail-container--has' : '';
+
+                return detailClassName + isResortIncludeDetailClassName;
             };
 
             top3Service.getTop3Places(this.resortType).then(function (response) {

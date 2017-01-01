@@ -14,9 +14,25 @@
 				url: '/',
 				templateUrl: 'app/templates/home/home.html'
 			})
+			.state('auth', {
+				url: '/auth',
+				templateUrl: 'app/templates/auth/auth.html',
+				params: {'type': 'login'}/*,
+				onEnter: function ($rootScope) {
+					$rootScope.$state = "auth";
+				}*/
+			})
 			.state('bungalows', {
 				url: '/bungalows',
 				templateUrl: 'app/templates/resorts/bungalows.html'
+			})
+			.state('hotels', {
+					url: '/hotels',
+					templateUrl: 'app/templates/resorts/hotels.html'
+				})
+			.state('villas', {
+				url: '/villas',
+				templateUrl: 'app/templates/resorts/villas.html'
 			});
 	}
 })();

@@ -2,7 +2,7 @@
     angular
         .module('ahotelApp')
         .constant('hotelDetailsConstant', [
-            "restourant",
+            "restaurant",
             "kids",
             "pool",
             "spa",

@@ -10,14 +10,15 @@
     function ahtlTop3Directive(top3Service, hotelDetailsConstant) {
 
         return {
-            restrict: 'A',
+            restrict: 'E',
             controller: ahtlTop3Controller,
-            controllerAs: 'top3'
+            controllerAs: 'top3',
+            templateUrl: 'app/templates/resorts/top3.template.html'
         };
 
         function ahtlTop3Controller($scope, $element, $attrs) {
             this.details = hotelDetailsConstant;
-            this.resortType = $attrs.ahtlTop3;
+            this.resortType = $attrs.ahtlTop3type;
             this.resort = null;
 
             this.getImgSrc = function(index) {
