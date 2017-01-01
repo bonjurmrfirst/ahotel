@@ -1,16 +1,21 @@
 var express = require('express'),
     url = require('url'),
-    engine = require('consolidate');
+    engine = require('consolidate'),
+    bodyParser = require('body-parser'),
+
+    db = require('./backend/db');
 
 var appRoot = process.env.PORT ? '/dist' : '/dist.dev';
 
 app = express();
 app.set('port', process.env.PORT || 5000);
-
 app.use(express.static(__dirname + appRoot));
 
 app.engine('html', engine.mustache);
 app.set('view engine', 'html');
+
+//app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 app.use(function(req,res,next){
    console.log(req.path);
@@ -42,13 +47,25 @@ app.get('/api/top3', function(request, response) {
     } else {
         response.status(400).send();
     }
+});
 
-    //
-    //console.log(request.query);
-    /*console.log('YEAH!');
-    response.end('13');*/
-    /*response.end('1');*/
-    //response.render(appRoot + '/index');
+var users = [];
+app.post('/api/users', function(request, response) {
+    console.log(request.query.action);
+    if (request.query.action === 'put') {
+        var credentials = request.body;
+        if (credentials.name && credentials.password && credentials.email) {
+            var dbAddUserResult = db.addUser(credentials);
+
+            if (dbAddUserResult === 'SUCCESS') {
+                response.status(200).send();
+            } else {
+                response.status(400).send(dbAddUserResult);
+            }
+            return
+        }
+    }
+    response.status(400).send();
 });
 
 app.listen(app.get('port'), function() {

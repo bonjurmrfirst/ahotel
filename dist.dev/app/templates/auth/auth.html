@@ -12,6 +12,8 @@
                   novalidate
                   role="form"><!--todo role-->
                 <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formJoin.userName.$invalid && !formJoin.userName.$pristine}"
                        type="text"
                        name="userName"
                        ng-model="form.newUser.name"
@@ -20,6 +22,8 @@
                        placeholder="name"
                        required />
                 <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formJoin.userPassword.$invalid && !formJoin.userPassword.$pristine}"
                        type="password"
                        name="userPassword"
                        ng-model="form.newUser.password"
@@ -28,6 +32,8 @@
                        placeholder="password"
                        required />
                 <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formJoin.userEmail.$invalid && !formJoin.userEmail.$pristine}"
                        type="email"
                        name="userEmail"
                        ng-model="form.newUser.email"
@@ -42,8 +48,8 @@
                         Sign In
                     </a>
                 </p>
-                <p>
-                    Valid
+                <p class="form-login__user-exists" ng-show="form.validationStatus.userAlreadyExists">
+                    User already exists
                 </p>
             </form>
             <form class="form-login"
@@ -53,6 +59,8 @@
                   novalidate
                   role="form"><!--todo role-->
                 <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formLogin.userName.$invalid && !formLogin.userName.$pristine}"
                        type="text"
                        name="userName"
                        ng-model="form.user.name"
@@ -61,6 +69,8 @@
                        placeholder="name"
                        required />
                 <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formLogin.userPassword.$invalid && !formLogin.userPassword.$pristine}"
                        type="password"
                        name="userPassword"
                        ng-model="form.user.password"

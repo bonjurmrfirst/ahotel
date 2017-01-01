@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .factory('top3Service', top3Service);
 
-    top3Service.$inject = ['$http'];
+    top3Service.$inject = ['$http', 'backendPathsConstant'];
 
-    function top3Service($http) {
+    function top3Service($http, backendPathsConstant) {
         return {
             getTop3Places: getTop3Places
         };
@@ -15,7 +15,7 @@
         function getTop3Places(type) {
             return $http({
                 method: 'GET',
-                url: '/api/top3',
+                url: backendPathsConstant.top3,
                 params: {
                     action: 'get',
                     type: type

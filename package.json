@@ -8,7 +8,10 @@
   "main": "index.js",
   "watch": {
     "start": {
-      "patterns": ["index.js", "./backend"],
+      "patterns": [
+        "index.js",
+        "./backend"
+      ],
       "extensions": "js,json",
       "quiet": false
     }
@@ -20,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "consolidate": "^0.14.5",
     "ejs": "2.4.1",
     "express": "4.13.3",
