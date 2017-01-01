@@ -8,7 +8,63 @@
 'use strict';
 
 (function () {
-    angular.module('ahotelApp').constant('hotelDetailsConstant', ["restourant", "kids", "pool", "spa", "wifi", "pet", "disable", "beach", "parking", "conditioning", "lounge", "terrace", "garden", "gym", "bicycles"]);
+	'use strict';
+
+	angular.module('ahotelApp').config(config);
+
+	config.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+	function config($stateProvider, $urlRouterProvider) {
+		$urlRouterProvider.otherwise('/');
+
+		$stateProvider.state('home', {
+			url: '/',
+			templateUrl: 'app/templates/home/home.html'
+		}).state('auth', {
+			url: '/auth',
+			templateUrl: 'app/templates/auth/auth.html',
+			params: { 'type': 'login' } /*,
+                               onEnter: function ($rootScope) {
+                               $rootScope.$state = "auth";
+                               }*/
+		}).state('bungalows', {
+			url: '/bungalows',
+			templateUrl: 'app/templates/resorts/bungalows.html'
+		}).state('hotels', {
+			url: '/hotels',
+			templateUrl: 'app/templates/resorts/hotels.html'
+		}).state('villas', {
+			url: '/villas',
+			templateUrl: 'app/templates/resorts/villas.html'
+		});
+	}
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').run(["$rootScope", function ($rootScope) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams /*, fromState, fromParams todo*/) {
+            $rootScope.$currentStateName = toState.name;
+            $rootScope.$currentStateParams = toParams;
+        });
+    }]);
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').constant('backendPathsConstant', {
+        top3: '/api/top3',
+        auth: '/api/users'
+    });
+})();
+'use strict';
+
+(function () {
+    angular.module('ahotelApp').constant('hotelDetailsConstant', ["restaurant", "kids", "pool", "spa", "wifi", "pet", "disable", "beach", "parking", "conditioning", "lounge", "terrace", "garden", "gym", "bicycles"]);
 })();
 'use strict';
 
@@ -54,23 +110,77 @@
 'use strict';
 
 (function () {
-	'use strict';
+    'use strict';
 
-	angular.module('ahotelApp').config(config);
+    angular.module('ahotelApp').controller('AuthController', AuthController);
 
-	config.$inject = ['$stateProvider', '$urlRouterProvider'];
+    AuthController.$inject = ['$scope', 'authService', '$state'];
 
-	function config($stateProvider, $urlRouterProvider) {
-		$urlRouterProvider.otherwise('/');
+    function AuthController($scope, authService, $state) {
+        this.validationStatus = {
+            userAlreadyExists: false
+        };
 
-		$stateProvider.state('home', {
-			url: '/',
-			templateUrl: 'app/templates/home/home.html'
-		}).state('bungalows', {
-			url: '/bungalows',
-			templateUrl: 'app/templates/resorts/bungalows.html'
-		});
-	}
+        this.createUser = function () {
+            var _this = this;
+
+            authService.createUser(this.newUser).then(function (response) {
+                if (response === 'OK') {
+                    console.log(response);
+                    $state.go('auth', { 'type': 'login' });
+                } else {
+                    alert();
+                    _this.validationStatus.userAlreadyExists = true;
+                    console.log(response);
+                }
+            });
+            /*console.log($scope.formJoin);
+            console.log(this.newUser);*/
+        };
+
+        this.loginUser = function () {
+            console.log(this.user);
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').factory('authService', authService);
+
+    authService.$inject = ['$http', 'backendPathsConstant', '$state'];
+
+    function authService($http, backendPathsConstant) {
+        //todo errors
+        function User(backendApi) {
+            this._backendApi = backendApi;
+        }
+
+        User.prototype.createUser = function (credentials) {
+            return $http({
+                method: 'POST',
+                url: this._backendApi,
+                params: {
+                    action: 'put'
+                },
+                data: credentials
+            }).then(onResolve, onRejected);
+
+            function onResolve(response) {
+                if (response.status === 200) {
+                    return 'OK';
+                }
+            }
+
+            function onRejected(response) {
+                return response.data;
+            }
+        };
+
+        return new User(backendPathsConstant.auth);
+    }
 })();
 'use strict';
 
@@ -259,9 +369,9 @@
 
     angular.module('ahotelApp').factory('top3Service', top3Service);
 
-    top3Service.$inject = ['$http'];
+    top3Service.$inject = ['$http', 'backendPathsConstant'];
 
-    function top3Service($http) {
+    function top3Service($http, backendPathsConstant) {
         return {
             getTop3Places: getTop3Places
         };
@@ -269,7 +379,7 @@
         function getTop3Places(type) {
             return $http({
                 method: 'GET',
-                url: '/api/top3',
+                url: backendPathsConstant.top3,
                 params: {
                     action: 'get',
                     type: type
