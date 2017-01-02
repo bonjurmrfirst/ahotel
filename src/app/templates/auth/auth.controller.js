@@ -5,11 +5,12 @@
         .module('ahotelApp')
         .controller('AuthController', AuthController);
 
-    AuthController.$inject = ['$scope', 'authService', '$state'];
+    AuthController.$inject = ['$rootScope', '$scope', 'authService', '$state'];
 
-    function AuthController($scope, authService, $state) {
+    function AuthController($rootScope, $scope, authService, $state) {
         this.validationStatus = {
-            userAlreadyExists: false
+            userAlreadyExists: false,
+            loginOrPasswordIncorrect: false
         };
 
         this.createUser = function() {
@@ -19,7 +20,6 @@
                         console.log(response);
                         $state.go('auth', {'type': 'login'})
                     } else {
-                        alert();
                         this.validationStatus.userAlreadyExists = true;
                         console.log(response);
                     }
@@ -29,7 +29,18 @@
         };
 
         this.loginUser = function() {
-            console.log(this.user);
+            authService.login(this.user)
+                .then((response) => {
+                    if (response === 'OK') {
+                        console.log(response);
+                        var previousState = $rootScope.$state.stateHistory[$rootScope.$state.stateHistory.length - 2] || 'home';
+                        console.log(previousState);
+                        $state.go(previousState)
+                    } else {
+                        this.validationStatus.loginOrPasswordIncorrect = true;
+                        console.log(response);
+                    }
+                })
         };
     }
 })();

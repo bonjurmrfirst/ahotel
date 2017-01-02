@@ -3,7 +3,8 @@ var express = require('express'),
     engine = require('consolidate'),
     bodyParser = require('body-parser'),
 
-    db = require('./backend/db');
+    db = require('./backend/db'),
+    session = require('./backend/session.js');
 
 var appRoot = process.env.PORT ? '/dist' : '/dist.dev';
 
@@ -51,19 +52,47 @@ app.get('/api/top3', function(request, response) {
 
 var users = [];
 app.post('/api/users', function(request, response) {
+    var
+        credentials,
+        dbInvokeDresult;
+
     console.log(request.query.action);
     if (request.query.action === 'put') {
-        var credentials = request.body;
+        credentials = request.body;
         if (credentials.name && credentials.password && credentials.email) {
-            var dbAddUserResult = db.addUser(credentials);
+            dbInvokeDresult = db.addUser(credentials);
 
-            if (dbAddUserResult === 'SUCCESS') {
+            if (dbInvokeDresult === 'SUCCESS') {
                 response.status(200).send();
             } else {
-                response.status(400).send(dbAddUserResult);
+                response.status(400).send(dbInvokeDresult);
             }
             return
         }
+    }
+
+    if (request.query.action === 'get') {
+        credentials = request.body;
+        if (credentials.name && credentials.password) {
+            dbInvokeDresult = db.isUser(credentials);
+
+            if (dbInvokeDresult === 'SUCCESS') {
+                response.status(200).send(session(credentials.password));
+            } else {
+                response.status(400).send(dbInvokeDresult);
+            }
+            return
+        }
+    }
+    response.status(400).send();
+});
+
+app.get('/api/users', function(request, response) {
+    'use strict';
+
+    console.log(request.query.action);
+    if (request.query.action === 'get') {
+
     }
     response.status(400).send();
 });

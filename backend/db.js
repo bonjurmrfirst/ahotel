@@ -6,7 +6,7 @@ function DB(initList) {
 
 DB.prototype.addUser = function (credentials) {
     var userAlreadyExists = false;
-    console.log(this._users);
+    console.info(this._users);
     for (var i = 0; i < this._users.length; i++) {
         if (this._users[i].name === credentials.name ||
             this._users[i].email === credentials.email) {
@@ -25,14 +25,15 @@ DB.prototype.addUser = function (credentials) {
 };
 
 DB.prototype.isUser = function(credentials) {
-    for (var i = 0; i < this._users.length - 1; i++) {
+    for (var i = 0; i < this._users.length; i++) {
+        console.info(this._users[i]);
         if (this._users[i].name === credentials.name &&
             this._users[i].password === credentials.password) {
-            return true
+            return 'SUCCESS'
         }
     }
 
-    return false
+    return 'Login or password incorrect'
 };
 
 var db = new DB({

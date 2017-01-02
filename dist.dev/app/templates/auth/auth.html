@@ -7,7 +7,7 @@
         <div class="form-container">
             <form class="form-join"
                   name="formJoin"
-                  ng-hide="$currentStateParams.type === 'login'"
+                  ng-hide="$state.currentStateParams.type === 'login'"
                   ng-submit="form.createUser()"
                   novalidate
                   role="form"><!--todo role-->
@@ -48,13 +48,13 @@
                         Sign In
                     </a>
                 </p>
-                <p class="form-login__user-exists" ng-show="form.validationStatus.userAlreadyExists">
+                <p class="form-login__validation-warning" ng-show="form.validationStatus.userAlreadyExists">
                     User already exists
                 </p>
             </form>
             <form class="form-login"
                   name="formLogin"
-                  ng-hide="$currentStateParams.type === 'join'"
+                  ng-hide="$state.currentStateParams.type === 'join'"
                   ng-submit="form.loginUser()"
                   novalidate
                   role="form"><!--todo role-->
@@ -86,6 +86,9 @@
                     <a class="form-login__link" ui-sref="auth({type: 'join'})">
                         Create an account
                     </a>
+                </p>
+                <p class="form-login__validation-warning" ng-show="form.validationStatus.loginOrPasswordIncorrect">
+                    Login or password incorrect
                 </p>
             </form>
         </div>
