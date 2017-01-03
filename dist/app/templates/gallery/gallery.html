@@ -1,0 +1,8 @@
+<div class="gallery-head"><img class="gallery-head__img" src="assets/images/gallery/gallery_main.jpg"> <img class="gallery-head__logo" src="assets/images/gallery/logo_as_bg.png"></div><ahtl-gallery ahtl-gallery-show-first="10" ahtl-gallery-show-next="3"></ahtl-gallery><!--ahtl-gallery class="gallery"
+              ahtl-gallery-show-first="10"
+              ahtl-gallery-show-after="3">
+    {{showFirst}}
+    <figure ng-repeat="img in $scope.showFirstImagesSrc">
+        <img ng-src="'assets/images/gallery/' + {{img}}">
+    </figure>
+</ahtl-gallery-->

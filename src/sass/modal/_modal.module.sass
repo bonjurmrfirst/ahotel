@@ -1,0 +1,47 @@
+.modal
+    position: fixed
+    display: none
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    z-index: 1000
+    background: transparent url('../assets/images/logoBlue.png') no-repeat 2% 98%
+    background-size: 100px
+    text-align: right
+
+    &__bg
+        position: absolute
+        height: 100%
+        width: 100%
+        background-color: black
+        opacity: 0.6
+
+    &__img
+        position: absolute
+        display: inline-block
+        max-width: 90%
+        max-height: 90%
+        margin: auto
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+
+    &__close
+        @include remFallback(2)
+        display: inline-block
+        padding: 20px
+        z-index: 123123123123
+
+        &:before
+            content: '\2716'
+            color: $color_green
+            
+        &:hover:before
+            content: '\2716'
+            color: $color_light_green
+
+        &:active:before
+            content: '\2716'
+            color: $color_dark_green

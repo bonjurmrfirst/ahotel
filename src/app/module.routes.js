@@ -33,6 +33,10 @@
 			.state('villas', {
 				url: '/villas',
 				templateUrl: 'app/templates/resorts/villas.html'
+			})
+			.state('gallery', {
+				url: '/gallery',
+				templateUrl: 'app/templates/gallery/gallery.html'
 			});
 	}
 })();

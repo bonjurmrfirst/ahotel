@@ -4,7 +4,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
 
     db = require('./backend/db'),
-    session = require('./backend/session.js');
+    session = require('./backend/session'),
+    gallery = require('./backend/gallery');
 
 var appRoot = process.env.PORT ? '/dist' : '/dist.dev';
 
@@ -95,6 +96,10 @@ app.get('/api/users', function(request, response) {
 
     }
     response.status(400).send();
+});
+
+app.get('/api/gallery', function(request, response) {
+    response.status(200).send(gallery);
 });
 
 app.listen(app.get('port'), function() {

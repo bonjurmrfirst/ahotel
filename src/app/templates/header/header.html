@@ -61,7 +61,7 @@
                             <a  class="sub-nav__link" href="">Inspire Me</a>
                         </li>
                         <li class="sub-nav__item">
-                            <a class="sub-nav__link" href="">Gallery</a>
+                            <a class="sub-nav__link" ui-sref="gallery">Gallery</a>
                         </li>
                         <li class="sub-nav__item">
                             <button class="sub-nav__btn sub-nav__btn--dest">Destinations</button>
@@ -97,7 +97,7 @@
     </nav>
 </header>
 
-<div ng-hide="$state.currentStateName === 'auth'">
+<div ng-hide="$state.currentStateName === 'auth' || $state.currentStateName === 'gallery'">
     <ahtl-slider></ahtl-slider>
 
     <div class="where-to-go">

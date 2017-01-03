@@ -36,6 +36,9 @@
 		}).state('villas', {
 			url: '/villas',
 			templateUrl: 'app/templates/resorts/villas.html'
+		}).state('gallery', {
+			url: '/gallery',
+			templateUrl: 'app/templates/gallery/gallery.html'
 		});
 	}
 })();
@@ -45,9 +48,16 @@
     'use strict';
 
     angular.module('ahotelApp').run(["$rootScope", function ($rootScope) {
+        $rootScope.$state = {
+            currentStateName: null,
+            currentStateParams: null,
+            stateHistory: []
+        };
+
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams /*, fromState, fromParams todo*/) {
-            $rootScope.$currentStateName = toState.name;
-            $rootScope.$currentStateParams = toParams;
+            $rootScope.$state.currentStateName = toState.name;
+            $rootScope.$state.currentStateParams = toParams;
+            $rootScope.$state.stateHistory.push(toState.name);
         });
     }]);
 })();
@@ -58,7 +68,8 @@
 
     angular.module('ahotelApp').constant('backendPathsConstant', {
         top3: '/api/top3',
-        auth: '/api/users'
+        auth: '/api/users',
+        gallery: '/api/gallery'
     });
 })();
 'use strict';
@@ -114,11 +125,12 @@
 
     angular.module('ahotelApp').controller('AuthController', AuthController);
 
-    AuthController.$inject = ['$scope', 'authService', '$state'];
+    AuthController.$inject = ['$rootScope', '$scope', 'authService', '$state'];
 
-    function AuthController($scope, authService, $state) {
+    function AuthController($rootScope, $scope, authService, $state) {
         this.validationStatus = {
-            userAlreadyExists: false
+            userAlreadyExists: false,
+            loginOrPasswordIncorrect: false
         };
 
         this.createUser = function () {
@@ -129,7 +141,6 @@
                     console.log(response);
                     $state.go('auth', { 'type': 'login' });
                 } else {
-                    alert();
                     _this.validationStatus.userAlreadyExists = true;
                     console.log(response);
                 }
@@ -139,7 +150,19 @@
         };
 
         this.loginUser = function () {
-            console.log(this.user);
+            var _this2 = this;
+
+            authService.login(this.user).then(function (response) {
+                if (response === 'OK') {
+                    console.log(response);
+                    var previousState = $rootScope.$state.stateHistory[$rootScope.$state.stateHistory.length - 2] || 'home';
+                    console.log(previousState);
+                    $state.go(previousState);
+                } else {
+                    _this2.validationStatus.loginOrPasswordIncorrect = true;
+                    console.log(response);
+                }
+            });
         };
     }
 })();
@@ -156,6 +179,39 @@
         //todo errors
         function User(backendApi) {
             this._backendApi = backendApi;
+            this._credentials = null;
+
+            this._onResolve = function (response) {
+                if (response.status === 200) {
+                    console.log(response);
+                    if (response.data.token) {
+                        tokenKeeper.saveToken(response.data.token);
+                    }
+                    return 'OK';
+                }
+            };
+
+            this._onRejected = function (response) {
+                return response.data;
+            };
+
+            var tokenKeeper = function () {
+                var token = null;
+
+                function saveToken(_token) {
+                    token = _token;
+                    console.log(token);
+                }
+
+                function getToken() {
+                    return token;
+                }
+
+                return {
+                    saveToken: saveToken,
+                    getToken: getToken
+                };
+            }();
         }
 
         User.prototype.createUser = function (credentials) {
@@ -166,22 +222,143 @@
                     action: 'put'
                 },
                 data: credentials
-            }).then(onResolve, onRejected);
+            }).then(this._onResolve, this._onRejected);
+        };
 
-            function onResolve(response) {
-                if (response.status === 200) {
-                    return 'OK';
-                }
-            }
+        User.prototype.login = function (credentials) {
+            this._credentials = credentials;
 
-            function onRejected(response) {
-                return response.data;
-            }
+            return $http({
+                method: 'POST',
+                url: this._backendApi,
+                params: {
+                    action: 'get'
+                },
+                data: this._credentials
+            }).then(this._onResolve, this._onRejected);
         };
 
         return new User(backendPathsConstant.auth);
     }
 })();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').directive('ahtlGallery', ahtlGalleryDirective);
+
+    ahtlGalleryDirective.$inject = ['$http', 'backendPathsConstant'];
+
+    function ahtlGalleryDirective($http, backendPathsConstant) {
+        AhtlGalleryController.$inject = ["$scope"];
+        return {
+            restrict: 'EA',
+            scope: {
+                showFirstImgCount: '=ahtlGalleryShowFirst',
+                showNextImgCount: '=ahtlGalleryShowNext'
+            },
+            templateUrl: 'app/templates/gallery/gallery.template.html',
+            controller: AhtlGalleryController,
+            controllerAs: 'gallery'
+        };
+
+        function AhtlGalleryController($scope) {
+            var _this = this;
+
+            var allImagesSrc = [];
+
+            this.showFirstImgCount = $scope.showFirstImgCount;
+            this.showNextImgCount = $scope.showNextImgCount;
+
+            this.showFirst = allImagesSrc.slice(0, this.showFirstImgCount);
+
+            _getImageSources().then(function (response) {
+                allImagesSrc = response;
+                _this.showFirst = allImagesSrc.slice(0, _this.showFirstImgCount);
+            });
+        }
+
+        function _getImageSources() {
+            return $http({
+                method: 'GET',
+                url: backendPathsConstant.gallery,
+                params: {
+                    action: 'get'
+                }
+            }).then(function (response) {
+                console.log(1);
+                console.log(response);
+                return response.data;
+            }, function (response) {
+                return 'ERROR'; //todo
+            });
+        }
+    }
+})();
+/*        .controller('GalleryController', GalleryController);
+
+    GalleryController.$inject = ['$scope'];
+
+    function GalleryController($scope) {
+        var imagesSrc = _getImageSources().then((response) => {
+            return response
+        })
+
+        console.log(imagesSrc)
+    }
+
+    function _getImageSources() {
+        return $http({
+            method: 'GET',
+            url: backendPathsConstant.gallery,
+            params: {
+                action: 'get'
+            }
+        })
+            .then((response) => {
+                console.log(1);
+                console.log(response);
+                return response.data
+            },
+            (response) => {
+                return 'ERROR'; //todo
+            });
+    }
+})();*/
+
+/*
+        .directive('ahtlGallery', ahtlGalleryDirective);
+
+    ahtlGalleryDirective.$inject = ['$http', 'backendPathsConstant'];
+
+    function ahtlGalleryDirective($http, backendPathsConstant) {
+        return {
+            restrict: 'EA',
+            scope: {
+                showFirst: "=ahtlGalleryShowFirst",
+                showAfter: "=ahtlGalleryShowAfter"
+            },
+            controller: AhtlGalleryController,
+            link: function(){}
+        };
+
+        function AhtlGalleryController($scope) {
+            $scope.a = 13;
+            console.log($scope.a);
+            /!*var allImagesSrc;
+
+            $scope.showFirstImagesSrc = ['123'];
+
+            _getImageSources().then((response) => {
+                //todo
+                allImagesSrc = response;
+            })*!/
+        }
+
+
+    }
+})();*/
 'use strict';
 
 (function () {
@@ -329,15 +506,15 @@
 
     function ahtlTop3Directive(top3Service, hotelDetailsConstant) {
 
-        ahtlTop3Controller.$inject = ["$scope", "$element", "$attrs"];
+        AhtlTop3Controller.$inject = ["$scope", "$element", "$attrs"];
         return {
             restrict: 'E',
-            controller: ahtlTop3Controller,
+            controller: AhtlTop3Controller,
             controllerAs: 'top3',
             templateUrl: 'app/templates/resorts/top3.template.html'
         };
 
-        function ahtlTop3Controller($scope, $element, $attrs) {
+        function AhtlTop3Controller($scope, $element, $attrs) {
             var _this = this;
 
             this.details = hotelDetailsConstant;

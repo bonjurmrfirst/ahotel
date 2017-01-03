@@ -11,12 +11,12 @@
 
         return {
             restrict: 'E',
-            controller: ahtlTop3Controller,
+            controller: AhtlTop3Controller,
             controllerAs: 'top3',
             templateUrl: 'app/templates/resorts/top3.template.html'
         };
 
-        function ahtlTop3Controller($scope, $element, $attrs) {
+        function AhtlTop3Controller($scope, $element, $attrs) {
             this.details = hotelDetailsConstant;
             this.resortType = $attrs.ahtlTop3type;
             this.resort = null;
