@@ -85,8 +85,6 @@
 	angular.module('ahotelApp').factory('PreloadImages', PreloadImages);
 
 	function PreloadImages() {
-		this._imageSrcList = imageList;
-
 		function preLoad(imageList) {
 
 			var promises = [];
@@ -113,9 +111,9 @@
 			});
 		}
 
-		preLoad(this._imageSrcList);
-
-		return preLoad;
+		return {
+			preLoad: preLoad
+		};
 	}
 })();
 'use strict';
@@ -248,9 +246,10 @@
 
     angular.module('ahotelApp').directive('ahtlGallery', ahtlGalleryDirective);
 
-    ahtlGalleryDirective.$inject = ['$http', 'backendPathsConstant'];
+    ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant'];
 
-    function ahtlGalleryDirective($http, backendPathsConstant) {
+    function ahtlGalleryDirective($http, $timeout, backendPathsConstant) {
+        //todo not only load but listSrc too accept
         AhtlGalleryController.$inject = ["$scope"];
         return {
             restrict: 'EA',
@@ -260,23 +259,48 @@
             },
             templateUrl: 'app/templates/gallery/gallery.template.html',
             controller: AhtlGalleryController,
-            controllerAs: 'gallery'
+            controllerAs: 'gallery',
+            link: ahtlGalleryLink
         };
 
         function AhtlGalleryController($scope) {
             var _this = this;
 
-            var allImagesSrc = [];
+            var allImagesSrc = [],
+                showFirstImgCount = $scope.showFirstImgCount,
+                showNextImgCount = $scope.showNextImgCount;
 
-            this.showFirstImgCount = $scope.showFirstImgCount;
-            this.showNextImgCount = $scope.showNextImgCount;
-
-            this.showFirst = allImagesSrc.slice(0, this.showFirstImgCount);
+            this.loadMore = function () {
+                this.showFirst = allImagesSrc.slice(0, Math.min(showFirstImgCount + showNextImgCount, allImagesSrc.length));
+                showFirstImgCount += showNextImgCount;
+                $timeout(_setImageAligment, 0);
+            };
 
             _getImageSources().then(function (response) {
                 allImagesSrc = response;
-                _this.showFirst = allImagesSrc.slice(0, _this.showFirstImgCount);
+                _this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
             });
+        }
+
+        function ahtlGalleryLink($scope, elem) {
+            elem.on('click', function (event) {
+                var imgSrc = event.target.src;
+
+                if (imgSrc) {
+                    $scope.$root.$broadcast('modalOpen', {
+                        show: 'image',
+                        src: imgSrc
+                    });
+                }
+            });
+
+            $scope.alignImages = function () {
+                $timeout(_setImageAligment, 0); // todo
+            };
+
+            $scope.alignImages();
+
+            $(window).on('resize', $scope.alignImages);
         }
 
         function _getImageSources() {
@@ -287,11 +311,46 @@
                     action: 'get'
                 }
             }).then(function (response) {
-                console.log(1);
-                console.log(response);
                 return response.data;
             }, function (response) {
                 return 'ERROR'; //todo
+            });
+        }
+
+        function _setImageAligment() {
+            //todo arguments naming, errors
+            var figures = $('.gallery__figure');
+            console.log(figures);
+
+            var galleryWidth = parseInt(figures.closest('.gallery').css('width')),
+                imageWidth = parseInt(figures.css('width'));
+
+            var columnsCount = Math.round(galleryWidth / imageWidth),
+                columnsHeight = new Array(columnsCount + 1).join('0').split('').map(function () {
+                return 0;
+            }),
+                currentColumnsHeight = columnsHeight.slice(0),
+                columnPointer = 0;
+
+            $(figures).css('margin-top', '0');
+
+            $.each(figures, function (index) {
+                currentColumnsHeight[columnPointer] = parseInt($(this).css('height'));
+
+                if (index > columnsCount - 1) {
+                    $(this).css('margin-top', -(Math.max.apply(null, columnsHeight) - columnsHeight[columnPointer]) + 'px');
+                }
+
+                //currentColumnsHeight[columnPointer] = parseInt($(this).css('height')) + columnsHeight[columnPointer];
+
+                if (columnPointer === columnsCount - 1) {
+                    columnPointer = 0;
+                    for (var i = 0; i < columnsHeight.length; i++) {
+                        columnsHeight[i] += currentColumnsHeight[i];
+                    }
+                } else {
+                    columnPointer++;
+                }
             });
         }
     }
@@ -494,6 +553,37 @@
 			link: link
 		};
 	}
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').directive('ahtlModal', ahtlModalDirective);
+
+    function ahtlModalDirective() {
+        return {
+            restrict: 'EA',
+            replace: false,
+            link: ahtlModalDirectiveLink,
+            templateUrl: 'app/templates/modal/modal.html'
+        };
+
+        function ahtlModalDirectiveLink($scope, elem) {
+            $scope.$on('modalOpen', function (event, data) {
+                if (data.show === 'image') {
+                    $scope.src = data.src;
+                    $scope.$apply();
+                }
+
+                elem.css('display', 'block');
+            });
+
+            $scope.closeDialog = function () {
+                elem.css('display', 'none');
+            };
+        }
+    }
 })();
 'use strict';
 

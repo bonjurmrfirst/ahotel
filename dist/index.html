@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="ahotelApp">
+<!--[if lte IE 9]> <html lang="en-US" ng-app="ahotelApp" class="lte9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en-US" ng-app="ahotelApp"> <!--<![endif]-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,7 +20,9 @@
     <script src="assets/vendor/promise.js"></script>
     <script src="app/app.js"></script>
 </head>
-<body>
+<body id="bbb">
+    <ahtl-modal class="modal"></ahtl-modal>
+
     <div class="l-wrapper">
         <ahtl-header></ahtl-header>
         <ui-view></ui-view>
@@ -30,6 +33,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/livingston-css3-mediaqueries-js/1.0.0/css3-mediaqueries.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/livingston-css3-mediaqueries-js/1.0.0/css3-mediaqueries.min.js"></script>
     <![endif]-->
-    <div style="position:fixed; bottom: 0; right: 0; font-size: 10px">{{3 + 0.14159265359}}</div>
+    <div style="position:fixed; bottom: 0; right: 0; font-size: 10px">{{3 + 0.14159265359}}<a></a></div>
 </body>
 </html>
