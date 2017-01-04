@@ -1,13 +1,13 @@
-    (function() {
+(function() {
     'use strict';
 
     angular
         .module('ahotelApp')
         .directive('ahtlGallery', ahtlGalleryDirective);
 
-    ahtlGalleryDirective.$inject = ['$http', 'backendPathsConstant'];
+    ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant'];
 
-    function ahtlGalleryDirective($http, backendPathsConstant) {
+    function ahtlGalleryDirective($http, $timeout, backendPathsConstant) { //todo not only load but listSrc too accept
         return {
             restrict: 'EA',
             scope: {
@@ -26,10 +26,9 @@
                 showNextImgCount = $scope.showNextImgCount;
 
             this.loadMore = function() {
-                console.log(this.showFirst);
                 this.showFirst = allImagesSrc.slice(0, Math.min(showFirstImgCount + showNextImgCount, allImagesSrc.length));
-                console.log(this.showFirst);
                 showFirstImgCount += showNextImgCount;
+                $timeout(_setImageAligment, 0);
             };
 
             _getImageSources().then((response) => {
@@ -48,7 +47,15 @@
                         src: imgSrc
                     });
                 }
-            })
+            });
+
+            $scope.alignImages = function() {
+                $timeout(_setImageAligment, 0); // todo
+            };
+
+            $scope.alignImages();
+
+            $(window).on('resize', $scope.alignImages);
         }
 
         function _getImageSources() {
@@ -60,12 +67,45 @@
                 }
             })
                 .then((response) => {
-                    console.log(1);
-                    console.log(response);
                     return response.data
                 },
                 (response) => {
                     return 'ERROR'; //todo
+                });
+        }
+
+        function _setImageAligment() { //todo arguments naming, errors
+                const figures = $('.gallery__figure');
+                console.log(figures);
+
+
+                const galleryWidth = parseInt(figures.closest('.gallery').css('width')),
+                    imageWidth = parseInt(figures.css('width'));
+
+                let columnsCount = Math.round(galleryWidth / imageWidth),
+                    columnsHeight = new Array(columnsCount + 1).join('0').split('').map(() => {return 0}),
+                    currentColumnsHeight = columnsHeight.slice(0),
+                    columnPointer = 0;
+
+                $(figures).css('margin-top', '0');
+
+                $.each(figures, function(index) {
+                    currentColumnsHeight[columnPointer] = parseInt($(this).css('height'));
+
+                    if (index > columnsCount - 1) {
+                        $(this).css('margin-top', -(Math.max.apply(null, columnsHeight) - columnsHeight[columnPointer]) + 'px');
+                    }
+
+                    //currentColumnsHeight[columnPointer] = parseInt($(this).css('height')) + columnsHeight[columnPointer];
+
+                    if (columnPointer === columnsCount - 1) {
+                        columnPointer = 0;
+                        for (let i = 0; i < columnsHeight.length; i++) {
+                            columnsHeight[i] += currentColumnsHeight[i];
+                        }
+                    } else {
+                        columnPointer++;
+                    }
                 });
         }
     }

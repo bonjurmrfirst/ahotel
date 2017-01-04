@@ -1,28 +1,28 @@
 .gallery
-    margin: 40px auto 0 auto
-    width: 94%
-    max-width: 1500px
-    column-count: 3
-    column-width: 320px
-    column-gap: 15px
+    width: 96%
+    margin: 40px auto
+    text-align: left
 
-    @media #{$mw768}
-        column-count: 1
-        column-gap: 0px
+    //@media #{$mw768}
+    //    column-count: 1
+    //    column-gap: 0px
 
-    &:hover .gallery__figure:not(:hover)
-        opacity: 0.5
+    //&:hover .gallery__figure:not(:hover)
+    //    opacity: 0.5
 
     &__figure
         display: inline-block
-        margin: 10px 3px
-        padding: 5px
-        border: 1px solid $color_background_gray
-        box-shadow: 0 1px 2px #656565
-        text-align: center
-        transition: 0.5s
+        width: 31%
+        //margin: 10px 3px
+        padding: 1%
+        vertical-align: top
+        //border: 1px solid $color_background_gray
+        //box-shadow: 0 1px 2px #656565
+        //text-align: center
+        //transition: 0.5s
 
         @media #{$mw768}
+            width: 48%
 
     &__img
         width: 100%
