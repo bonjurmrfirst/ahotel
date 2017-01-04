@@ -1,3 +1,25 @@
+.gallery-container
+    display: block
+    text-align: center
+    width: 100%
+
+    &__btn
+        margin-top: 20px
+        display: inline-block
+        width: 150px
+        height: 38px
+        color: $color_text_black
+        border: 2px solid $color_text_black
+
+        &:hover
+            color: $color_text_white
+            background-color: $color_green
+            border-color: $color_green
+
+        &:active
+            background-color: $color_dark_green
+            border-color: $color_dark_green
+
 .gallery-head
     position: relative
     max-height: 700px

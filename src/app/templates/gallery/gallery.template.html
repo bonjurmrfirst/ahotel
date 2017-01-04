@@ -1,6 +1,8 @@
 <div class="gallery">
-    <figure class="gallery__figure" ng-repeat="img in gallery.showFirst">
+    <figure class="gallery__figure" ng-repeat="img in gallery.showFirst track by $index">
         <img class="gallery__img" ng-src="{{'assets/images/gallery/' + img}}">
-        <figcaption class="gallery__img-caption">asd</figcaption>
+        <figcaption class="gallery__img-caption">{{img}}</figcaption>
     </figure>
 </div>
+
+<button class="gallery-container__btn" ng-click="gallery.loadMore()">Load more</button>

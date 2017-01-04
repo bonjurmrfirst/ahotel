@@ -1,4 +1,4 @@
-(function() {
+    (function() {
     'use strict';
 
     angular
@@ -25,7 +25,12 @@
                 showFirstImgCount = $scope.showFirstImgCount,
                 showNextImgCount = $scope.showNextImgCount;
 
-            //this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
+            this.loadMore = function() {
+                console.log(this.showFirst);
+                this.showFirst = allImagesSrc.slice(0, Math.min(showFirstImgCount + showNextImgCount, allImagesSrc.length));
+                console.log(this.showFirst);
+                showFirstImgCount += showNextImgCount;
+            };
 
             _getImageSources().then((response) => {
                 allImagesSrc = response;
@@ -38,7 +43,6 @@
                 let imgSrc = event.target.src;
 
                 if (imgSrc) {
-                    console.log('open?');
                     $scope.$root.$broadcast('modalOpen', {
                         show: 'image',
                         src: imgSrc

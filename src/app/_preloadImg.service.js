@@ -6,8 +6,6 @@
 		.factory('PreloadImages',PreloadImages);
 
 	function PreloadImages() {
-		this._imageSrcList = imageList;
-
 		function preLoad(imageList) {
 
 			var promises = [];
@@ -34,8 +32,9 @@
 			});
 		}
 
-		preLoad(this._imageSrcList);
 
-		return preLoad;
+		return {
+			preLoad: preLoad
+		};
 	}
 })();
