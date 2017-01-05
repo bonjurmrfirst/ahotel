@@ -3,7 +3,20 @@
 (function () {
     'use strict';
 
-    angular.module('ahotelApp', ['ui.router', 'ngAnimate']);
+    angular.module('ahotelApp', ['ui.router', 'preload', 'ngAnimate']);
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').config(config);
+
+    config.$inject = ['preloadServiceProvider', 'backendPathsConstant'];
+
+    function config(preloadServiceProvider, backendPathsConstant) {
+        preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get');
+    }
 })();
 'use strict';
 
@@ -47,7 +60,11 @@
 (function () {
     'use strict';
 
-    angular.module('ahotelApp').run(["$rootScope", function ($rootScope) {
+    angular.module('ahotelApp').run(run);
+
+    run.$inject = ['$rootScope', 'backendPathsConstant', 'preloadService'];
+
+    function run($rootScope, backendPathsConstant, preloadService) {
         $rootScope.$state = {
             currentStateName: null,
             currentStateParams: null,
@@ -59,23 +76,9 @@
             $rootScope.$state.currentStateParams = toParams;
             $rootScope.$state.stateHistory.push(toState.name);
         });
-    }]);
-})();
-'use strict';
 
-(function () {
-    'use strict';
-
-    angular.module('ahotelApp').constant('backendPathsConstant', {
-        top3: '/api/top3',
-        auth: '/api/users',
-        gallery: '/api/gallery'
-    });
-})();
-'use strict';
-
-(function () {
-    angular.module('ahotelApp').constant('hotelDetailsConstant', ["restaurant", "kids", "pool", "spa", "wifi", "pet", "disable", "beach", "parking", "conditioning", "lounge", "terrace", "garden", "gym", "bicycles"]);
+        preloadService.preloadImages('gallery', { url: backendPathsConstant.gallery, method: 'GET', action: 'get' });
+    }
 })();
 'use strict';
 
@@ -115,6 +118,125 @@
 			preLoad: preLoad
 		};
 	}
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('preload', []);
+})();
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+(function () {
+    'use strict';
+
+    angular.module('preload').provider('preloadService', preloadService);
+
+    function preloadService() {
+        var config = null;
+
+        this.config = function (url, method, action) {
+            config = {
+                url: url,
+                method: method,
+                action: action
+            };
+        };
+
+        this.$get = ["$http", "$timeout", function ($http, $timeout) {
+            var preloadCache = [];
+
+            function preloadImages(preloadName, images) {
+                //todo errors
+                var imagesSrcList = [];
+
+                if (typeof images === 'array') {
+                    imagesSrcList = images;
+
+                    preloadCache.push({
+                        name: preloadName,
+                        src: imagesSrcList
+                    });
+
+                    preload(imagesSrcList);
+                } else if ((typeof images === 'undefined' ? 'undefined' : _typeof(images)) === 'object') {
+                    $http({
+                        images: images.method || config.method,
+                        url: images.url || config.url,
+                        params: {
+                            images: images.action || config.action
+                        }
+                    }).then(function (response) {
+                        imagesSrcList = response.data;
+
+                        preloadCache.push({
+                            name: preloadName,
+                            src: imagesSrcList
+                        });
+
+                        $timeout(preload.bind(null, imagesSrcList));
+                    }, function (response) {
+                        return 'ERROR'; //todo
+                    });
+                } else {
+                        return; //todo
+                    }
+
+                function preload(imagesSrcList) {
+                    for (var i = 0; i < imagesSrcList.length; i++) {
+                        var image = new Image();
+                        image.src = imagesSrcList[i];
+                        image.onload = function (e) {
+                            //resolve(image);
+                            console.log(this.src);
+                        };
+                        image.onerror = function (e) {
+                            console.log(e);
+                        };
+                    }
+                }
+            }
+
+            function getPreload(preloadName) {
+                console.debug('preloadService:getPreload: ', preloadName);
+                if (!preloadName) {
+                    return preloadCache;
+                }
+
+                for (var i = 0; i < preloadCache.length; i++) {
+                    if (preloadCache[i].name === preloadName) {
+                        return preloadCache[i].src;
+                    }
+                }
+
+                console.warn('No preloads found');
+            }
+
+            return {
+                preloadImages: preloadImages,
+                getPreload: getPreload
+            };
+        }];
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').constant('backendPathsConstant', {
+        top3: '/api/top3',
+        auth: '/api/users',
+        gallery: '/api/gallery'
+    });
+})();
+'use strict';
+
+(function () {
+    angular.module('ahotelApp').constant('hotelDetailsConstant', ["restaurant", "kids", "pool", "spa", "wifi", "pet", "disable", "beach", "parking", "conditioning", "lounge", "terrace", "garden", "gym", "bicycles"]);
 })();
 'use strict';
 
@@ -246,9 +368,9 @@
 
     angular.module('ahotelApp').directive('ahtlGallery', ahtlGalleryDirective);
 
-    ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant'];
+    ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant', 'preloadService'];
 
-    function ahtlGalleryDirective($http, $timeout, backendPathsConstant) {
+    function ahtlGalleryDirective($http, $timeout, backendPathsConstant, preloadService) {
         //todo not only load but listSrc too accept
         AhtlGalleryController.$inject = ["$scope"];
         return {
@@ -271,14 +393,35 @@
                 showNextImgCount = $scope.showNextImgCount;
 
             this.loadMore = function () {
-                this.showFirst = allImagesSrc.slice(0, Math.min(showFirstImgCount + showNextImgCount, allImagesSrc.length));
-                showFirstImgCount += showNextImgCount;
-                $timeout(_setImageAligment, 0);
+                showFirstImgCount = Math.min(showFirstImgCount + showNextImgCount, allImagesSrc.length);
+                this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
+                this.isAllImagesLoaded = this.showFirst >= allImagesSrc.length;
+
+                /*$timeout(_setImageAligment, 0);*/
             };
 
-            _getImageSources().then(function (response) {
+            this.allImagesLoaded = function () {
+                return this.showFirst ? this.showFirst.length === this.imagesCount : true;
+            };
+
+            this.alignImages = function () {
+                if ($('.gallery img').length < showFirstImgCount) {
+                    console.log($('.gallery img').length, showFirstImgCount);
+                    $timeout(_this.alignImages, 0);
+                } else {
+                    $timeout(_setImageAligment);
+                    $(window).on('resize', _setImageAligment);
+                }
+            };
+
+            this.alignImages();
+
+            _getImageSources(function (response) {
+                console.log(response);
                 allImagesSrc = response;
                 _this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
+                _this.imagesCount = allImagesSrc.length;
+                //$timeout(_setImageAligment);
             });
         }
 
@@ -294,27 +437,23 @@
                 }
             });
 
-            $scope.alignImages = function () {
-                $timeout(_setImageAligment, 0); // todo
-            };
+            /* var $images = $('.gallery img');
+             var loaded_images_count = 0;*/
+            /*$scope.alignImages = function() {
+                $images.load(function() {
+                    loaded_images_count++;
+                      if (loaded_images_count == $images.length) {
+                        _setImageAligment();
+                    }
+                });
+                //$timeout(_setImageAligment, 0); // todo
+            };*/
 
-            $scope.alignImages();
-
-            $(window).on('resize', $scope.alignImages);
+            //$scope.alignImages();
         }
 
-        function _getImageSources() {
-            return $http({
-                method: 'GET',
-                url: backendPathsConstant.gallery,
-                params: {
-                    action: 'get'
-                }
-            }).then(function (response) {
-                return response.data;
-            }, function (response) {
-                return 'ERROR'; //todo
-            });
+        function _getImageSources(cb) {
+            cb(preloadService.getPreload('gallery'));
         }
 
         function _setImageAligment() {
@@ -329,7 +468,8 @@
                 columnsHeight = new Array(columnsCount + 1).join('0').split('').map(function () {
                 return 0;
             }),
-                currentColumnsHeight = columnsHeight.slice(0),
+                //todo del join-split
+            currentColumnsHeight = columnsHeight.slice(0),
                 columnPointer = 0;
 
             $(figures).css('margin-top', '0');
