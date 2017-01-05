@@ -11,14 +11,19 @@
         color: $color_text_black
         border: 2px solid $color_text_black
 
-        &:hover
+        &:not(:disabled):hover
             color: $color_text_white
             background-color: $color_green
             border-color: $color_green
 
-        &:active
+        &:not(:disabled):active
             background-color: $color_dark_green
             border-color: $color_dark_green
+
+        &:disabled
+            opacity: 0.5
+            color: $color_text_black
+            border-color: $color_text_black
 
 .gallery-head
     position: relative

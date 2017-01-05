@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .directive('ahtlGallery', ahtlGalleryDirective);
 
-    ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant'];
+    ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant', 'preloadService'];
 
-    function ahtlGalleryDirective($http, $timeout, backendPathsConstant) { //todo not only load but listSrc too accept
+    function ahtlGalleryDirective($http, $timeout, backendPathsConstant, preloadService) { //todo not only load but listSrc too accept
         return {
             restrict: 'EA',
             scope: {
@@ -26,14 +26,35 @@
                 showNextImgCount = $scope.showNextImgCount;
 
             this.loadMore = function() {
-                this.showFirst = allImagesSrc.slice(0, Math.min(showFirstImgCount + showNextImgCount, allImagesSrc.length));
-                showFirstImgCount += showNextImgCount;
-                $timeout(_setImageAligment, 0);
+                showFirstImgCount = Math.min(showFirstImgCount + showNextImgCount, allImagesSrc.length);
+                this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
+                this.isAllImagesLoaded = this.showFirst >= allImagesSrc.length;
+
+                /*$timeout(_setImageAligment, 0);*/
             };
 
-            _getImageSources().then((response) => {
+            this.allImagesLoaded = function() {
+                return (this.showFirst) ? this.showFirst.length === this.imagesCount: true
+            };
+
+            this.alignImages = () => {
+                if ($('.gallery img').length < showFirstImgCount) {
+                    console.log($('.gallery img').length, showFirstImgCount);
+                    $timeout(this.alignImages, 0)
+                } else {
+                    $timeout(_setImageAligment);
+                    $(window).on('resize', _setImageAligment);
+                }
+            };
+
+            this.alignImages();
+
+            _getImageSources((response) => {
+                console.log(response);
                 allImagesSrc = response;
                 this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
+                this.imagesCount = allImagesSrc.length;
+                //$timeout(_setImageAligment);
             })
         }
 
@@ -49,29 +70,24 @@
                 }
             });
 
-            $scope.alignImages = function() {
-                $timeout(_setImageAligment, 0); // todo
-            };
+           /* var $images = $('.gallery img');
+            var loaded_images_count = 0;*/
+            /*$scope.alignImages = function() {
+                $images.load(function() {
+                    loaded_images_count++;
 
-            $scope.alignImages();
+                    if (loaded_images_count == $images.length) {
+                        _setImageAligment();
+                    }
+                });
+                //$timeout(_setImageAligment, 0); // todo
+            };*/
 
-            $(window).on('resize', $scope.alignImages);
+            //$scope.alignImages();
         }
 
-        function _getImageSources() {
-            return $http({
-                method: 'GET',
-                url: backendPathsConstant.gallery,
-                params: {
-                    action: 'get'
-                }
-            })
-                .then((response) => {
-                    return response.data
-                },
-                (response) => {
-                    return 'ERROR'; //todo
-                });
+        function _getImageSources(cb) {
+            cb(preloadService.getPreload('gallery'));
         }
 
         function _setImageAligment() { //todo arguments naming, errors
@@ -83,7 +99,7 @@
                     imageWidth = parseInt(figures.css('width'));
 
                 let columnsCount = Math.round(galleryWidth / imageWidth),
-                    columnsHeight = new Array(columnsCount + 1).join('0').split('').map(() => {return 0}),
+                    columnsHeight = new Array(columnsCount + 1).join('0').split('').map(() => {return 0}), //todo del join-split
                     currentColumnsHeight = columnsHeight.slice(0),
                     columnPointer = 0;
 

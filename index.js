@@ -11,7 +11,7 @@ var appRoot = process.env.PORT ? '/dist' : '/dist.dev';
 
 app = express();
 app.set('port', process.env.PORT || 5000);
-app.use(express.static(__dirname + appRoot));
+app.use(express.static(__dirname + appRoot, { maxAge: 86400000}));
 
 app.engine('html', engine.mustache);
 app.set('view engine', 'html');
