@@ -1,0 +1,80 @@
+.guestcomments-header
+    position: relative
+    margin-top: 105px
+    text-align: center
+
+    &__img
+        width: 100%
+        max-width: 1900px
+        height: auto
+
+    &__caption
+        @include remFallback(2)
+        @include fontStyle(cabEB)
+        @include remLineHeightFallback(2)
+        position: absolute
+        display: inline-block
+        right: 0
+        bottom: 3%
+        left: 0
+        color: $color_text_white
+        opacity: 0.7
+
+.guestcomments-lead
+    @include remFallback(2)
+    @include fontStyle(cabM)
+    margin-top: 40px
+    padding: 0 3%
+    color: $color_green
+
+.comment
+    margin-top: 40px
+    padding: 0 33% 0 3%
+
+    &__author
+        @include fontStyle(cabEB)
+        color: $color_dark_reverse
+
+        &:before
+            content: 'From '
+
+    &__text
+        margin-top: 5px
+        color: $color_text_black
+
+.about__btn--comment
+    margin: 40px 3% 0 3%
+    cursor: pointer
+
+.form-comment
+    margin-top: 40px
+    padding: 0 33% 0 3%
+    height: 0
+    overflow: hidden
+
+    &__opened
+        height: 275px
+        transition: 0.5s
+
+.form-login__input--comment
+    width: 100%
+
+.form-comment__comment-text
+    width: 100%
+    resize: none
+
+.form-login__btn--comment
+    width: 200px
+    background-color: $color_reverse
+
+    &:hover
+        background-color: $color_light_reverse
+
+    &:active
+        background-color: $color_dark_reverse
+
+    &:disabled
+        background-color: $color_reverse
+
+.guestcomments__please-login
+    color: red

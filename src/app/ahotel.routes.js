@@ -37,6 +37,10 @@
 			.state('gallery', {
 				url: '/gallery',
 				templateUrl: 'app/templates/gallery/gallery.html'
+			})
+			.state('guestcomments', {
+				url: '/guestcomments',
+				templateUrl: 'app/templates/guestcomments/guestcomments.html'
 			});
 	}
 })();

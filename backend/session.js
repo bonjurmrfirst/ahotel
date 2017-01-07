@@ -3,7 +3,7 @@ var sessions = [{user: 'admin', token: 'XXXXXXXXXX'}];
 function generateToken(password) {
     'use strict';
 
-    var token = password + '!' + 'XXXXXXXXXX';
+    var token = 'XXXXXXXXXX';
 
     sessions.push({
         user: password,

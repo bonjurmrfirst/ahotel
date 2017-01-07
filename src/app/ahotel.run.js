@@ -8,6 +8,8 @@
     run.$inject = ['$rootScope' , 'backendPathsConstant', 'preloadService'];
 
     function run($rootScope, backendPathsConstant, preloadService) {
+        $rootScope.logged = false;
+
         $rootScope.$state = {
             currentStateName: null,
             currentStateParams: null,
@@ -21,6 +23,6 @@
                 $rootScope.$state.stateHistory.push(toState.name);
             });
 
-        preloadService.preloadImages('gallery', {url: backendPathsConstant.gallery, method: 'GET', action: 'get'});
+        preloadService.preloadImages('gallery', {url: backendPathsConstant.gallery, method: 'GET', action: 'get'}); //todo del method, action by default
     }
 })();

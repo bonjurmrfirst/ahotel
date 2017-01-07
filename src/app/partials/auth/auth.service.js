@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .factory('authService', authService);
 
-    authService.$inject = ['$http', 'backendPathsConstant', '$state'];
+    authService.$inject = ['$rootScope', '$http', 'backendPathsConstant'];
 
-    function authService($http, backendPathsConstant) {
+    function authService($rootScope, $http, backendPathsConstant) {
         //todo errors
         function User(backendApi) {
             this._backendApi = backendApi;
@@ -17,7 +17,7 @@
                 if (response.status === 200) {
                     console.log(response);
                     if (response.data.token) {
-                        tokenKeeper.saveToken(response.data.token);
+                        this._tokenKeeper.saveToken(response.data.token);
                     }
                     return 'OK'
                 }
@@ -27,12 +27,13 @@
                 return response.data
             };
 
-            var tokenKeeper = (function() {
+            this._tokenKeeper = (function() {
                 let token = null;
 
                 function saveToken(_token) {
+                    $rootScope.logged = true;
                     token = _token;
-                    console.log(token)
+                    console.debug(token)
                 }
 
                 function getToken() {
@@ -70,6 +71,13 @@
                 data: this._credentials
             })
                 .then(this._onResolve, this._onRejected);
+        };
+
+        User.prototype.getLogInfo = function() {
+            return {
+                credentials: this._credentials,
+                token: this._tokenKeeper.getToken()
+            }
         };
 
         return new User(backendPathsConstant.auth);

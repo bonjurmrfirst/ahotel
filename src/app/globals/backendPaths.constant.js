@@ -6,6 +6,7 @@
         .constant('backendPathsConstant', {
             top3: '/api/top3',
             auth: '/api/users',
-            gallery: '/api/gallery'
+            gallery: '/api/gallery',
+            guestcomments: '/api/guestcomments'
         });
 })();

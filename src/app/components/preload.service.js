@@ -8,16 +8,35 @@
     function preloadService() {
         let config = null;
 
-        this.config = function(url, method, action) {
+        this.config = function(url = '/api',
+                               method = 'get',
+                               action = 'get',
+                               timeout = false,
+                               log = 'debug') {
             config = {
                 url: url,
                 method: method,
-                action: action
+                action: action,
+                timeout: timeout,
+                log: log
             };
         };
 
         this.$get = function ($http, $timeout) {
-            let preloadCache = [];
+            let preloadCache = [],
+                logger = function(message, log = 'debug') {
+                    if (config.log === 'silent') {
+                        return;
+                    }
+
+                    if (config.log === 'debug' && log === 'debug') {
+                        console.debug(message);
+                    }
+
+                    if (log === 'warning') {
+                        console.warn(message);
+                    }
+                };
 
             function preloadImages(preloadName, images) { //todo errors
                 let imagesSrcList = [];
@@ -47,7 +66,11 @@
                                 src: imagesSrcList
                             });
 
-                            $timeout(preload.bind(null, imagesSrcList));
+                            if (config.timeout === false) {
+                                preload(imagesSrcList);
+                            } else {
+                                $timeout(preload.bind(null, imagesSrcList), config.timeout);
+                            }
                         },
                         (response) => {
                             return 'ERROR'; //todo
@@ -62,7 +85,7 @@
                         image.src = imagesSrcList[i];
                         image.onload = function (e) {
                             //resolve(image);
-                            console.log(this.src)
+                            logger(this.src, 'debug')
                         };
                         image.onerror = function (e) {
                             console.log(e);
@@ -72,7 +95,7 @@
             }
 
             function getPreload(preloadName) {
-                console.debug('preloadService:getPreload: ', preloadName);
+                logger('preloadService: get request ' + '"' + preloadName + '"', 'debug');
                 if (!preloadName) {
                     return preloadCache;
                 }
@@ -83,12 +106,12 @@
                     }
                 }
 
-                console.warn('No preloads found');
+                logger('No preloads found', 'warning');
             }
 
             return {
                 preloadImages: preloadImages,
-                getPreload: getPreload
+                getPreloadCache: getPreload
             }
         };
     }

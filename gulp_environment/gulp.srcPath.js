@@ -1,7 +1,7 @@
 module.exports = {
 	src: './src/**/*.*',
 	index: './src/index.html',
-	templates: './src/app/templates/**/*.html',
+	templates: './src/app/partials/**/*.html',
 	app: 'src/app/**/*.js',
 	vendorList: {
 		root: './src/assets/vendor/**/*.*',

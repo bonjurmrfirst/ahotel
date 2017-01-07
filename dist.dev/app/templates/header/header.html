@@ -25,7 +25,7 @@
                             <a class="sub-nav__link" ui-sref="bungalows">Bungalows</a>
                         </li>
                         <li class="sub-nav__item">
-                            <a class="sub-nav__link" href="">Guest feedback</a>
+                            <a class="sub-nav__link" ui-sref="guestcomments">Guest comments</a>
                         </li>
                         <li class="sub-nav__item">
                             <button class="sub-nav__btn">View rooms</button>
@@ -97,7 +97,7 @@
     </nav>
 </header>
 
-<div ng-hide="$state.currentStateName === 'auth' || $state.currentStateName === 'gallery'">
+<div ng-hide="$state.currentStateName === 'auth' || $state.currentStateName === 'gallery' || $state.currentStateName === 'guestcomments'">
     <ahtl-slider></ahtl-slider>
 
     <div class="where-to-go">

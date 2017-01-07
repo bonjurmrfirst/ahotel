@@ -3,12 +3,12 @@
 
     angular
         .module('ahotelApp')
-        .directive('ahtlGallery', ahtlGalleryDirective);
+            .directive('ahtlGallery', ahtlGalleryDirective);
 
-    ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant', 'preloadService'];
+        ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant', 'preloadService'];
 
-    function ahtlGalleryDirective($http, $timeout, backendPathsConstant, preloadService) { //todo not only load but listSrc too accept
-        return {
+        function ahtlGalleryDirective($http, $timeout, backendPathsConstant, preloadService) { //todo not only load but listSrc too accept
+            return {
             restrict: 'EA',
             scope: {
                 showFirstImgCount: '=ahtlGalleryShowFirst',
@@ -39,7 +39,7 @@
 
             this.alignImages = () => {
                 if ($('.gallery img').length < showFirstImgCount) {
-                    console.log($('.gallery img').length, showFirstImgCount);
+                    console.log('oops');
                     $timeout(this.alignImages, 0)
                 } else {
                     $timeout(_setImageAligment);
@@ -50,7 +50,6 @@
             this.alignImages();
 
             _getImageSources((response) => {
-                console.log(response);
                 allImagesSrc = response;
                 this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
                 this.imagesCount = allImagesSrc.length;
@@ -87,13 +86,11 @@
         }
 
         function _getImageSources(cb) {
-            cb(preloadService.getPreload('gallery'));
+            cb(preloadService.getPreloadCache('gallery'));
         }
 
         function _setImageAligment() { //todo arguments naming, errors
                 const figures = $('.gallery__figure');
-                console.log(figures);
-
 
                 const galleryWidth = parseInt(figures.closest('.gallery').css('width')),
                     imageWidth = parseInt(figures.css('width'));

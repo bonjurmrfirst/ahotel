@@ -15,7 +15,7 @@
     config.$inject = ['preloadServiceProvider', 'backendPathsConstant'];
 
     function config(preloadServiceProvider, backendPathsConstant) {
-        preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get');
+        preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get', 0, 'warning');
     }
 })();
 'use strict';
@@ -52,6 +52,9 @@
 		}).state('gallery', {
 			url: '/gallery',
 			templateUrl: 'app/templates/gallery/gallery.html'
+		}).state('guestcomments', {
+			url: '/guestcomments',
+			templateUrl: 'app/templates/guestcomments/guestcomments.html'
 		});
 	}
 })();
@@ -65,6 +68,8 @@
     run.$inject = ['$rootScope', 'backendPathsConstant', 'preloadService'];
 
     function run($rootScope, backendPathsConstant, preloadService) {
+        $rootScope.logged = false;
+
         $rootScope.$state = {
             currentStateName: null,
             currentStateParams: null,
@@ -77,47 +82,8 @@
             $rootScope.$state.stateHistory.push(toState.name);
         });
 
-        preloadService.preloadImages('gallery', { url: backendPathsConstant.gallery, method: 'GET', action: 'get' });
+        preloadService.preloadImages('gallery', { url: backendPathsConstant.gallery, method: 'GET', action: 'get' }); //todo del method, action by default
     }
-})();
-'use strict';
-
-(function () {
-	'use strict';
-
-	angular.module('ahotelApp').factory('PreloadImages', PreloadImages);
-
-	function PreloadImages() {
-		function preLoad(imageList) {
-
-			var promises = [];
-
-			function loadImage(src) {
-				return new Promise(function (resolve, reject) {
-					var image = new Image();
-					image.src = src;
-					image.onload = function () {
-						resolve(image);
-					};
-					image.onerror = function (e) {
-						reject(e);
-					};
-				});
-			}
-
-			for (var i = 0; i < imageList.length; i++) {
-				promises.push(loadImage(imageList[i]));
-			}
-
-			return Promise.all(promises).then(function (results) {
-				return results;
-			});
-		}
-
-		return {
-			preLoad: preLoad
-		};
-	}
 })();
 'use strict';
 
@@ -138,16 +104,39 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     function preloadService() {
         var config = null;
 
-        this.config = function (url, method, action) {
+        this.config = function () {
+            var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '/api';
+            var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'get';
+            var action = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'get';
+            var timeout = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+            var log = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'debug';
+
             config = {
                 url: url,
                 method: method,
-                action: action
+                action: action,
+                timeout: timeout,
+                log: log
             };
         };
 
         this.$get = ["$http", "$timeout", function ($http, $timeout) {
-            var preloadCache = [];
+            var preloadCache = [],
+                logger = function logger(message) {
+                var log = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'debug';
+
+                if (config.log === 'silent') {
+                    return;
+                }
+
+                if (config.log === 'debug' && log === 'debug') {
+                    console.debug(message);
+                }
+
+                if (log === 'warning') {
+                    console.warn(message);
+                }
+            };
 
             function preloadImages(preloadName, images) {
                 //todo errors
@@ -177,7 +166,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                             src: imagesSrcList
                         });
 
-                        $timeout(preload.bind(null, imagesSrcList));
+                        if (config.timeout === false) {
+                            preload(imagesSrcList);
+                        } else {
+                            $timeout(preload.bind(null, imagesSrcList), config.timeout);
+                        }
                     }, function (response) {
                         return 'ERROR'; //todo
                     });
@@ -191,7 +184,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                         image.src = imagesSrcList[i];
                         image.onload = function (e) {
                             //resolve(image);
-                            console.log(this.src);
+                            logger(this.src, 'debug');
                         };
                         image.onerror = function (e) {
                             console.log(e);
@@ -201,7 +194,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
 
             function getPreload(preloadName) {
-                console.debug('preloadService:getPreload: ', preloadName);
+                logger('preloadService: get request ' + '"' + preloadName + '"', 'debug');
                 if (!preloadName) {
                     return preloadCache;
                 }
@@ -212,12 +205,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     }
                 }
 
-                console.warn('No preloads found');
+                logger('No preloads found', 'warning');
             }
 
             return {
                 preloadImages: preloadImages,
-                getPreload: getPreload
+                getPreloadCache: getPreload
             };
         }];
     }
@@ -230,7 +223,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     angular.module('ahotelApp').constant('backendPathsConstant', {
         top3: '/api/top3',
         auth: '/api/users',
-        gallery: '/api/gallery'
+        gallery: '/api/gallery',
+        guestcomments: '/api/guestcomments'
     });
 })();
 'use strict';
@@ -293,11 +287,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').factory('authService', authService);
 
-    authService.$inject = ['$http', 'backendPathsConstant', '$state'];
+    authService.$inject = ['$rootScope', '$http', 'backendPathsConstant'];
 
-    function authService($http, backendPathsConstant) {
+    function authService($rootScope, $http, backendPathsConstant) {
         //todo errors
         function User(backendApi) {
+            var _this = this;
+
             this._backendApi = backendApi;
             this._credentials = null;
 
@@ -305,7 +301,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 if (response.status === 200) {
                     console.log(response);
                     if (response.data.token) {
-                        tokenKeeper.saveToken(response.data.token);
+                        _this._tokenKeeper.saveToken(response.data.token);
                     }
                     return 'OK';
                 }
@@ -315,12 +311,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 return response.data;
             };
 
-            var tokenKeeper = function () {
+            this._tokenKeeper = function () {
                 var token = null;
 
                 function saveToken(_token) {
+                    $rootScope.logged = true;
                     token = _token;
-                    console.log(token);
+                    console.debug(token);
                 }
 
                 function getToken() {
@@ -356,6 +353,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 },
                 data: this._credentials
             }).then(this._onResolve, this._onRejected);
+        };
+
+        User.prototype.getLogInfo = function () {
+            return {
+                credentials: this._credentials,
+                token: this._tokenKeeper.getToken()
+            };
         };
 
         return new User(backendPathsConstant.auth);
@@ -406,7 +410,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             this.alignImages = function () {
                 if ($('.gallery img').length < showFirstImgCount) {
-                    console.log($('.gallery img').length, showFirstImgCount);
+                    console.log('oops');
                     $timeout(_this.alignImages, 0);
                 } else {
                     $timeout(_setImageAligment);
@@ -417,7 +421,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.alignImages();
 
             _getImageSources(function (response) {
-                console.log(response);
                 allImagesSrc = response;
                 _this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
                 _this.imagesCount = allImagesSrc.length;
@@ -453,13 +456,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         function _getImageSources(cb) {
-            cb(preloadService.getPreload('gallery'));
+            cb(preloadService.getPreloadCache('gallery'));
         }
 
         function _setImageAligment() {
             //todo arguments naming, errors
             var figures = $('.gallery__figure');
-            console.log(figures);
 
             var galleryWidth = parseInt(figures.closest('.gallery').css('width')),
                 imageWidth = parseInt(figures.css('width'));
@@ -558,6 +560,119 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     }
 })();*/
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').controller('GuestcommentsController', GuestcommentsController);
+
+    GuestcommentsController.$inject = ['$rootScope', 'guestcommentsService'];
+
+    function GuestcommentsController($rootScope, guestcommentsService) {
+        var _this = this;
+
+        this.comments = [];
+
+        this.openForm = false;
+        this.showPleaseLogiMessage = false;
+
+        this.writeComment = function () {
+            if ($rootScope.logged) {
+                this.openForm = true;
+            } else {
+                this.showPleaseLogiMessage = true;
+            }
+        };
+
+        guestcommentsService.getGuestComments().then(function (response) {
+            _this.comments = response.data;
+            console.log(response);
+        });
+
+        this.addComment = function () {
+            var _this2 = this;
+
+            guestcommentsService.sendComment(this.formData).then(function (response) {
+                _this2.comments.push({ 'name': _this2.formData.name, 'comment': _this2.formData.comment });
+                _this2.openForm = false;
+                _this2.formData = null;
+            });
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').filter('reverse', reverse);
+
+    function reverse() {
+        return function (items) {
+            //to errors
+            return items.slice().reverse();
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').factory('guestcommentsService', guestcommentsService);
+
+    guestcommentsService.$inject = ['$http', 'backendPathsConstant', 'authService'];
+
+    function guestcommentsService($http, backendPathsConstant, authService) {
+        return {
+            getGuestComments: getGuestComments,
+            sendComment: sendComment
+        };
+
+        function getGuestComments(type) {
+            return $http({
+                method: 'GET',
+                url: backendPathsConstant.guestcomments,
+                params: {
+                    action: 'get'
+                }
+            }).then(onResolve, onReject);
+        }
+
+        function onResolve(response) {
+            return response;
+        }
+
+        function onReject(response) {
+            return response;
+        }
+
+        function sendComment(comment) {
+            var user = authService.getLogInfo();
+
+            return $http({
+                method: 'POST',
+                url: backendPathsConstant.guestcomments,
+                params: {
+                    action: 'put'
+                },
+                data: {
+                    user: user,
+                    comment: comment
+                }
+            }).then(onResolve, onReject);
+
+            function onResolve(response) {
+                return response;
+            }
+
+            function onReject(response) {
+                return response;
+            }
+        }
+    }
+})();
 'use strict';
 
 (function () {

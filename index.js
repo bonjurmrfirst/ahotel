@@ -4,8 +4,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
 
     db = require('./backend/db'),
-    session = require('./backend/session'),
-    gallery = require('./backend/gallery');
+    session = require('./backend/session');
 
 var appRoot = process.env.PORT ? '/dist' : '/dist.dev';
 
@@ -99,7 +98,25 @@ app.get('/api/users', function(request, response) {
 });
 
 app.get('/api/gallery', function(request, response) {
-    response.status(200).send(gallery);
+    response.status(200).send(require('./backend/gallery'));
+});
+
+app.get('/api/guestcomments', function(request, response) {
+    response.status(200).send(require('./backend/guestcomments'));
+});
+
+app.post('/api/guestcomments', function(request, response) {
+    if (request.query.action === 'put') {
+        console.log(request.body);
+
+        var allComments = require('./backend/guestcomments');
+        allComments.push({'name': request.body.comment.name, 'comment': request.body.comment.comment});
+        require('fs').writeFile('./backend/guestcomments.json', JSON.stringify(allComments), function (err) {
+            console.log(err);
+        });
+    }
+
+    response.status(200).send(require('./backend/guestcomments'));
 });
 
 app.listen(app.get('port'), function() {
