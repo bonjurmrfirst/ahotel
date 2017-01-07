@@ -69,7 +69,8 @@
                             if (config.timeout === false) {
                                 preload(imagesSrcList);
                             } else {
-                                $timeout(preload.bind(null, imagesSrcList), config.timeout);
+                                window.onload = preload;
+                                //$timeout(preload.bind(null, imagesSrcList), config.timeout);
                             }
                         },
                         (response) => {
