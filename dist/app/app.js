@@ -10,6 +10,86 @@
 (function () {
     'use strict';
 
+    angular.module('ahotelApp').config(["$provide", function ($provide) {
+        $provide.decorator('$log', ["$delegate", "$window", function ($delegate, $window) {
+            var logHistory = {
+                warn: [],
+                err: []
+            };
+
+            $delegate.log = function (message) {};
+
+            var _logWarn = $delegate.warn;
+            $delegate.warn = function (message) {
+                logHistory.warn.push(message);
+                _logWarn.apply(null, [message]);
+            };
+
+            var _logErr = $delegate.error;
+            $delegate.error = function (message) {
+                logHistory.err.push({ name: message, stack: new Error().stack });
+                _logErr.apply(null, [message]);
+            };
+
+            (function sendOnUnload() {
+                $window.onbeforeunload = function () {
+                    if (!logHistory.err.length && !logHistory.warn.length) {
+                        return;
+                    }
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('post', '/api/log', false);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify(logHistory));
+                };
+            })();
+
+            return $delegate;
+        }]);
+    }]);
+})();
+
+/*
+        .factory('log', log);
+
+    log.$inject = ['$window', '$log'];
+
+    function log($window, $log) {
+
+
+        function warn(...args) {
+            logHistory.warn.push(args);
+
+            if (browserLog) {
+                $log.warn(args);
+            }
+        }
+
+        function error(e) {
+            logHistory.err.push({
+                name: e.name,
+                message: e.message,
+                stack: e.stack
+            });
+            $log.error(e);
+        }
+
+        //todo all errors
+
+
+
+        return {
+            warn: warn,
+            error: error,
+            sendOnUnload: sendOnUnload
+        }
+    }
+})();*/
+'use strict';
+
+(function () {
+    'use strict';
+
     angular.module('ahotelApp').config(config);
 
     config.$inject = ['preloadServiceProvider', 'backendPathsConstant'];
@@ -32,35 +112,35 @@
 
 		$stateProvider.state('home', {
 			url: '/',
-			templateUrl: 'app/templates/home/home.html'
+			templateUrl: 'app/partials/home/home.html'
 		}).state('auth', {
 			url: '/auth',
-			templateUrl: 'app/templates/auth/auth.html',
+			templateUrl: 'app/partials/auth/auth.html',
 			params: { 'type': 'login' } /*,
                                onEnter: function ($rootScope) {
                                $rootScope.$state = "auth";
                                }*/
 		}).state('bungalows', {
 			url: '/bungalows',
-			templateUrl: 'app/templates/top/bungalows.html'
+			templateUrl: 'app/partials/top/bungalows.html'
 		}).state('hotels', {
 			url: '/top',
-			templateUrl: 'app/templates/top/hotels.html'
+			templateUrl: 'app/partials/top/hotels.html'
 		}).state('villas', {
 			url: '/villas',
-			templateUrl: 'app/templates/top/villas.html'
+			templateUrl: 'app/partials/top/villas.html'
 		}).state('gallery', {
 			url: '/gallery',
-			templateUrl: 'app/templates/gallery/gallery.html'
+			templateUrl: 'app/partials/gallery/gallery.html'
 		}).state('guestcomments', {
 			url: '/guestcomments',
-			templateUrl: 'app/templates/guestcomments/guestcomments.html'
+			templateUrl: 'app/partials/guestcomments/guestcomments.html'
 		}).state('destinations', {
 			url: '/destinations',
-			templateUrl: 'app/templates/destinations/destinations.html'
+			templateUrl: 'app/partials/destinations/destinations.html'
 		}).state('resort', {
 			url: '/resort',
-			templateUrl: 'app/templates/resort/resort.html'
+			templateUrl: 'app/partials/resort/resort.html'
 		});
 	}
 })();
@@ -73,7 +153,7 @@
 
     run.$inject = ['$rootScope', 'backendPathsConstant', 'preloadService', '$window'];
 
-    function run($rootScope, backendPathsConstant, preloadService, $window) {
+    function run($rootScope, backendPathsConstant, preloadService, $window, log) {
         $rootScope.$logged = false;
 
         $rootScope.$state = {
@@ -89,8 +169,11 @@
         });
 
         $window.onload = function () {
+            //todo onload �������� � ������
             preloadService.preloadImages('gallery', { url: backendPathsConstant.gallery, method: 'GET', action: 'get' }); //todo del method, action by default
         };
+
+        //log.sendOnUnload();
     }
 })();
 'use strict';
@@ -233,13 +316,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         top3: '/api/top3',
         auth: '/api/users',
         gallery: '/api/gallery',
-        guestcomments: '/api/guestcomments'
+        guestcomments: '/api/guestcomments',
+        hotels: '/api/hotels'
     });
 })();
 'use strict';
 
 (function () {
-    angular.module('ahotelApp').constant('hotelDetailsConstant', ["restaurant", "kids", "pool", "spa", "wifi", "pet", "disable", "beach", "parking", "conditioning", "lounge", "terrace", "garden", "gym", "bicycles"]);
+    angular.module('ahotelApp').constant('hotelDetailsConstant', {
+        types: ['Hotel', 'Bungalow', 'Villa'],
+
+        settings: ['Coast', 'City', 'Desert'],
+
+        locations: ['Namibia', 'Libya', 'South Africa', 'Tanzania', 'Papua New Guinea', 'Reunion', 'Swaziland', 'Sao Tome', 'Madagascar', 'Mauritius', 'Seychelles', 'Mayotte', 'Ukraine'],
+
+        guests: {
+            max: 5
+        },
+
+        mustHave: ['restaurant', 'kids', 'pool', 'spa', 'wifi', 'pet', 'disable', 'beach', 'parking', 'conditioning', 'lounge', 'terrace', 'garden', 'gym', 'bicycles'],
+
+        activitys: ['Cooking classes', 'Cycling', 'Fishing', 'Golf', 'Hiking', 'Horse-riding', 'Kayaking', 'Nightlife', 'Sailing', 'Scuba diving', 'Shopping / markets', 'Snorkelling', 'Skiing', 'Surfing', 'Wildlife', 'Windsurfing', 'Wine tasting', 'Yoga']
+    });
 })();
 'use strict';
 
@@ -402,7 +500,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 showFirstImgCount: '=ahtlGalleryShowFirst',
                 showNextImgCount: '=ahtlGalleryShowNext'
             },
-            templateUrl: 'app/templates/gallery/gallery.template.html',
+            templateUrl: 'app/partials/gallery/gallery.template.html',
             controller: AhtlGalleryController,
             controllerAs: 'gallery',
             link: ahtlGalleryLink
@@ -717,12 +815,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	function ahtlHeader() {
 		return {
 			restrict: 'EAC',
-			templateUrl: 'app/templates/header/header.html',
-			link: function link() {
-				$('[ahtl-autoheight-emit]').on('click', function () {
-					$('[ahtl-autoheight-on]').css('height', 'auto');
-				});
-			}
+			templateUrl: 'app/partials/header/header.html'
 		};
 	}
 })();
@@ -733,12 +826,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	angular.module('ahotelApp').service('HeaderTransitionsService', HeaderTransitionsService);
 
-	HeaderTransitionsService.$inject = ['$timeout'];
+	HeaderTransitionsService.$inject = ['$timeout', '$log'];
 
-	function HeaderTransitionsService($timeout) {
+	function HeaderTransitionsService($timeout, $log) {
 		function UItransitions(container) {
 			if (!$(container).length) {
-				$log.warn('');
+				$log.warn('Element \'' + container + '\' not found');
+				this._container = null;
+				return;
 			}
 
 			this.container = $(container);
@@ -755,9 +850,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			    delay = _ref$delay === undefined ? 100 : _ref$delay;
 
 
+			if (this._container === null) {
+				return this;
+			}
+
 			this.container.mouseenter(function () {
 				var targetElements = $(this).find(targetElementsQuery),
-				    targetElementsFinishState;
+				    targetElementsFinishState = void 0;
+
+				if (!targetElements.length) {
+					$log.warn('Element(s) ' + targetElementsQuery + ' not found');
+					return;
+				}
 
 				targetElements.css(cssEnumerableRule, to);
 				targetElementsFinishState = targetElements.css(cssEnumerableRule);
@@ -768,19 +872,45 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 				targetElements.animate(animateOptions, delay);
 			});
+
+			return this;
+		};
+
+		UItransitions.prototype.recalculateHeightOnClick = function (elementTriggerQuery, elementOnQuery) {
+			if (!$(elementTriggerQuery).length || !$(elementOnQuery).length) {
+				$log.warn('Element(s) ' + elementTriggerQuery + ' ' + elementOnQuery + ' not found');
+				return;
+			}
+
+			$(elementTriggerQuery).on('click', function () {
+				$(elementOnQuery).css('height', 'auto');
+			});
+
+			return this;
 		};
 
 		function HeaderTransitions(headerQuery, containerQuery) {
-			this.header = $(headerQuery);
 			UItransitions.call(this, containerQuery);
+
+			if (!$(headerQuery).length) {
+				$log.warn('Element(s) ' + headerQuery + ' not found');
+				this._header = null;
+				return;
+			}
+
+			this._header = $(headerQuery);
 		}
 
 		HeaderTransitions.prototype = Object.create(UItransitions.prototype);
 		HeaderTransitions.prototype.constructor = HeaderTransitions;
 
-		HeaderTransitions.prototype.fixHeaderElement = function (_fixElement, fixClassName, unfixClassName, options) {
+		HeaderTransitions.prototype.fixHeaderElement = function (elementFixQuery, fixClassName, unfixClassName, options) {
+			if (this._header === null) {
+				return;
+			}
+
 			var self = this;
-			var fixElement = $(_fixElement);
+			var fixElement = $(elementFixQuery);
 
 			function onWidthChangeHandler() {
 				var timer = void 0;
@@ -795,9 +925,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					timer = null;
 				}
 
-				if ($(window).width() < options.onMaxWindowWidth) {
+				var width = window.innerWidth || $(window).innerWidth();
+
+				if (width < options.onMaxWindowWidth) {
 					fixUnfixMenuOnScroll();
-					self.header.addClass(unfixClassName);
+					self._header.addClass(unfixClassName);
 
 					$(window).off('scroll');
 					$(window).scroll(function () {
@@ -806,7 +938,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 						}
 					});
 				} else {
-					self.header.removeClass(unfixClassName);
+					self._header.removeClass(unfixClassName);
 					fixElement.removeClass(fixClassName);
 					$(window).off('scroll');
 				}
@@ -814,6 +946,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 			onWidthChangeHandler();
 			$(window).on('resize', onWidthChangeHandler);
+
+			return this;
 		};
 
 		return HeaderTransitions;
@@ -829,26 +963,60 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	ahtlStikyHeader.$inject = ['HeaderTransitionsService'];
 
 	function ahtlStikyHeader(HeaderTransitionsService) {
-		function link() {
-			var header = new HeaderTransitionsService('.l-header', '.nav__item-container');
-
-			header.animateTransition('.sub-nasv', {
-				cssEnumerableRule: 'height',
-				delay: 300
-			});
-
-			header.fixHeaderElement('.nav', 'js_nav--fixed', 'js_l-header--relative', {
-				onMinScrolltop: 88,
-				onMaxWindowWidth: 850
-			});
-		}
-
 		return {
 			restrict: 'A',
 			scope: {},
 			link: link
 		};
+
+		function link() {
+			var header = new HeaderTransitionsService('.l-header', '.nav__item-container');
+
+			header.animateTransition('.sub-nav', {
+				cssEnumerableRule: 'height',
+				delay: 300 }).recalculateHeightOnClick('[data-autoheight-trigger]', '[data-autoheight-on]').fixHeaderElement('.nav', 'js_nav--fixed', 'js_l-header--relative', {
+				onMinScrolltop: 88,
+				onMaxWindowWidth: 850 });
+		}
 	}
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').controller('HomeController', HomeController);
+
+    HomeController.$inject = ['trendHotelsImgPaths'];
+
+    function HomeController(trendHotelsImgPaths) {
+        this.hotels = trendHotelsImgPaths;
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').constant('trendHotelsImgPaths', [{
+        name: 'Hotel1',
+        src: 'assets/images/home/trend6.jpg'
+    }, {
+        name: 'Hotel2',
+        src: 'assets/images/home/trend6.jpg'
+    }, {
+        name: 'Hotel3',
+        src: 'assets/images/home/trend6.jpg'
+    }, {
+        name: 'Hotel4',
+        src: 'assets/images/home/trend6.jpg'
+    }, {
+        name: 'Hotel5',
+        src: 'assets/images/home/trend6.jpg'
+    }, {
+        name: 'Hotel6',
+        src: 'assets/images/home/trend6.jpg'
+    }]);
 })();
 'use strict';
 
@@ -862,7 +1030,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             restrict: 'EA',
             replace: false,
             link: ahtlModalDirectiveLink,
-            templateUrl: 'app/templates/modal/modal.html'
+            templateUrl: 'app/partials/modal/modal.html'
         };
 
         function ahtlModalDirectiveLink($scope, elem) {
@@ -886,24 +1054,80 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
+    angular.module('ahotelApp').controller('ResortController', ResortController);
+
+    ResortController.$inject = ['hotelDetailsConstant', 'resortService'];
+
+    function ResortController(hotelDetailsConstant, resortService) {
+        var _this = this;
+
+        this.loading = true;
+
+        this.renderFiltersList = hotelDetailsConstant;
+
+        this.filters = {};
+        this.filters.price = {
+            min: 0,
+            max: 1000
+        };
+
+        resortService.getResort(function (response) {
+            _this.loading = false;
+        });
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').factory('resortService', resortService);
+
+    resortService.$inject = ['$http', 'backendPathsConstant'];
+
+    function resortService($http, backendPathsConstant) {
+        return {
+            getResort: getResort
+        };
+
+        function getResort() {
+            return $http({
+                method: 'GET',
+                url: backendPathsConstant.hotels
+            }).then(onResolve, onRejected);
+
+            function onResolve(response) {
+                console.log(response);
+            }
+
+            function onRejected(response) {
+                console.log(response);
+            }
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
     angular.module('ahotelApp').directive('ahtlTop3', ahtlTop3Directive);
 
     ahtlTop3Directive.$inject = ['top3Service', 'hotelDetailsConstant'];
 
     function ahtlTop3Directive(top3Service, hotelDetailsConstant) {
-
         AhtlTop3Controller.$inject = ["$scope", "$element", "$attrs"];
         return {
             restrict: 'E',
             controller: AhtlTop3Controller,
             controllerAs: 'top3',
-            templateUrl: 'app/templates/resorts/top3.template.html'
+            templateUrl: 'app/partials/top/top3.template.html'
         };
 
         function AhtlTop3Controller($scope, $element, $attrs) {
             var _this = this;
 
-            this.details = hotelDetailsConstant;
+            this.details = hotelDetailsConstant.mustHave;
             this.resortType = $attrs.ahtlTop3type;
             this.resort = null;
 
@@ -913,7 +1137,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             this.isResortIncludeDetail = function (item, detail) {
                 var detailClassName = 'top3__detail-container--' + detail,
-                    isResortIncludeDetailClassName = !item.details[detail] ? ' top3__detail-container--has' : '';
+                    isResortIncludeDetailClassName = !item.details[detail] ? ' top3__detail-container--hasnt' : '';
 
                 return detailClassName + isResortIncludeDetailClassName;
             };
@@ -975,7 +1199,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				if (slidingDirection === 'right') {
 					$(element).animate({ 'left': '100%' }, 500, done);
 				} else {
-					$(element).animate({ 'left': '-200%' }, 500, done); //why 200? $)
+					$(element).animate({ 'left': '-200%' }, 500, done); //200? $)
 				}
 			},
 
@@ -998,6 +1222,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	function ahtlSlider(sliderService, $timeout) {
 		ahtlSliderController.$inject = ["$scope"];
+		return {
+			restrict: 'EA',
+			scope: {},
+			controller: ahtlSliderController,
+			templateUrl: 'app/templates/header/slider/slider.html',
+			link: link
+		};
+
 		function ahtlSliderController($scope) {
 			$scope.slider = sliderService;
 			$scope.slidingDirection = null;
@@ -1044,14 +1276,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}, 500);
 			});
 		}
-
-		return {
-			restrict: 'EA',
-			scope: {},
-			controller: ahtlSliderController,
-			templateUrl: 'app/templates/header/slider/slider.html',
-			link: link
-		};
 	}
 })();
 'use strict';
@@ -1080,7 +1304,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		Slider.prototype.setCurrentSlide = function (slide) {
 			slide = parseInt(slide);
 
-			if (!slide || isNaN(slide) || slide < 0 || slide > this._imageSrcList.length - 1) {
+			if (isNaN(slide) || slide < 0 || slide > this._imageSrcList.length - 1) {
 				return;
 			}
 
@@ -1108,4 +1332,75 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     'use strict';
 
     angular.module('ahotelApp').constant('sliderImgPathConstant', ['assets/images/slider/slider1.jpg', 'assets/images/slider/slider2.jpg', 'assets/images/slider/slider3.jpg']);
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').directive('ahtlPriceSlider', priceSliderDirective);
+
+    priceSliderDirective.$inject = [];
+
+    function priceSliderDirective() {
+        return {
+            scope: { //todo@=
+                min: "=min",
+                max: "=max"
+            },
+            restrict: 'E',
+            templateUrl: 'app/partials/resort/priceSlider/priceSlider.html',
+            link: priceSliderDirectiveLink
+        };
+
+        function priceSliderDirectiveLink($scope, elem, attrs) {
+            var rightBtn = $('.slide__pointer--right'),
+                leftBtn = $('.slide__pointer--left');
+
+            initDrag(rightBtn, parseInt(rightBtn.css('left')), function () {
+                return parseInt($('.slide').css('width'));
+            }, function () {
+                return parseInt(leftBtn.css('left'));
+            });
+
+            initDrag(leftBtn, parseInt(leftBtn.css('left')), function () {
+                return parseInt(rightBtn.css('left'));
+            }, function () {
+                return 0;
+            });
+
+            function initDrag(dragElem, initPosition, maxPosition, minPosition) {
+                var shift = void 0;
+
+                dragElem.on('mousedown', btnOnMouseDown);
+
+                function btnOnMouseDown(event) {
+                    shift = event.pageX;
+                    initPosition = parseInt(dragElem.css('left'));
+
+                    $(document).on('mousemove', docOnMouseMove);
+                    dragElem.on('mouseup', btnOnMouseUp);
+                    $(document).on('mouseup', btnOnMouseUp);
+                }
+
+                function docOnMouseMove(event) {
+                    if (initPosition + event.pageX - shift >= minPosition() + 20 && initPosition + event.pageX - shift <= maxPosition() - 20) {
+                        dragElem.css('left', initPosition + event.pageX - shift);
+                    }
+                }
+
+                function btnOnMouseUp() {
+                    $(document).off('mousemove', docOnMouseMove);
+                    dragElem.off('mouseup', btnOnMouseUp);
+                    $(document).off('mouseup', btnOnMouseUp);
+
+                    initPosition = parseInt(dragElem.css('left'));
+                }
+
+                dragElem.on('dragstart', function () {
+                    return false;
+                });
+            }
+        }
+    }
 })();
