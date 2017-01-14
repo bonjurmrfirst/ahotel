@@ -30,54 +30,24 @@
         for doors, windows, and heating to ensure intelligent usage of energy depending upon whether rooms
         are let or vacant
     </p>
-    <p class="about__content"></p>
-    <p class="about__content"></p>
     <footer>
-        <button class="about__btn">make a reservation today</button>
+        <button class="about__btn" ui-sref="resort">make a reservation today</button>
     </footer>
 </main>
 
 <figure class="trending">
     <figcaption>
-        <h3 class="trending__header">Trending</h3>
-        <p class="trending__content">Popular searches and in-demand destinations</p>
+        <h3 class="trending__header">Our best offers</h3>
+        <p class="trending__content">Children stay free, free breakfast</p>
     </figcaption>
-    <figure class="img-group">
-        <figure class="img-group__item">
+    <figure class="img-group" ng-controller="HomeController as trend">
+        <figure class="img-group__item" ng-repeat="hotel in trend.hotels">
             <figcaption class="img-group__caption">
-                <a class="img-group__link" href="">Hotel one two three four five six seven</a>
+                <span class="img-group__name">{{hotel.name}}</span>
             </figcaption>
-            <img class="img-group__img" src="assets/images/home/trend6.jpg" width="400" height="300">
-        </figure>
-        <figure class="img-group__item">
-            <figcaption class="img-group__caption">
-                <a class="img-group__link" href="">Hotel one two three four five six seven</a>
-            </figcaption>
-            <img class="img-group__img" src="assets/images/home/trend6.jpg" width="400" height="300">
-        </figure>
-        <figure class="img-group__item">
-            <figcaption class="img-group__caption">
-                <a class="img-group__link" href="">Hotel one two three four five six seven</a>
-            </figcaption>
-            <img class="img-group__img" src="assets/images/home/trend6.jpg" width="400" height="300">
-        </figure>
-        <figure class="img-group__item">
-            <figcaption class="img-group__caption">
-                <a class="img-group__link" href="">Hotel one two three four five six seven</a>
-            </figcaption>
-            <img class="img-group__img" src="assets/images/home/trend6.jpg" width="400" height="300">
-        </figure>
-        <figure class="img-group__item">
-            <figcaption class="img-group__caption">
-                <a class="img-group__link" href="">Hotel one two</a>
-            </figcaption>
-            <img class="img-group__img" src="assets/images/home/trend6.jpg" width="400" height="300">
-        </figure>
-        <figure class="img-group__item">
-            <figcaption class="img-group__caption">
-                <a class="img-group__link" href="">Hotel one two three four five six seven</a>
-            </figcaption>
-            <img class="img-group__img" src="assets/images/home/trend6.jpg" width="400" height="300">
+            <a class="img-group__details" href="">
+                <img class="img-group__img" ng-src="{{hotel.src}}" width="400" height="300">
+            </a>
         </figure>
     </figure>
 </figure>

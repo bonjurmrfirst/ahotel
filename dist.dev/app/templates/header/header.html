@@ -40,10 +40,10 @@
                 <div class="sub-nav">
                     <ul>
                         <li class="sub-nav__item">
-                            <a  class="sub-nav__link" href="">Show all offers</a>
+                            <a  class="sub-nav__link" ui-sref="resort">Show all offers</a>
                         </li>
                         <li class="sub-nav__item">
-                            <a class="sub-nav__link" href="">Show discounts</a>
+                            <a class="sub-nav__link" ui-sref="resort">Show discounts</a>
                         </li>
                         <li class="sub-nav__item">
                             <button class="sub-nav__btn">View rooms</button>
@@ -64,22 +64,25 @@
                             <a class="sub-nav__link" ui-sref="gallery">Gallery</a>
                         </li>
                         <li class="sub-nav__item">
-                            <button class="sub-nav__btn sub-nav__btn--dest">Destinations</button>
+                            <button class="sub-nav__btn sub-nav__btn--dest" ui-sref="destinations">Destinations</button>
                             <img class="sub-nav__img" src="assets/images/menu/submenu_destinations.png" width="300" height="200" alt="Best hotel">
                             <img class="sub-nav__img-bg" src="assets/images/menu/submenu_destinations_green.png" width="300" height="200" alt="Best hotel">
                         </li>
                     </ul>
                 </div>
             </li>
-            <li class="nav__item-container">
-                <span class="nav__item nav__item--right nav__item--login">Login</span>
-                <div class="sub-nav sub-nav--right">
+            <li class="nav__item-container" ng-controller="HeaderController as auth">
+                <span class="nav__item nav__item--right nav__item--login">{{$logged ? 'Sign out' : 'Sign In'}}</span>
+                <div class="sub-nav sub-nav--right" data-autoheight-on>
                     <ul>
-                        <li class="sub-nav__item">
-                            <a  class="sub-nav__link" ui-sref="auth({type: 'login'})">Login</a>
+                        <li class="sub-nav__item" ng-hide="$logged">
+                            <a  class="sub-nav__link" ui-sref="auth({type: 'login'})">Sign In</a>
                         </li>
-                        <li class="sub-nav__item sub-nav__item--last">
+                        <li class="sub-nav__item sub-nav__item--last" ng-hide="$logged">
                             <a class="sub-nav__link"  ui-sref="auth({type: 'join'})">Join</a>
+                        </li>
+                        <li class="sub-nav__item sub-nav__item--last" ng-show="$logged">
+                            <a class="sub-nav__link" ng-click="auth.signOut()" data-autoheight-trigger href="#">Sign Out</a>
                         </li>
                     </ul>
                 </div>
@@ -97,12 +100,14 @@
     </nav>
 </header>
 
-<div ng-hide="$state.currentStateName === 'auth' || $state.currentStateName === 'gallery' || $state.currentStateName === 'guestcomments'">
+<div ng-hide="$state.currentStateName === 'auth' ||
+                $state.currentStateName === 'gallery' ||
+                $state.currentStateName === 'guestcomments'"><!--todo-->
     <ahtl-slider></ahtl-slider>
 
     <div class="where-to-go">
         <h4 class="where-to-go__header">No idea where to go?</h4>
-        <button class="where-to-go__btn sub-nav__btn sub-nav__btn--dest">destinations</button>
+        <button class="where-to-go__btn sub-nav__btn sub-nav__btn--dest" ui-sref="destinations">destinations</button>
     </div>
 </div>
 

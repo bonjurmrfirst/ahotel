@@ -1,7 +1,7 @@
 <footer class="l-footer" ng-hide="$state.currentStateName === 'auth'">
     <figure class="footer-figure">
         <figcaption class="footer-figure__caption">
-            <a class="footer-figure__link" href="">find your next<br>adventure</a>
+            <a class="footer-figure__link" ui-sref="resort">find your next<br>adventure</a>
         </figcaption>
         <img class="footer-figure__img" src="assets/images/footer/footer.jpg"
              width="1900" height="600" alt="find your next adventure">
@@ -31,10 +31,10 @@
             </div>
         </div>
         <div class="links">
-            <a class="links__link" href="">Hotels</a>
-            <a class="links__link" href="">Villas</a>
-            <a class="links__link" href="">Bungalows</a>
-            <a class="links__link--guest-book" href="">Guest book</a>
+            <a class="links__link" ui-sref="hotels">Hotels</a>
+            <a class="links__link" ui-sref="villas">Villas</a>
+            <a class="links__link" ui-sref="bungalows">Bungalows</a>
+            <a class="links__link--guest-book" ui-sref="guestcomments">Guest book</a>
         </div>
     </div>
 </footer>

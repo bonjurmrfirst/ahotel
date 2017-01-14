@@ -10,7 +10,7 @@
             restrict: 'EA',
             replace: false,
             link: ahtlModalDirectiveLink,
-            templateUrl: 'app/templates/modal/modal.html'
+            templateUrl: 'app/partials/modal/modal.html'
         };
 
         function ahtlModalDirectiveLink($scope, elem) {

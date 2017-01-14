@@ -1,6 +1,5 @@
 .footer-figure
     position: relative
-    margin-top: 40px
     width: 100%
     height: auto
     font-size: 0
@@ -25,10 +24,12 @@
         display: inline-block
         vertical-align: middle
         color: $color_text_white
-        opacity: 0.7
+        opacity: 0.6
+        transition: opacity 0.3s ease-in
 
         &:hover
             opacity: 1
+            transition: opacity 0.3s ease-in
 
     &__img
         width: 100%
@@ -67,28 +68,28 @@
             width: 30px
 
         &--fb:after
+            @include transition(background-position)
             background-position: 30px -230px
-            transition: 0.5s
 
         &--fb:hover:after
+            @include transition(background-position)
             background-position: 30px -200px
-            transition: 0.5s
 
         &--tw:after
+            @include transition(background-position)
             background-position: 60px -230px
-            transition: 0.5s
 
         &--tw:hover:after
+            @include transition(background-position)
             background-position: 60px -200px
-            transition: 0.5s
 
         &--yt:after
+            @include transition(background-position)
             background-position: 90px -230px
-            transition: 0.5s
 
         &--yt:hover:after
+            @include transition(background-position)
             background-position: 90px -200px
-            transition: 0.5s
 
 .address
     background-color: #161D21
@@ -102,7 +103,7 @@
         text-align: center
 
     &__header-primary
-        @include fontStyle(cabR)
+        @include fontStyle(cabB)
         @include remFallback(1.7)
 
     &__header-secondary
@@ -126,21 +127,27 @@
 
     &__link
         @include remFallback(1)
+        @include transition(color)
         padding: 0 20px
         line-height: 30px
         color: #161D21
 
         &:hover
+            @include transition(color)
             color: $color_green
 
         &:active
+            @include transition(color)
             color: $color_light_green
 
         &--guest-book
+            @include transition(color)
             color: $color_text_black
 
             &:hover
+                @include transition(color)
                 color: $color_reverse
 
             &:active
+                @include transition(color)
                 color: $color_dark_reverse

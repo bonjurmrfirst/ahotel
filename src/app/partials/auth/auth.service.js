@@ -31,7 +31,7 @@
                 let token = null;
 
                 function saveToken(_token) {
-                    $rootScope.logged = true;
+                    $rootScope.$logged = true;
                     token = _token;
                     console.debug(token)
                 }
@@ -40,9 +40,14 @@
                     return token;
                 }
 
+                function deleteToken() {
+                    token = null;
+                }
+
                 return {
                     saveToken: saveToken,
-                    getToken: getToken
+                    getToken: getToken,
+                    deleteToken: deleteToken
                 }
             })();
         }
@@ -59,7 +64,7 @@
                 .then(this._onResolve, this._onRejected);
         };
 
-        User.prototype.login = function(credentials) {
+        User.prototype.signIn = function(credentials) {
             this._credentials = credentials;
 
             return $http({
@@ -71,6 +76,11 @@
                 data: this._credentials
             })
                 .then(this._onResolve, this._onRejected);
+        };
+
+        User.prototype.signOut = function() {
+            $rootScope.$logged = false;
+            this._tokenKeeper.deleteToken();
         };
 
         User.prototype.getLogInfo = function() {

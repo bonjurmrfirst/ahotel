@@ -5,45 +5,84 @@
 		.module('ahotelApp')
 		.service('HeaderTransitionsService', HeaderTransitionsService);
 
-	HeaderTransitionsService.$inject = ['$timeout'];
+	HeaderTransitionsService.$inject = ['$timeout', '$log'];
 
-	function HeaderTransitionsService($timeout) {
-		function UItransitions(containerQuery) {
-			//todo errors
-			this.container = $(containerQuery);
+	function HeaderTransitionsService($timeout, $log) {
+		function UItransitions(container) {
+			if (!$(container).length) {
+				$log.warn(`Element '${container}' not found`);
+				this._container = null;
+				return
+			}
+
+			this.container = $(container);
 		}
 
-		UItransitions.prototype.elementTransition = function (targetElementsQuery,
+		UItransitions.prototype.animateTransition = function (targetElementsQuery,
 			{cssEnumerableRule = 'width', from = 0, to = 'auto', delay = 100}) {
-			//todo errors
-			this.container.mouseenter(
-				function () {
-					var targetElements = $(this).find(targetElementsQuery),
-						targetElementsFinishState;
 
-					targetElements.css(cssEnumerableRule, to);
-					targetElementsFinishState = targetElements.css(cssEnumerableRule);
-					targetElements.css(cssEnumerableRule, from);
+			if (this._container === null) {
+				return this
+			}
 
-					let animateOptions = {};
-					animateOptions[cssEnumerableRule] = targetElementsFinishState;
+			this.container.mouseenter(function () {
+				let targetElements = $(this).find(targetElementsQuery),
+					targetElementsFinishState;
 
-					targetElements.animate(animateOptions, delay);
+				if (!targetElements.length) {
+					$log.warn(`Element(s) ${targetElementsQuery} not found`);
+					return
+				}
+
+				targetElements.css(cssEnumerableRule, to);
+				targetElementsFinishState = targetElements.css(cssEnumerableRule);
+				targetElements.css(cssEnumerableRule, from);
+
+				let animateOptions = {};
+				animateOptions[cssEnumerableRule] = targetElementsFinishState;
+
+				targetElements.animate(animateOptions, delay);
 				}
 			);
+
+			return this;
+		};
+
+		UItransitions.prototype.recalculateHeightOnClick = function(elementTriggerQuery, elementOnQuery) {
+			if (!$(elementTriggerQuery).length || !$(elementOnQuery).length) {
+				$log.warn(`Element(s) ${elementTriggerQuery} ${elementOnQuery} not found`);
+				return
+			}
+
+			$(elementTriggerQuery).on('click', function() {
+				$(elementOnQuery).css('height', 'auto');
+			});
+
+			return this;
 		};
 
 		function HeaderTransitions(headerQuery, containerQuery) {
-			this.header = $(headerQuery);
 			UItransitions.call(this, containerQuery);
+
+			if (!$(headerQuery).length) {
+				$log.warn(`Element(s) ${headerQuery} not found`);
+				this._header = null;
+				return
+			}
+
+			this._header = $(headerQuery);
 		}
 
 		HeaderTransitions.prototype = Object.create(UItransitions.prototype);
 		HeaderTransitions.prototype.constructor = HeaderTransitions;
 
-		HeaderTransitions.prototype.fixHeaderElement = function (_fixElement, fixClassName, unfixClassName, options) {
+		HeaderTransitions.prototype.fixHeaderElement = function (elementFixQuery, fixClassName, unfixClassName, options) {
+			if (this._header === null) {
+				return;
+			}
+
 			let self = this;
-			let fixElement = $(_fixElement);
+			let fixElement = $(elementFixQuery);
 
 			function onWidthChangeHandler() {
 				let timer;
@@ -58,9 +97,11 @@
 					timer = null;
 				}
 
-				if ($(window).width() < options.onMaxWindowWidth) {
+				let width = window.innerWidth || $(window).innerWidth();
+
+				if (width < options.onMaxWindowWidth) {
 					fixUnfixMenuOnScroll();
-					self.header.addClass(unfixClassName);
+					self._header.addClass(unfixClassName);
 
 					$(window).off('scroll');
 					$(window).scroll(function () {
@@ -69,7 +110,7 @@
 						}
 					});
 				} else {
-					self.header.removeClass(unfixClassName);
+					self._header.removeClass(unfixClassName);
 					fixElement.removeClass(fixClassName);
 					$(window).off('scroll');
 				}
@@ -77,6 +118,8 @@
 
 			onWidthChangeHandler();
 			$(window).on('resize', onWidthChangeHandler);
+
+			return this
 		};
 
 		return HeaderTransitions;

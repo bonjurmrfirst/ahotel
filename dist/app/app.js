@@ -15,7 +15,7 @@
     config.$inject = ['preloadServiceProvider', 'backendPathsConstant'];
 
     function config(preloadServiceProvider, backendPathsConstant) {
-        preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get', 0, 'warning');
+        preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get', 100, 'warning');
     }
 })();
 'use strict';
@@ -42,19 +42,25 @@
                                }*/
 		}).state('bungalows', {
 			url: '/bungalows',
-			templateUrl: 'app/templates/resorts/bungalows.html'
+			templateUrl: 'app/templates/top/bungalows.html'
 		}).state('hotels', {
-			url: '/hotels',
-			templateUrl: 'app/templates/resorts/hotels.html'
+			url: '/top',
+			templateUrl: 'app/templates/top/hotels.html'
 		}).state('villas', {
 			url: '/villas',
-			templateUrl: 'app/templates/resorts/villas.html'
+			templateUrl: 'app/templates/top/villas.html'
 		}).state('gallery', {
 			url: '/gallery',
 			templateUrl: 'app/templates/gallery/gallery.html'
 		}).state('guestcomments', {
 			url: '/guestcomments',
 			templateUrl: 'app/templates/guestcomments/guestcomments.html'
+		}).state('destinations', {
+			url: '/destinations',
+			templateUrl: 'app/templates/destinations/destinations.html'
+		}).state('resort', {
+			url: '/resort',
+			templateUrl: 'app/templates/resort/resort.html'
 		});
 	}
 })();
@@ -65,10 +71,10 @@
 
     angular.module('ahotelApp').run(run);
 
-    run.$inject = ['$rootScope', 'backendPathsConstant', 'preloadService'];
+    run.$inject = ['$rootScope', 'backendPathsConstant', 'preloadService', '$window'];
 
-    function run($rootScope, backendPathsConstant, preloadService) {
-        $rootScope.logged = false;
+    function run($rootScope, backendPathsConstant, preloadService, $window) {
+        $rootScope.$logged = false;
 
         $rootScope.$state = {
             currentStateName: null,
@@ -82,7 +88,9 @@
             $rootScope.$state.stateHistory.push(toState.name);
         });
 
-        preloadService.preloadImages('gallery', { url: backendPathsConstant.gallery, method: 'GET', action: 'get' }); //todo del method, action by default
+        $window.onload = function () {
+            preloadService.preloadImages('gallery', { url: backendPathsConstant.gallery, method: 'GET', action: 'get' }); //todo del method, action by default
+        };
     }
 })();
 'use strict';
@@ -169,6 +177,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                         if (config.timeout === false) {
                             preload(imagesSrcList);
                         } else {
+                            //window.onload = preload;
                             $timeout(preload.bind(null, imagesSrcList), config.timeout);
                         }
                     }, function (response) {
@@ -266,7 +275,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.loginUser = function () {
             var _this2 = this;
 
-            authService.login(this.user).then(function (response) {
+            authService.signIn(this.user).then(function (response) {
                 if (response === 'OK') {
                     console.log(response);
                     var previousState = $rootScope.$state.stateHistory[$rootScope.$state.stateHistory.length - 2] || 'home';
@@ -315,7 +324,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 var token = null;
 
                 function saveToken(_token) {
-                    $rootScope.logged = true;
+                    $rootScope.$logged = true;
                     token = _token;
                     console.debug(token);
                 }
@@ -324,9 +333,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     return token;
                 }
 
+                function deleteToken() {
+                    token = null;
+                }
+
                 return {
                     saveToken: saveToken,
-                    getToken: getToken
+                    getToken: getToken,
+                    deleteToken: deleteToken
                 };
             }();
         }
@@ -342,7 +356,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }).then(this._onResolve, this._onRejected);
         };
 
-        User.prototype.login = function (credentials) {
+        User.prototype.signIn = function (credentials) {
             this._credentials = credentials;
 
             return $http({
@@ -353,6 +367,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 },
                 data: this._credentials
             }).then(this._onResolve, this._onRejected);
+        };
+
+        User.prototype.signOut = function () {
+            $rootScope.$logged = false;
+            this._tokenKeeper.deleteToken();
         };
 
         User.prototype.getLogInfo = function () {
@@ -578,7 +597,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.showPleaseLogiMessage = false;
 
         this.writeComment = function () {
-            if ($rootScope.logged) {
+            if ($rootScope.$logged) {
                 this.openForm = true;
             } else {
                 this.showPleaseLogiMessage = true;
@@ -676,6 +695,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 'use strict';
 
 (function () {
+    'use strict';
+
+    angular.module('ahotelApp').controller('HeaderController', HeaderController);
+
+    HeaderController.$inject = ['authService'];
+
+    function HeaderController(authService) {
+        this.signOut = function () {
+            authService.signOut();
+        };
+    }
+})();
+'use strict';
+
+(function () {
 	'use strict';
 
 	angular.module('ahotelApp').directive('ahtlHeader', ahtlHeader);
@@ -683,7 +717,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	function ahtlHeader() {
 		return {
 			restrict: 'EAC',
-			templateUrl: 'app/templates/header/header.html'
+			templateUrl: 'app/templates/header/header.html',
+			link: function link() {
+				$('[ahtl-autoheight-emit]').on('click', function () {
+					$('[ahtl-autoheight-on]').css('height', 'auto');
+				});
+			}
 		};
 	}
 })();
@@ -697,12 +736,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	HeaderTransitionsService.$inject = ['$timeout'];
 
 	function HeaderTransitionsService($timeout) {
-		function UItransitions(containerQuery) {
-			//todo errors
-			this.container = $(containerQuery);
+		function UItransitions(container) {
+			if (!$(container).length) {
+				$log.warn('');
+			}
+
+			this.container = $(container);
 		}
 
-		UItransitions.prototype.elementTransition = function (targetElementsQuery, _ref) {
+		UItransitions.prototype.animateTransition = function (targetElementsQuery, _ref) {
 			var _ref$cssEnumerableRul = _ref.cssEnumerableRule,
 			    cssEnumerableRule = _ref$cssEnumerableRul === undefined ? 'width' : _ref$cssEnumerableRul,
 			    _ref$from = _ref.from,
@@ -712,7 +754,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			    _ref$delay = _ref.delay,
 			    delay = _ref$delay === undefined ? 100 : _ref$delay;
 
-			//todo errors
+
 			this.container.mouseenter(function () {
 				var targetElements = $(this).find(targetElementsQuery),
 				    targetElementsFinishState;
@@ -790,7 +832,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		function link() {
 			var header = new HeaderTransitionsService('.l-header', '.nav__item-container');
 
-			header.elementTransition('.sub-nav', {
+			header.animateTransition('.sub-nasv', {
 				cssEnumerableRule: 'height',
 				delay: 300
 			});
@@ -803,7 +845,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		return {
 			restrict: 'A',
-			transclude: false,
 			scope: {},
 			link: link
 		};
@@ -1006,7 +1047,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		return {
 			restrict: 'EA',
-			transclude: false,
 			scope: {},
 			controller: ahtlSliderController,
 			templateUrl: 'app/templates/header/slider/slider.html',

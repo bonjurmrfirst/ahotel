@@ -3,11 +3,19 @@
 
 	angular
 		.module('ahotelApp')
-		.directive('ahtlSlider',ahtlSlider);
+		.directive('ahtlSlider', ahtlSlider);
 
 	ahtlSlider.$inject = ['sliderService', '$timeout'];
 
 	function ahtlSlider(sliderService, $timeout) {
+		return {
+			restrict: 'EA',
+			scope: {},
+			controller: ahtlSliderController,
+			templateUrl: 'app/templates/header/slider/slider.html',
+			link: link
+		};
+
 		function ahtlSliderController($scope) {
 			$scope.slider = sliderService;
 			$scope.slidingDirection = null;
@@ -55,15 +63,6 @@
 				}, 500);
 			});
 		}
-
-		return {
-			restrict: 'EA',
-			transclude: false,
-			scope: {},
-			controller: ahtlSliderController,
-			templateUrl: 'app/templates/header/slider/slider.html',
-			link: link
-		};
 	}
 })();
 

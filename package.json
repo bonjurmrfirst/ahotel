@@ -12,7 +12,7 @@
         "index.js",
         "./backend"
       ],
-      "extensions": "js,json",
+      "extensions": "js",
       "quiet": false
     }
   },
@@ -27,7 +27,8 @@
     "consolidate": "^0.14.5",
     "ejs": "2.4.1",
     "express": "4.13.3",
-    "mustache": "^2.3.0"
+    "mustache": "^2.3.0",
+    "serve-favicon": "^2.3.2"
   },
   "repository": {
     "type": "git",

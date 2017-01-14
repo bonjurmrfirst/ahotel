@@ -36,7 +36,7 @@ $mw667: "all and (max-width: 667px)"
 $mw736: "all and (max-width: 736px)"
 $mw768: "all and (max-width: 768px)"
 $mw800: "all and (max-width: 800px)"
-$mw850: "all and (max-width: 850px)"
+$mw850: "all and (max-width: 849px)"
 $mw900: "all and (max-width: 900px)"
 $mw1024: "all and (max-width: 1024px)"
 $mw1200: "all and (max-width: 1200px)"
@@ -60,10 +60,10 @@ $mw1680: "all and (max-width: 1680px)"
 @mixin fontStyle($fnt)
     font-family: $fnt, Helvetica, Arial, sans-serif
 
-$default_transition_time: 0.5s
-@mixin transition($time: null)
-    @if ($time)
-        transition: $time
+$default_transition_time: 0.3s
+@mixin transition($prop)
+    @if ($prop)
+        transition: $prop $default_transition_time linear
     @else
-        transition: $default_transition_time
+        transition: all $default_transition_time linear
 // Mixins END

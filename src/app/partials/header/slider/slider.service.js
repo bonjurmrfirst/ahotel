@@ -24,7 +24,7 @@
 		Slider.prototype.setCurrentSlide = function (slide) {
 			slide = parseInt(slide);
 
-			if (!slide || isNaN(slide) || slide < 0 || slide > this._imageSrcList.length - 1) {
+			if (isNaN(slide) || slide < 0 || slide > this._imageSrcList.length - 1) {
 				return;
 			}
 

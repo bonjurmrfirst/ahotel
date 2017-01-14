@@ -29,7 +29,7 @@
         };
 
         this.loginUser = function() {
-            authService.login(this.user)
+            authService.signIn(this.user)
                 .then((response) => {
                     if (response === 'OK') {
                         console.log(response);

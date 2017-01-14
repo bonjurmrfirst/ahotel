@@ -1,4 +1,4 @@
-.bungalows
+.top
 	margin: 60px 6% 0 6%
 	width: 70%
 
@@ -7,23 +7,20 @@
 		 margin-top: 20px
 
 	&__reviewed
-	    @include fontStyle(cabEB)
+	    @include fontStyle(cabB)
 	    @include remLineHeightFallback(1.3)
 	    margin-top: 20px
 	    text-align: justify
-	    text-align-last: right
 
 .top3
     margin-bottom: 40px
     padding:  0 3%
     font-size: 0
-    text-align: center
 
     &:after
         content: ' '
         display: block
         clear: both
-        height: 40px
 
     &__item
         float: left
@@ -32,9 +29,10 @@
         height: auto
 
     &__header
-        @include fontStyle(cabEB)
-        @include remFallback(0.9)
+        @include fontStyle(cabB)
+        @include remFallback(1.2)
         margin-top: 20px
+        padding: 0 3%
         color: $color_reverse
 
     &__desc
@@ -47,79 +45,75 @@
         margin-top: 20px
 
     &__detail-container
+        display: inline-block
         position: relative
-        margin-top: 50px
-        height: 60px
+        height: 30px
+        width: 40px
         background-image: url('../assets/images/icons_details.png')
         background-repeat: no-repeat
         background-position: center 20px
 
-        &--has
+        &--hasnt
             opacity: 0.35
 
-        &--restourant
+        &--restaurant
             background-position: center 0
 
         &--kids
-            background-position: center -60px
+            background-position: center -30px
 
         &--pool
-            background-position: center -120px
+            background-position: center -60px
 
         &--spa
-            background-position: center -180px
+            background-position: center -90px
 
         &--wifi
-            background-position: center -240px
+            background-position: center -120px
 
         &--pet
-            background-position: center -300px
+            background-position: center -150px
 
         &--disable
-            background-position: center -360px
+            background-position: center -180px
 
         &--beach
-            background-position: center -420px
+            background-position: center -210px
 
         &--parking
-            background-position: center -480px
+            background-position: center -240px
 
         &--conditioning
-            background-position: center -540px
+            background-position: center -270px
 
         &--lounge
-            background-position: center -600px
+            background-position: center -300px
 
         &--terrace
-            background-position: center -660px
+            background-position: center -330px
 
         &--garden
-            background-position: center -720px
+            background-position: center -360px
 
         &--gym
-            background-position: center -780px
+            background-position: center -390px
 
         &--bicycles
-            background-position: center -840px
+            background-position: center -420px
 
     &__detail
-        @include fontStyle(cabR)
+        @include fontStyle(cabL)
         @include remFallback(1)
-        position: absolute
-        margin: 0 auto
-        right: 0
-        bottom: -25px
-        left: 0
-        text-transform: capitalize
+        display: inline-block
+        margin-left: 10px
+        margin-bottom: 5px
+        color: $color_dark_reverse
+
 
         &--own
-            @include fontStyle(cabEB)
+            @include fontStyle(cabHi)
             @include remFallback(0.8)
-            position: absolute
-            margin: 0 auto
-            right: 0
-            bottom: -40px
-            left: 0
+            margin-left: 0
             text-transform: capitalize
 
     &__img-container
@@ -129,3 +123,7 @@
         padding: 0 3%
         width: 97%
         height: auto
+
+.top3__detail-container--hasnt + .top3__detail
+    opacity: 0.5
+    text-decoration: line-through

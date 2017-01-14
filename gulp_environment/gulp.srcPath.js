@@ -21,7 +21,7 @@ module.exports = {
 		root: './dist.dev',
 		app: './dist.dev/app',
 		outputAppFileName: 'app.js',
-		templates: './dist.dev/app/templates',
+		templates: './dist.dev/app/partials',
 		vendor: './dist.dev/assets/vendor',
 		css: './dist.dev/styles'
 	},
@@ -30,7 +30,7 @@ module.exports = {
 		root: './dist',
 		app: './dist/app',
 		outputAppFileName: 'app.js',
-		templates: './dist/app/templates',
+		templates: './dist/app/partials',
 		vendor: './dist/assets/vendor',
 		css: './dist/styles',
 		temp: './dist/tmp'

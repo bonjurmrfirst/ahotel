@@ -1,10 +1,8 @@
 h1, h2, h3, h4, h5, h6
-    @include fontStyle(cabEM)
-    /*todo header fonts*/
     color: $color_text_black
 
-p, span, a, li, button, input
-    @include fontStyle(cabR)
+p, span, a, li, button, input, label
+    @include fontStyle(cabL)
     @include remFallback(1)
     color: $color_text_black
 
@@ -12,11 +10,13 @@ a
     text-decoration: none
 
 button, input
+    @include fontStyle(cabHi)
     border: 0
     border-radius: 0
     background-color: transparent
     outline: 0
     text-transform: lowercase
+    cursor: pointer
 
 textarea:focus, input:focus, button:focus
     outline: none

@@ -11,7 +11,7 @@
     <span class="guestcomments__please-login" ng-show="guestComments.showPleaseLogiMessage">Please log in first</span>
 
     <form class="form-comment"
-          ng-class="{'form-comment__opened': guestComments.openForm && logged}"
+          ng-class="{'form-comment__opened': guestComments.openForm && $logged}"
           name="guestComments.formComment"
           ng-submit="guestComments.addComment()"
           novalidate

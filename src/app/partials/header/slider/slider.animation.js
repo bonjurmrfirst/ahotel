@@ -3,7 +3,7 @@
 
 	angular
 		.module('ahotelApp')
-		.animation('.slider__img',animationFunction)
+		.animation('.slider__img', animationFunction);
 
 	function animationFunction() {
 		return {
@@ -14,7 +14,7 @@
 				if(slidingDirection === 'right') {
 					$(element).animate({'left': '100%'}, 500, done);
 				} else {
-					$(element).animate({'left': '-200%'}, 500, done); //why 200? $)
+					$(element).animate({'left': '-200%'}, 500, done); //200? $)
 				}
 			},
 

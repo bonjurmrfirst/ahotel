@@ -14,7 +14,7 @@
         this.showPleaseLogiMessage = false;
 
         this.writeComment = function() {
-            if ($rootScope.logged) {
+            if ($rootScope.$logged) {
                 this.openForm = true
             } else {
                 this.showPleaseLogiMessage = true;

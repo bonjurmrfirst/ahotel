@@ -14,7 +14,7 @@
                 showFirstImgCount: '=ahtlGalleryShowFirst',
                 showNextImgCount: '=ahtlGalleryShowNext'
             },
-            templateUrl: 'app/templates/gallery/gallery.template.html',
+            templateUrl: 'app/partials/gallery/gallery.template.html',
             controller: AhtlGalleryController,
             controllerAs: 'gallery',
             link: ahtlGalleryLink

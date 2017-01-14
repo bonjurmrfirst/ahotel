@@ -12,11 +12,11 @@
 		$stateProvider
 			.state('home', {
 				url: '/',
-				templateUrl: 'app/templates/home/home.html'
+				templateUrl: 'app/partials/home/home.html'
 			})
 			.state('auth', {
 				url: '/auth',
-				templateUrl: 'app/templates/auth/auth.html',
+				templateUrl: 'app/partials/auth/auth.html',
 				params: {'type': 'login'}/*,
 				onEnter: function ($rootScope) {
 					$rootScope.$state = "auth";
@@ -24,23 +24,31 @@
 			})
 			.state('bungalows', {
 				url: '/bungalows',
-				templateUrl: 'app/templates/resorts/bungalows.html'
+				templateUrl: 'app/partials/top/bungalows.html'
 			})
 			.state('hotels', {
-					url: '/hotels',
-					templateUrl: 'app/templates/resorts/hotels.html'
+					url: '/top',
+					templateUrl: 'app/partials/top/hotels.html'
 				})
 			.state('villas', {
 				url: '/villas',
-				templateUrl: 'app/templates/resorts/villas.html'
+				templateUrl: 'app/partials/top/villas.html'
 			})
 			.state('gallery', {
 				url: '/gallery',
-				templateUrl: 'app/templates/gallery/gallery.html'
+				templateUrl: 'app/partials/gallery/gallery.html'
 			})
 			.state('guestcomments', {
 				url: '/guestcomments',
-				templateUrl: 'app/templates/guestcomments/guestcomments.html'
+				templateUrl: 'app/partials/guestcomments/guestcomments.html'
+			})
+			.state('destinations', {
+					url: '/destinations',
+					templateUrl: 'app/partials/destinations/destinations.html'
+			})
+			.state('resort', {
+				url: '/resort',
+				templateUrl: 'app/partials/resort/resort.html'
 			});
 	}
 })();
