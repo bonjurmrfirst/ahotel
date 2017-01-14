@@ -1,0 +1,96 @@
+<!--[if lte IE 9]>
+    <script src="assets/vendor/placeholder.js"></script>
+<![endif]-->
+
+<div class="l-auth" ng-controller="AuthController as form">
+    <div class="auth">
+        <div class="form-container">
+            <form class="form-join"
+                  name="formJoin"
+                  ng-hide="$state.currentStateParams.type === 'login'"
+                  ng-submit="form.createUser()"
+                  novalidate
+                  role="form"><!--todo role-->
+                <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formJoin.userName.$invalid && !formJoin.userName.$pristine}"
+                       type="text"
+                       name="userName"
+                       ng-model="form.newUser.name"
+                       ng-minlength="3"
+                       ng-maxlength="10"
+                       placeholder="name"
+                       required />
+                <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formJoin.userPassword.$invalid && !formJoin.userPassword.$pristine}"
+                       type="password"
+                       name="userPassword"
+                       ng-model="form.newUser.password"
+                       ng-minlength="3"
+                       ng-maxlength="10"
+                       placeholder="password"
+                       required />
+                <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formJoin.userEmail.$invalid && !formJoin.userEmail.$pristine}"
+                       type="email"
+                       name="userEmail"
+                       ng-model="form.newUser.email"
+                       placeholder="email address"
+                       required />
+                <input class="form-login__btn"
+                       type="submit"
+                       ng-disabled="formJoin.$invalid"
+                       value="Create">
+                <p class="form-login__message">Already registered?
+                    <a ui-sref="auth({type: 'login'})">
+                        Sign In
+                    </a>
+                </p>
+                <p class="form-login__validation-warning" ng-show="form.validationStatus.userAlreadyExists">
+                    User already exists
+                </p>
+            </form>
+            <form class="form-login"
+                  name="formLogin"
+                  ng-hide="$state.currentStateParams.type === 'join'"
+                  ng-submit="form.loginUser()"
+                  novalidate
+                  role="form"><!--todo role-->
+                <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formLogin.userName.$invalid && !formLogin.userName.$pristine}"
+                       type="text"
+                       name="userName"
+                       ng-model="form.user.name"
+                       ng-minlength="3"
+                       ng-maxlength="10"
+                       placeholder="name"
+                       required />
+                <input class="form-login__input"
+                       ng-class="{'form-login__input--invalid':
+                            formLogin.userPassword.$invalid && !formLogin.userPassword.$pristine}"
+                       type="password"
+                       name="userPassword"
+                       ng-model="form.user.password"
+                       ng-minlength="3"
+                       ng-maxlength="10"
+                       placeholder="password"
+                       required />
+                <input class="form-login__btn"
+                       type="submit"
+                       ng-disabled="formLogin.$invalid"
+                       value="login">
+                <p class="form-login__message">Not registered?
+                    <a class="form-login__link" ui-sref="auth({type: 'join'})">
+                        Create an account
+                    </a>
+                </p>
+                <p class="form-login__validation-warning" ng-show="form.validationStatus.loginOrPasswordIncorrect">
+                    Login or password incorrect
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

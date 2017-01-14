@@ -1,0 +1,62 @@
+.filters
+    position: relative
+    width: 280px
+    padding: 10px
+    background-color: $color_background_gray
+
+    &__header
+        @include fontStyle(cabB)
+        @include remFallback(1.8)
+        position: absolute
+        top: 0
+        right: 0
+        left: 0
+        display: inline-block
+        padding: 15px 15px
+        color: $color_text_white
+        background-color: $color_green
+
+    &__filter-group
+        position: relative
+        margin-top: 40px
+
+        &:before
+            content: ' '
+            display: block
+            position: absolute
+            height: 2px
+            top: -20px
+            right: 0
+            left: 0
+            background-color: $color_text_white
+
+        &--first
+            margin-top: 80px
+
+    &__filter-group-switcher
+        display: none
+
+    &__filter-group-header
+        @include fontStyle(cab)
+        @include remFallback(1.5)
+        position: relative
+        cursor: pointer
+
+    &__list
+        margin-top: 10px
+
+    &__filter
+        display: block
+
+        &-guests
+            @include transition(background-position-y)
+            display: inline-block
+            height: 55px
+            width: 100px
+            background: transparent url("../assets/images/icons.png") no-repeat
+            background-position-x: -301px
+            background-position-y: -292px
+            cursor: pointer
+
+        &-input-guests
+            display: none

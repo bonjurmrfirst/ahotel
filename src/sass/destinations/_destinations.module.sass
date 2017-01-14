@@ -1,0 +1,28 @@
+.destinations
+
+    &__map
+        margin-top: 40px
+        width: 100%
+        height: 500px
+
+    &__headers
+        margin-top: 40px
+        padding: 0 3%
+
+    &__content
+        margin-top: 40px
+        padding: 0 3%
+
+    &__footer
+        margin-top: 40px
+        padding: 0 3%
+        text-align: center
+
+    &__footer-content
+        @include fontStyle(cabM)
+
+    &__em-text
+        @include fontStyle(cabEB)
+        @include remFallback(1.3)
+        @include remLineHeightFallback(2)
+        color: $color_dark_reverse

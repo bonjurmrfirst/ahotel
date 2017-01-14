@@ -1,0 +1,1122 @@
+{
+  "Hotel El Manantial": {
+    "type": "bungalow",
+    "environment": "desert",
+    "location": {
+      "country": "Namibia",
+      "region": "Otjozondjupa Region, Kalahari Desert"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "A peaceful retreat in colonial-style splendour, stunningly situated in Purmamarca, the most idyllic village in the Quebrada de Humahuaca, 2 hours north of Jujuy",
+    "descLocation": "Otjozondjupa region is one of the fourteen regions of Namibia, its capital is Otjiwarongo. An outstanding landmark within this region is the Waterberg Plateau Park. Administration offices are based in Otjiwarongo which is the largest town in the region.",
+
+    "_": {
+      "lat": -20.330869,
+      "lng": 17.346563
+    }
+  },
+
+  "Legado Mitico": {
+    "type": "bungalow",
+    "environment": "desert",
+    "location": {
+      "country": "Libya",
+      "region": "Sirte District, Sahara Desert"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "A most sophisticated boutique hotel in fashionable Palermo: elegant in style, with excellent service",
+    "descLocation": "Sirte is one of the districts of Libya. It lies in the north of the country and borders the Gulf of Sidra. Its capital is the city of Sirte. Al-Tahadi University is located in Sirte. To the north, Sirte District has a shoreline on the Mediterranean Sea and bordered Al Wahat in the east, Jufra in the south, Jabal al Gharbi in the west and Misrata in the northwest.",
+
+    "_": {
+      "lat": 31.195005,
+      "lng": 16.500483
+    }
+  },
+
+  "Club Tapiz": {
+    "type": "bungalow",
+    "environment": "desert",
+    "location": {
+      "country": "South Africa",
+      "region": "Limpopo"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "A charming little hotel with an excellent restaurant and its own bodega in the wine-growing region.",
+    "descLocation": "Limpopo  is the northernmost province of South Africa. It is named after the Limpopo River, which forms the province's western and northern borders. The name \"Limpopo\" has its etymological origin in the Northern Sotho language word diphororo t?a meetse, meaning \"strong gushing waterfalls\". The capital is Polokwane, formerly called Pietersburg.",
+
+    "_": {
+      "lat": -23.789900,
+      "lng": 30.175637
+    }
+  },
+
+  "Finca Adalgisa": {
+    "type": "villa",
+    "environment": "coast",
+    "location": {
+      "country": "Tanzania",
+      "region": "Bububu, Zanzibar Town"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "All who stay here profess to love it and it’s easy to see why.",
+    "descLocation": "Bububu is a town on the Tanzanian island of Unguja, the main island of Zanzibar. It is located on the central west coast, 10 kilometres north of the Zanzibari capital of Stone Town. The town is predominantly a densely populated industrial town, but it is also noted for its beach, which is one of the most renowned within easy reach of the capital.",
+
+    "_": {
+      "lat": -6.101247,
+      "lng": 39.215758
+    }
+  },
+
+  "Legado Mitico": {
+    "type": "villa",
+    "environment": "coast",
+    "location": {
+      "country": "Papua New Guinea",
+      "region": "Madang Province"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "Fruit and lemonade brought to you at the pool and a bottle of wine as a welcome on your first evening.",
+    "descLocation": "Madang is the capital of Madang Province and is a town with a population of 27,420 (in 2005) on the north coast of Papua New Guinea. It was first settled by the Germans in the 19th century.",
+
+    "_": {
+      "lat": -5.510379,
+      "lng": 145.980497
+    }
+  },
+
+  "House of Jasmines": {
+    "type": "villa",
+    "environment": "coast",
+    "location": {
+      "country": "Reunion",
+      "region": "Saint Andre"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "A charming and intimate boutique hotel with luxurious rooms and a superb little spa.",
+    "descLocation": "Saint Andre is the sixth-largest commune in the French overseas department of R?union. It is located on the northeast part of the island of R?union.",
+
+    "_": {
+      "lat": -20.919410,
+      "lng": 55.642483
+    }
+  },
+
+  "House of Jasmines": {
+    "type": "hotel",
+    "environment": "desert",
+    "location": {
+      "country": "Swaziland",
+      "region": "Lubombo Region"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "Superb spa offering an extensive menu of excellent massages and facials",
+    "descLocation": "Lubombo located in the east of the country. It has an area of 5,849.11 km? and a population of 207,731 (2007). Its administrative center is Siteki. It borders all three other regions: Hhohho to the north, Manzini to the west, and Shiselweni to the south. It is divided into 11 tinkhundla.",
+
+    "_": {
+      "lat": -26.784930,
+      "lng": 31.734820
+    }
+  },
+
+  "Posada de la Laguna": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Sao Tome",
+      "region": "Cantagalo"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "The setting is extremely peaceful and the views are wonderfully tranquil",
+    "descLocation": "Cantagalo is a district of S?o Tom? Province. Out of the seven districts that make up the equatorial Atlantic islands of S?o Tom? and Pr?ncipe. It is fourth largest in terms of population and covers approximately 119 square kilometers. Its population is 15,113 (2008 est.).[1] The district capital is Santana.",
+
+    "_": {
+      "lat": 0.237637,
+      "lng": 6.738835
+    }
+  },
+
+  "Estancia Rincon": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Madagascar",
+      "region": "Ampanihy"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "There's greenery everywhere: step outside to admire the vineyards and palms",
+    "descLocation": "Ampanihy  is a town in Atsimo-Andrefana Region, Madagascar. It is home of the Ampanihy Airport (AMP) and is crossed by the Route nationale 10.",
+
+    "_": {
+      "lat": -25.023296,
+      "lng": 44.063869
+    }
+  },
+
+  "Yacutinga Lodge": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Mauritius",
+      "region": "Plaine Corail-La Fouche Corail"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "A chic but relaxed mood: nothing pretentious, just chilled-out elegance",
+    "descLocation": "Mauritius officially the Republic of Mauritius (French: R?publique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agal?ga, St. Brandon and two disputed territories).",
+
+    "_": {
+      "lat": -19.740817,
+      "lng": 63.363294
+    }
+  },
+
+  "Aldebaran Hotel": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Mauritius",
+      "region": "South Agalega Islands"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "Superb restaurant using local produce, with an excellent wine list.",
+    "descLocation": "Mauritius officially the Republic of Mauritius (French: R?publique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agal?ga, St. Brandon and two disputed territories).",
+
+    "_": {
+      "lat": -10.455412,
+      "lng": 56.685301
+    }
+  },
+
+  "Bldebaran Hotel": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Mauritius",
+      "region": "North Agalega Islands"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "Good little spa, with a sauna, a Jacuzzi and fantastic massages. ",
+    "descLocation": "Mauritius officially the Republic of Mauritius (French: R?publique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agal?ga, St. Brandon and two disputed territories).",
+
+    "_": {
+      "lat": -10.433995,
+      "lng": 56.647268
+    }
+  },
+
+  "Estancia Peuma Hue": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Seychelles",
+      "region": "Coetivy"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "A friendly atmosphere: meet other guests at the daily wine tasting and swap travel notes",
+    "descLocation": "Coetivy Along with ?le Platte, the nearest neighbor 171 km (106 mi) northwest, it comprises the Southern Coral Group and therefore belongs to the Outer Islands.",
+
+    "_": {
+      "lat": -7.140338,
+      "lng": 56.270384
+    }
+  },
+
+  "Eolo": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Mayotte",
+      "region": "Dembeni"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "Excellent attention from the friendly and professional staff",
+    "descLocation": "Dembeni is a commune in the French overseas department of Mayotte, in the Indian Ocean.",
+
+    "_": {
+      "lat": -12.839928,
+      "lng": 45.190855
+    }
+  },
+
+  "Babyntsi Hotel": {
+    "type": "hotel",
+    "environment": "city",
+    "location": {
+      "country": "Ukraine",
+      "region": "Babyntsi, Kyivs'ka oblast"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "Beautiful themed rooms based around historical Ukraine figures",
+    "descLocation": "Kyivs'ka oblast is an oblast (province) in central Ukraine. The administrative center of the oblast is the city of Kiev (Ukrainian: Êè¿â, Kyiv), which also serves as the capital of Ukraine. Despite being located in the center of the Kiev Oblast, and hosting the governing bodies of the oblast, Kiev itself is a self-governing city with special status and not under oblast jurisdiction.",
+
+    "_": {
+      "lat": 50.638800,
+      "lng": 30.022539
+    }
+  },
+
+  "Pechykhvosty Hotel": {
+    "type": "hotel",
+    "environment": "city",
+    "location": {
+      "country": "Ukraine",
+      "region": "Pechykhvosty, Volyns'ka oblast"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "A clever combination of peaceful simplicity in the d?cor, but with real comfort",
+    "descLocation": "Volyns'ka oblast is an oblast (province) in north-western Ukraine. Its administrative center is Lutsk. Kovel is the westernmost town and the last station in Ukraine of the rail line running from Kiev to Warsaw. Population: 1,042,918?(2015 est.)",
+
+    "_": {
+      "lat": 50.502495,
+      "lng": 24.614732
+    }
+  },
+
+  "Dnistrovs'kyi Hotel": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Ukraine",
+      "region": "Bilhorod-Dnistrovs'kyi district, Odessa Oblast"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "Excellent beds, good bathrooms and a welcoming lounge",
+    "descLocation": "Bilhorod-Dnistrovs'kyi district is a city and port situated on the right bank of the Dniester Liman (on the Dniester estuary leading to the Black Sea[2]) in Odessa Oblast of southwestern Ukraine, in the historical region of Bessarabia. Administratively, Bilhorod-Dnistrovskyi is incorporated as a town of oblast significance. It also serves as the administrative center of Bilhorod-Dnistrovskyi Raion, one of twenty-six districts of Odessa Oblast, though it is not a part of the district. It is a location of a big freight seaport. Population: 50,086?(2015 est.)",
+
+    "_": {
+      "lat": 46.061116,
+      "lng": 30.412401
+    }
+  },
+
+  "Petrushky Hotel": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Ukraine",
+      "region": "Petrushky, Kyivs'ka oblast"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "A swimming pool (summer only) with excellent views",
+    "descLocation": "Kyivs'ka oblast is an oblast (province) in central Ukraine. The administrative center of the oblast is the city of Kiev (Ukrainian: Êè¿â, Kyiv), which also serves as the capital of Ukraine. Despite being located in the center of the Kiev Oblast, and hosting the governing bodies of the oblast, Kiev itself is a self-governing city with special status and not under oblast jurisdiction.",
+
+    "_": {
+      "lat": 50.420998,
+      "lng": 30.161548
+    }
+  },
+
+  "Velyka Doch Hotel": {
+    "type": "hotel",
+    "environment": "coast",
+    "location": {
+      "country": "Ukraine",
+      "region": "Velyka Doch, Chernihivs'ka oblast"
+    },
+    "price": 100,
+    "guests": {
+      "min": 1,
+      "max": 5
+    },
+    "details": {
+      "restaurant": "daily",
+      "kids": "all ages welcome",
+      "pool": "outdoor",
+      "spa": "spa treatments",
+      "wifi": "yes",
+      "pet": "pet friendly",
+      "disable": "disable access",
+      "beach": "beach nearby, 10m",
+      "parking": "off-street",
+      "conditioning": "air cond.",
+      "lounge": "yes",
+      "terrace": "yes",
+      "garden": "yes",
+      "gym": "yes",
+      "bicycles": "available"
+    },
+    "activities": [
+      "Cooking classes",
+      "Cycling",
+      "Fishing",
+      "Golf",
+      "Hiking",
+      "Horse-riding",
+      "Kayaking",
+      "Nightlife",
+      "Sailing",
+      "Scuba diving",
+      "Shopping / markets",
+      "Snorkelling",
+      "Skiing",
+      "Surfing",
+      "Wildlife",
+      "Windsurfing",
+      "Wine tasting",
+      "Yoga"
+    ],
+
+    "desc": "Personalised service: this is a small place so you create the schedule",
+    "descLocation": "Chernihivs'ka oblast is an oblast (province) of northern Ukraine. The administrative center of the oblast is the city of Chernihiv however within the entire Oblast are 1,511 settlements of various sizes ranging from large cities to very small villages.",
+
+    "_": {
+      "lat": 51.307518,
+      "lng": 32.574232
+    }
+  }
+}

@@ -1,0 +1,42 @@
+.filters__filter-group-switcher:not(:checked) ~ .filters__list
+    display: none
+
+.filters__filter-group-switcher:checked + .filters__filter-group-header:after
+    @include fontStyle(cabL)
+    @include remFallback(0.7)
+    @include transition(all)
+    content: '(hide)'
+    position: absolute
+    top: 0
+    right: -30px
+    bottom: 0
+    display: block
+    color: $color_green
+
+.filters__filter-group-switcher:not(:checked) + .filters__filter-group-header:after
+    @include fontStyle(cabL)
+    @include remFallback(0.7)
+    @include transition(all)
+    content: '(show)'
+    position: absolute
+    top: 0
+    right: -35px
+    bottom: 0
+    display: block
+    color: $color_green
+
+.filters__filter-group-switcher:checked + .filters__filter-group-header:hover:after,
+.filters__filter-group-switcher:not(:checked) + .filters__filter-group-header:hover:after
+    @include transition(color)
+    color: $color_dark_green
+
+.filters__filter-group-switcher:checked + .filters__filter-group-header:active:after,
+.filters__filter-group-switcher:not(:checked) + .filters__filter-group-header:active:after
+    @include transition(color)
+    color: $color_light_green
+
+
+
+.filters__filter-input-guests:checked + .filters__filter-guests
+    @include transition(background-position-y)
+    background-position-y: -346px
