@@ -1226,7 +1226,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			restrict: 'EA',
 			scope: {},
 			controller: ahtlSliderController,
-			templateUrl: 'app/templates/header/slider/slider.html',
+			templateUrl: 'app/partials/header/slider/slider.html',
 			link: link
 		};
 
