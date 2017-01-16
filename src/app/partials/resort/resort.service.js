@@ -20,11 +20,12 @@
                 .then(onResolve, onRejected);
 
             function onResolve(response) {
-                console.log(response);
+                console.log(response.data)
+                return response.data
             }
 
             function onRejected(response) {
-                console.log(response);
+                return response
             }
         }
     }

@@ -18,8 +18,17 @@
             max: 1000
         };
 
-        resortService.getResort((response) => {
-            this.loading = false;
+        this.hotels = {};
+
+        resortService.getResort().then((response) => {
+            this.hotels = response
         });
+        /*((response) => {
+                console.log(response)
+                this.loading = false;
+        },
+            (response) => {
+                console.log(response)
+            });*/
     }
 })();

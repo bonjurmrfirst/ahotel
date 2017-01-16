@@ -34,7 +34,7 @@
                 max: 5
             },
 
-            mustHave: [
+            mustHaves: [
                 'restaurant',
                 'kids',
                 'pool',
@@ -52,7 +52,7 @@
                 'bicycles'
             ],
 
-            activitys: [
+            activities: [
                 'Cooking classes',
                 'Cycling',
                 'Fishing',
@@ -71,6 +71,11 @@
                 'Windsurfing',
                 'Wine tasting',
                 'Yoga' 
-            ]
+            ],
+
+            price: {
+                min: 0,
+                max: 1000
+            }
         });
 })();

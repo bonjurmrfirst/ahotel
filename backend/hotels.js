@@ -9,7 +9,7 @@ router.use(function (req, res, next) {
 });
 
 router.get('/', function(req, res) {
-    res.send('Birds home page');
+    res.send(hotels);
 });
 
 /*router.get('/about', function(req, res) {

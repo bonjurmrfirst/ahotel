@@ -2,21 +2,29 @@
     text-align: center
 
     &__input
-        width: 30%
+        margin-top: 5px
+        width: 55px
+
+        &--invalid
+            color: $color_text_invalid //$, component?
 
 .slide
     position: relative
+    display: inline-block
     margin-top: 10px
+    width: 240px
     height: 20px
     border-radius: 20px
-    background-color: $color_text_white //$color_gray, really?
+    background-color: $color_text_white
 
     &__pointer
         position: absolute
+        top: -1px
         height: 20px
         width: 20px
+        border: 1px solid $color_dark_green
         border-radius: 20px
-        background-color: $color_green //$color_green, really?
+        background-color: $color_green
         cursor: pointer
 
         &--left
@@ -34,7 +42,10 @@
     &__line
         position: absolute
         height: 1px
-        background-color: $color_green
+        background-color: $color_background_gray
         top: 10px
         right: 0
         left: 0
+
+        &--green
+            background-color: $color_green

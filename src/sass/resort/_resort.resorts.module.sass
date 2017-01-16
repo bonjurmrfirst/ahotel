@@ -1,0 +1,146 @@
+.resorts
+    overflow: hidden
+
+.hotel
+    position: relative
+    margin-bottom: 30px
+
+    &:before
+        content: ' '
+        position: absolute
+        top: -15px
+        right: 0
+        left: 0
+        display: block
+        height: 1px
+        background-color: $color_background_gray
+
+    &:after
+        content: ' '
+        display: block
+        clear: both
+
+    &__img
+        float: right
+        margin-left: 3%
+        width: 33%
+        min-width: 216px
+        max-width: 300px
+        padding: 3px
+        border: 1px solid $color_background_gray
+
+    &__name
+        @include fontStyle(cabL)
+        @include remFallback(1.6)
+        margin: 15px 30px 0 0
+
+    &__map
+        position: relative
+        &:after
+            content: ' '
+            position: absolute
+            top: -12px
+            right: -30px
+            display: block
+            width: 24px
+            height: 30px
+            background: transparent url('../assets/images/icons.png') no-repeat
+            background-position: -177px -370px
+
+        &:hover
+            color: $color_green
+
+            &:after
+                background-position: -201px -370px
+
+        &:active
+            color: $color_dark_green
+
+    &__location
+        @include fontStyle(cabHi)
+        margin: 15px 0
+        color: $color_text_gray
+
+    &__price
+        margin-top: 15px
+
+    &__desc
+        margin-top: 10px
+
+    &__activities
+        margin-top: 10px
+
+    &__activities-em
+        @include fontStyle(cabB)
+        color: $color_dark_reverse
+
+    &__more
+        @include fontStyle(cabHi)
+        display: inline-block
+        margin-top: 15px
+        padding: 15px 50px
+        background-color: $color_dark_reverse
+        color: white
+
+        &:hover
+            background-color: $color_light_reverse
+
+        &:active
+            background-color: $color_dark_reverse
+/*.resorts
+    display: inline-block
+    vertical-align: top
+
+    &__found
+        @include fontStyle(cabL)
+        @include remFallback(1.5)
+        @include remLineHeightFallback(4)
+        display: block
+
+
+/*.hotel
+    &__img
+        float: left
+
+        &:after
+            content: ' '
+            display: block
+            clear: both
+
+    &__details
+        position: relative
+        margin: 5px 0 5px 20px
+        background-color: red
+
+    &__name
+        @include fontStyle(cabL)
+        @include remFallback(1.4)
+
+    &__map
+        //cursor: pointer
+
+        &:after
+            content: ' '
+            position: absolute
+            top: -10px
+            right: -45px
+            width: 35px
+            height: 45px
+            background: transparent url('../assets/images/icon_map.png') no-repeat
+
+        &:hover
+            color: $color_green
+
+        &:active
+            color: $color_dark_green
+
+    &__type
+        @include fontStyle(cabB)
+        margin-top: 5px
+        float: left
+
+    &__price
+        @include fontStyle(cabL)
+
+    &__desc
+        min-width: 0

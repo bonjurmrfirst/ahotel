@@ -334,9 +334,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             max: 5
         },
 
-        mustHave: ['restaurant', 'kids', 'pool', 'spa', 'wifi', 'pet', 'disable', 'beach', 'parking', 'conditioning', 'lounge', 'terrace', 'garden', 'gym', 'bicycles'],
+        mustHaves: ['restaurant', 'kids', 'pool', 'spa', 'wifi', 'pet', 'disable', 'beach', 'parking', 'conditioning', 'lounge', 'terrace', 'garden', 'gym', 'bicycles'],
 
-        activitys: ['Cooking classes', 'Cycling', 'Fishing', 'Golf', 'Hiking', 'Horse-riding', 'Kayaking', 'Nightlife', 'Sailing', 'Scuba diving', 'Shopping / markets', 'Snorkelling', 'Skiing', 'Surfing', 'Wildlife', 'Windsurfing', 'Wine tasting', 'Yoga']
+        activities: ['Cooking classes', 'Cycling', 'Fishing', 'Golf', 'Hiking', 'Horse-riding', 'Kayaking', 'Nightlife', 'Sailing', 'Scuba diving', 'Shopping / markets', 'Snorkelling', 'Skiing', 'Surfing', 'Wildlife', 'Windsurfing', 'Wine tasting', 'Yoga'],
+
+        price: {
+            min: 0,
+            max: 1000
+        }
     });
 })();
 'use strict';
@@ -1054,6 +1059,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
+    angular.module('ahotelApp').filter('activitiesfilter', activitiesFilter);
+
+    activitiesFilter.$inject = ['$log'];
+
+    function activitiesFilter($log) {
+        return function (arg, _stringLength) {
+            var stringLength = parseInt(_stringLength);
+
+            if (isNaN(stringLength)) {
+                $log.warn('Can\'t parse argument: ' + _stringLength);
+                return;
+            }
+
+            var result = arg.join(', ').slice(0, stringLength);
+
+            return result.slice(0, result.lastIndexOf(',')) + '...';
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
     angular.module('ahotelApp').controller('ResortController', ResortController);
 
     ResortController.$inject = ['hotelDetailsConstant', 'resortService'];
@@ -1071,9 +1100,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             max: 1000
         };
 
-        resortService.getResort(function (response) {
-            _this.loading = false;
+        this.hotels = {};
+
+        resortService.getResort().then(function (response) {
+            _this.hotels = response;
         });
+        /*((response) => {
+                console.log(response)
+                this.loading = false;
+        },
+            (response) => {
+                console.log(response)
+            });*/
     }
 })();
 'use strict';
@@ -1097,11 +1135,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }).then(onResolve, onRejected);
 
             function onResolve(response) {
-                console.log(response);
+                console.log(response.data);
+                return response.data;
             }
 
             function onRejected(response) {
-                console.log(response);
+                return response;
             }
         }
     }
@@ -1340,31 +1379,41 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').directive('ahtlPriceSlider', priceSliderDirective);
 
-    priceSliderDirective.$inject = [];
+    priceSliderDirective.$inject = ['HeaderTransitionsService'];
 
     function priceSliderDirective() {
         return {
-            scope: { //todo@=
-                min: "=min",
-                max: "=max"
+            scope: {
+                min: "@",
+                max: "@",
+                leftSlider: '=',
+                rightSlider: '='
             },
             restrict: 'E',
             templateUrl: 'app/partials/resort/priceSlider/priceSlider.html',
             link: priceSliderDirectiveLink
         };
 
-        function priceSliderDirectiveLink($scope, elem, attrs) {
+        function priceSliderDirectiveLink($scope, HeaderTransitionsService) {
             var rightBtn = $('.slide__pointer--right'),
-                leftBtn = $('.slide__pointer--left');
+                leftBtn = $('.slide__pointer--left'),
+                slideAreaWidth = parseInt($('.slide').css('width')),
+                valuePerStep = $scope.max / (slideAreaWidth - 20);
+
+            $scope.min = parseInt($scope.min);
+            $scope.max = parseInt($scope.max);
+
+            $('.priceSlider__input--min').val($scope.min);
+            $('.priceSlider__input--max').val($scope.max);
 
             initDrag(rightBtn, parseInt(rightBtn.css('left')), function () {
-                return parseInt($('.slide').css('width'));
+                return slideAreaWidth;
             }, function () {
                 return parseInt(leftBtn.css('left'));
             });
 
             initDrag(leftBtn, parseInt(leftBtn.css('left')), function () {
-                return parseInt(rightBtn.css('left'));
+                return parseInt(rightBtn.css('left')) + 20;
             }, function () {
                 return 0;
             });
@@ -1384,8 +1433,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
 
                 function docOnMouseMove(event) {
-                    if (initPosition + event.pageX - shift >= minPosition() + 20 && initPosition + event.pageX - shift <= maxPosition() - 20) {
+                    var positionLessThanMax = initPosition + event.pageX - shift <= maxPosition() - 20,
+                        positionGraterThanMin = initPosition + event.pageX - shift >= minPosition();
+
+                    if (positionLessThanMax && positionGraterThanMin) {
                         dragElem.css('left', initPosition + event.pageX - shift);
+
+                        if (dragElem.attr('class').indexOf('left') !== -1) {
+                            $('.slide__line--green').css('left', initPosition + event.pageX - shift);
+                        } else {
+                            $('.slide__line--green').css('right', slideAreaWidth - initPosition - event.pageX + shift);
+                        }
+
+                        setPrices();
                     }
                 }
 
@@ -1394,12 +1454,107 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     dragElem.off('mouseup', btnOnMouseUp);
                     $(document).off('mouseup', btnOnMouseUp);
 
-                    initPosition = parseInt(dragElem.css('left'));
+                    setPrices();
+                    emit();
                 }
 
                 dragElem.on('dragstart', function () {
                     return false;
                 });
+
+                function setPrices() {
+                    var newMin = ~~(parseInt(leftBtn.css('left')) * valuePerStep),
+                        newMax = ~~(parseInt(rightBtn.css('left')) * valuePerStep);
+
+                    $('.priceSlider__input--min').val(newMin);
+                    $('.priceSlider__input--max').val(newMax);
+
+                    /*$scope.$broadcast('priceSliderPositionChanged', {
+                        left: leftBtn.css('left'),
+                        right: rightBtn.css('left')
+                    })*/
+                }
+
+                function setSliders(btn, newValue) {
+                    var newPostion = newValue / valuePerStep;
+                    btn.css('left', newPostion);
+
+                    if (btn.attr('class').indexOf('left') !== -1) {
+                        $('.slide__line--green').css('left', newPostion);
+                    } else {
+                        $('.slide__line--green').css('right', slideAreaWidth - newPostion);
+                    }
+
+                    emit();
+                }
+
+                $('.priceSlider__input--min').on('change keyup paste input', function () {
+                    var newValue = $(this).val();
+
+                    if (+newValue < 0) {
+                        $(this).addClass('priceSlider__input--invalid');
+                        return;
+                    }
+
+                    if (+newValue / valuePerStep > parseInt(rightBtn.css('left')) - 20) {
+                        $(this).addClass('priceSlider__input--invalid');
+                        console.log('fa;l');
+                        return;
+                    }
+
+                    $(this).removeClass('priceSlider__input--invalid');
+                    setSliders(leftBtn, newValue);
+                });
+
+                $('.priceSlider__input--max').on('change keyup paste input', function () {
+                    var newValue = $(this).val();
+
+                    if (+newValue > $scope.max) {
+                        $(this).addClass('priceSlider__input--invalid');
+                        console.log(newValue, $scope.max);
+                        return;
+                    }
+
+                    if (+newValue / valuePerStep < parseInt(leftBtn.css('left')) + 20) {
+                        $(this).addClass('priceSlider__input--invalid');
+                        console.log('fa;l');
+                        return;
+                    }
+
+                    $(this).removeClass('priceSlider__input--invalid');
+                    setSliders(rightBtn, newValue);
+                });
+
+                function emit() {
+                    $scope.leftSlider = $('.priceSlider__input--min').val();
+                    $scope.rightSlider = $('.priceSlider__input--max').val();
+                    $scope.$apply();
+
+                    /*$scope.$broadcast('priceSliderPositionChanged', {
+                        min: $('.priceSlider__input--min').val(),
+                        max: $('.priceSlider__input--max').val()
+                    });
+                    console.log(13);*/
+                }
+
+                //todo ie8 bug fix
+                if ($('html').hasClass('ie8')) {
+                    $('.priceSlider__input--max').trigger('change');
+                }
+
+                /*$scope.$watch(function() {
+                        return $(elem).find('.slide__pointer--left').css('left');
+                    },
+                    function(newValue) {
+                        $('.slide__line--green').css('left', newValue);
+                    });
+                  $scope.$watch(function() {
+                        return $(elem).find('.slide__pointer--right').css('left');
+                    },
+                    function(newValue) {
+                        console.log(+slideAreaWidth - +newValue);
+                        $('.slide__line--green').css('right', +slideAreaWidth - parseInt(newValue));
+                    });*/
             }
         }
     }

@@ -1,5 +1,6 @@
-{
-  "Hotel El Manantial": {
+[
+  {
+    "name": "Hotel El Manantial",
     "type": "bungalow",
     "environment": "desert",
     "location": {
@@ -55,10 +56,13 @@
     "_": {
       "lat": -20.330869,
       "lng": 17.346563
-    }
+    },
+
+    "_id": 1
   },
 
-  "Legado Mitico": {
+  {
+    "name": "Legado Mitico",
     "type": "bungalow",
     "environment": "desert",
     "location": {
@@ -111,13 +115,16 @@
     "desc": "A most sophisticated boutique hotel in fashionable Palermo: elegant in style, with excellent service",
     "descLocation": "Sirte is one of the districts of Libya. It lies in the north of the country and borders the Gulf of Sidra. Its capital is the city of Sirte. Al-Tahadi University is located in Sirte. To the north, Sirte District has a shoreline on the Mediterranean Sea and bordered Al Wahat in the east, Jufra in the south, Jabal al Gharbi in the west and Misrata in the northwest.",
 
-    "_": {
+    "_coordinates": {
       "lat": 31.195005,
       "lng": 16.500483
-    }
+    },
+
+    "_id": 2
   },
 
-  "Club Tapiz": {
+  {
+    "name": "Club Tapiz",
     "type": "bungalow",
     "environment": "desert",
     "location": {
@@ -173,10 +180,13 @@
     "_": {
       "lat": -23.789900,
       "lng": 30.175637
-    }
+    },
+
+    "_id": 3
   },
 
-  "Finca Adalgisa": {
+  {
+    "name": "Finca Adalgisa",
     "type": "villa",
     "environment": "coast",
     "location": {
@@ -232,10 +242,13 @@
     "_": {
       "lat": -6.101247,
       "lng": 39.215758
-    }
+    },
+
+    "_id": 4
   },
 
-  "Legado Mitico": {
+  {
+    "name": "Legado Mitico",
     "type": "villa",
     "environment": "coast",
     "location": {
@@ -291,10 +304,13 @@
     "_": {
       "lat": -5.510379,
       "lng": 145.980497
-    }
+    },
+
+    "_id": 5
   },
 
-  "House of Jasmines": {
+  {
+    "name": "House of Jasmines",
     "type": "villa",
     "environment": "coast",
     "location": {
@@ -350,10 +366,13 @@
     "_": {
       "lat": -20.919410,
       "lng": 55.642483
-    }
+    },
+
+    "_id": 6
   },
 
-  "House of Jasmines": {
+  {
+    "name": "House of Jasmines",
     "type": "hotel",
     "environment": "desert",
     "location": {
@@ -409,10 +428,13 @@
     "_": {
       "lat": -26.784930,
       "lng": 31.734820
-    }
+    },
+
+    "_id": 7
   },
 
-  "Posada de la Laguna": {
+  {
+    "name": "Posada de la Laguna",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -468,10 +490,13 @@
     "_": {
       "lat": 0.237637,
       "lng": 6.738835
-    }
+    },
+
+    "_id": 8
   },
 
-  "Estancia Rincon": {
+  {
+    "name": "Estancia Rincon",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -527,10 +552,13 @@
     "_": {
       "lat": -25.023296,
       "lng": 44.063869
-    }
+    },
+
+    "_id": 9
   },
 
-  "Yacutinga Lodge": {
+  {
+    "name": "Yacutinga Lodge",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -586,10 +614,13 @@
     "_": {
       "lat": -19.740817,
       "lng": 63.363294
-    }
+    },
+
+    "_id": 10
   },
 
-  "Aldebaran Hotel": {
+  {
+    "name": "Aldebaran Hotel",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -645,10 +676,13 @@
     "_": {
       "lat": -10.455412,
       "lng": 56.685301
-    }
+    },
+
+    "_id": 11
   },
 
-  "Bldebaran Hotel": {
+  {
+    "name": "Bldebaran Hotel",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -704,10 +738,13 @@
     "_": {
       "lat": -10.433995,
       "lng": 56.647268
-    }
+    },
+
+    "_id": 12
   },
 
-  "Estancia Peuma Hue": {
+  {
+    "name": "Estancia Peuma Hue",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -763,10 +800,13 @@
     "_": {
       "lat": -7.140338,
       "lng": 56.270384
-    }
+    },
+
+    "_id": 13
   },
 
-  "Eolo": {
+  {
+    "name": "Eolo",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -822,10 +862,13 @@
     "_": {
       "lat": -12.839928,
       "lng": 45.190855
-    }
+    },
+
+    "_id": 14
   },
 
-  "Babyntsi Hotel": {
+  {
+    "name": "Babyntsi Hotel",
     "type": "hotel",
     "environment": "city",
     "location": {
@@ -881,10 +924,13 @@
     "_": {
       "lat": 50.638800,
       "lng": 30.022539
-    }
+    },
+
+    "_id": 15
   },
 
-  "Pechykhvosty Hotel": {
+  {
+    "name": "Pechykhvosty Hotel",
     "type": "hotel",
     "environment": "city",
     "location": {
@@ -940,10 +986,13 @@
     "_": {
       "lat": 50.502495,
       "lng": 24.614732
-    }
+    },
+
+    "_id": 16
   },
 
-  "Dnistrovs'kyi Hotel": {
+  {
+    "name": "Dnistrovs'kyi Hotel",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -999,10 +1048,13 @@
     "_": {
       "lat": 46.061116,
       "lng": 30.412401
-    }
+    },
+
+    "_id": 17
   },
 
-  "Petrushky Hotel": {
+  {
+    "name": "Petrushky Hotel",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -1058,10 +1110,13 @@
     "_": {
       "lat": 50.420998,
       "lng": 30.161548
-    }
+    },
+
+    "_id": 18
   },
 
-  "Velyka Doch Hotel": {
+  {
+    "name": "Velyka Doch Hotel",
     "type": "hotel",
     "environment": "coast",
     "location": {
@@ -1117,6 +1172,8 @@
     "_": {
       "lat": 51.307518,
       "lng": 32.574232
-    }
+    },
+
+    "_id": 19
   }
-}
+]

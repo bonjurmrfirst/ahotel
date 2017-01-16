@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<!--[if lte IE 9]> <html lang="en-US" ng-app="ahotelApp" class="lte9"> <![endif]-->
+<!--[if IE 9]> <html lang="en-US" ng-app="ahotelApp" class="ie9"> <![endif]-->
+<!--[if IE 8]> <html lang="en-US" ng-app="ahotelApp" class="ie8"> <![endif]-->
+<!--[if lt IE 8]> <html lang="en-US" ng-app="ahotelApp" class="lt8"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en-US" ng-app="ahotelApp"> <!--<![endif]-->
 <head>
     <meta charset="UTF-8">
@@ -10,8 +12,6 @@
         <script src="assets/vendor/html5shiv.js"></script>
         <script src="assets/vendor/angularShiv.js"></script>
     <![endif]-->
-    <!--script src="../node_modules/notification-logger/notification-logger.js"></script>
-    <script>logger.init();</script-->
     <link href="styles/styles.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
@@ -20,13 +20,13 @@
     <script src="assets/vendor/promise.js"></script>
     <script src="app/app.js"></script>
 </head>
-<body id="bbb">
+<body>
     <ahtl-modal class="modal"></ahtl-modal>
 
     <div class="l-wrapper">
         <ahtl-header></ahtl-header>
         <ui-view></ui-view>
-        <ng-include src="'app/templates/footer/footer.html'"></ng-include>
+        <ng-include src="'app/partials/footer/footer.html'"></ng-include>
     </div>
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/console-polyfill/0.2.3/index.min.js"></script>

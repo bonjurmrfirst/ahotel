@@ -1,8 +1,18 @@
 .filters
     position: relative
-    width: 280px
+    float: left
+    display: block
+    margin-right: 3%
+    width: 240px
     padding: 10px
     background-color: $color_background_gray
+
+    @media #{$mw768}
+        float: none
+        width: 97%
+        margin-right: 16%
+        background-color: red
+        text-align: center
 
     &__header
         @include fontStyle(cabB)
@@ -33,6 +43,18 @@
         &--first
             margin-top: 80px
 
+        &--last
+            margin-bottom: 20px
+            &:after
+                content: ' '
+                display: block
+                position: absolute
+                height: 2px
+                bottom: -20px
+                right: 0
+                left: 0
+                background-color: $color_text_white
+
     &__filter-group-switcher
         display: none
 
@@ -48,6 +70,10 @@
     &__filter
         display: block
 
+        @media #{$mw768}
+            display: inline-block
+            margin-left: 10px
+
         &-guests
             @include transition(background-position-y)
             display: inline-block
@@ -60,3 +86,15 @@
 
         &-input-guests
             display: none
+
+.help
+    margin: 40px 3% 10px 3%
+    text-align: center
+    opacity: 0.5
+
+    &__header
+        @include fontStyle(cabHi)
+        @include remFallback(1.5)
+
+    &__call-us
+        margin-top: 5px
