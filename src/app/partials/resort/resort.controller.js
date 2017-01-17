@@ -5,24 +5,23 @@
         .module('ahotelApp')
         .controller('ResortController', ResortController);
 
-    ResortController.$inject = ['hotelDetailsConstant', 'resortService'];
+    ResortController.$inject = ['filtersService', 'resortService', '$scope'];
 
-    function ResortController(hotelDetailsConstant, resortService) {
+    function ResortController(filtersService, resortService, $scope) {
         this.loading = true;
-
-        this.renderFiltersList = hotelDetailsConstant;
-
-        this.filters = {};
-        this.filters.price = {
-            min: 0,
-            max: 1000
-        };
-
         this.hotels = {};
+
+        this.filters = filtersService.initFilters();
 
         resortService.getResort().then((response) => {
             this.hotels = response
         });
+
+        $scope.$watch(() => this.filters, function(newValue) {//todo
+            //for (let key in )
+            console.log(newValue)
+        }, true);
+
         /*((response) => {
                 console.log(response)
                 this.loading = false;

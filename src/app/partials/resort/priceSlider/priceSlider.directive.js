@@ -21,6 +21,9 @@
         };
 
         function priceSliderDirectiveLink($scope, HeaderTransitionsService) {
+            /*console.log($scope.leftSlider);
+            console.log($scope.rightSlider);
+            $scope.rightSlider.max = 15;*/
             let rightBtn = $('.slide__pointer--right'),
                 leftBtn = $('.slide__pointer--left'),
                 slideAreaWidth = parseInt($('.slide').css('width')),

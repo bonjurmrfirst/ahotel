@@ -4,31 +4,35 @@
     display: block
     margin-right: 3%
     width: 240px
-    padding: 10px
+    padding: 30px
+    overflow: hidden
     background-color: $color_background_gray
 
     @media #{$mw768}
         float: none
-        width: 97%
-        margin-right: 16%
-        background-color: red
+        width: 100%
+        padding: 30px
         text-align: center
 
     &__header
         @include fontStyle(cabB)
-        @include remFallback(1.8)
+        @include remFallback(1.4)
+        @include remLineHeightFallback(1.8)
         position: absolute
         top: 0
         right: 0
         left: 0
         display: inline-block
         padding: 15px 15px
-        color: $color_text_white
+        color: $color_text_gray
         background-color: $color_green
 
     &__filter-group
         position: relative
         margin-top: 40px
+
+        @media #{$mw768}
+            padding: 0 6%
 
         &:before
             content: ' '
@@ -72,7 +76,7 @@
 
         @media #{$mw768}
             display: inline-block
-            margin-left: 10px
+            margin-left: 20px
 
         &-guests
             @include transition(background-position-y)
@@ -95,6 +99,62 @@
     &__header
         @include fontStyle(cabHi)
         @include remFallback(1.5)
+        cursor: pointer
 
     &__call-us
         margin-top: 5px
+
+.menu-handler
+    display: inline-block
+    position: absolute
+    right: 20px
+    top: 20px
+    width: 30px
+    height: 45px
+    @include transition(all)
+    cursor: pointer
+
+    @media #{$mw768}
+        left: 20px
+    top: 20px
+    width: 30px
+    height: 45px
+
+    &__bar1, &__bar2, &__bar3
+        display: block
+        position: absolute
+        height: 3px
+        width: 100%
+        background: $color_text_gray
+        border-radius: 9px
+        opacity: 1
+        left: 0
+        @include transition(all)
+
+    &__bar1
+        top: 0
+        transform-origin: left center
+
+    &__bar2
+        top: 6px
+        transform-origin: left center
+
+    &__bar3
+        top: 12px
+        transform-origin: left center
+
+    &__bar1--change
+        transform: rotate(45deg)
+        top: -3px
+        left: 8px
+
+    &__bar2--change
+        width: 0
+        opacity: 0
+
+    &__bar3--change
+        transform: rotate(-45deg)
+        top: 18px
+        left: 8px
+
+

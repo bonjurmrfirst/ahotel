@@ -1,6 +1,16 @@
 .resorts
     overflow: hidden
 
+    @media #{$mw768}
+        padding: 0 3%
+
+    &__found
+        @include remFallback(3)
+        @include remLineHeightFallback(4)
+
+    &--clear
+        overflow: visible
+
 .hotel
     position: relative
     margin-bottom: 30px

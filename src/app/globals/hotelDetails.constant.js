@@ -30,9 +30,13 @@
                 'Ukraine'
             ],
 
-            guests: {
-                max: 5
-            },
+            guests: [
+                "1guest",
+                "2guest",
+                "3guest",
+                "4guest",
+                "5guest"
+            ],
 
             mustHaves: [
                 'restaurant',
@@ -73,9 +77,9 @@
                 'Yoga' 
             ],
 
-            price: {
-                min: 0,
-                max: 1000
-            }
+            price: [
+                "min",
+                "max"
+            ]
         });
 })();
