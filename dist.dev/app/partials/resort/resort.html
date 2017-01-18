@@ -1,5 +1,6 @@
 <div class="l-resort" ahtl-slide-on-click ng-controller="ResortController as resort">
     <div class="filters">
+
         <div class="filters__header">
             Filter your search
             <div slide-emit class="menu-handler">
@@ -14,7 +15,8 @@
                 <label class="filters__filter-group-header" for="location">Location</label>
                 <div class="filters__list">
                     <label class="filters__filter" ng-repeat="(location, v) in resort.filters.locations">
-                        <input ng-model="resort.filters.locations[location]"
+                       <input ng-model="resort.filters.locations[location]"
+                               ng-change="resort.onFilterChange('locations', location, resort.filters.locations[location])"
                                type="checkbox" checked>
                         {{location}}
                     </label>
@@ -117,33 +119,5 @@
             <a class="hotel__more" href="">read more</a>
         </div>
     </div>
+    <div style="clear: both"></div>
 </div>
-<!--span class="resorts__found">We have found X hotels</span-->
-
-<!--div class="hotel" ng-repeat="hotel in resort.hotels track by hotel._id">
-    <div class="hotel__details">
-        aaaaaaaaaaaa adsasasasd aaahhhh a aaaaaaaaaaaa adsasasasd aaahhhhhhaaaa a a a   aa  a a aa  a a a a a a aaa  a aa  a aa a
-    </div>
-
-</div-->
-
-<!--h3 class="hotel__name">{{hotel.name}}</h3>
-<a href="" class="hotel__map"></a>
-<p class="hotel__type">{{hotel.type}}</p>
-<p class="hotel__price">{{hotel.price}}</p>
-<p class="hotel__desc">asdasdddddddddddd dddddddddddd dddddddddddddddd d d dd</p>
-<p class="hotel__activities"></p>
-<button class="hotel__more"></button-->
-
-<!--span>abcabcabc abcabcabc abcabcabc abcabcabc abcabcabc abcabcabc
-abcabcabc abcabcabc abcabcabc
-abcabcabc abcabcabc abcabcabc
-abcabcabc abcabcabc abcabcabc</span>
-<h4>We have found X hotels</h4>
-<div class="hotel" ng-repeat="hotel in resort.hotels track by hotel._id">
-    <img class="hotel__img" ng-src="assets/images/resort/{{hotel._id}}/preview.jpg">
-    <div class="hotel__info">
-        <h2>{{hotel.descLocation}}</h2>
-    </div>
-</div-->
-
