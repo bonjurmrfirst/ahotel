@@ -13,11 +13,11 @@
 
             if (isNaN(stringLength)) {
                 $log.warn(`Can't parse argument: ${_stringLength}`);
-                return
+                return arg
             }
 
             let result = arg.join(', ').slice(0, stringLength);
-
+            console.log(arg);
             return result.slice(0, result.lastIndexOf(',')) + '...'
         };
     }

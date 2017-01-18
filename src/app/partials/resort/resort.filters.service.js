@@ -48,33 +48,40 @@
         };*/
 
         function FiltersHandler(initFilters) {
-            this._initFilters = initFilters;
-            this._filters = {};
+            this._initFilters = createFilters(initFilters);
+            this._initModel = {};
 
-            this._model = null;
-            this._filteredModel = null;
+            this._filters = {};
+            this._filteredModel = {};
+
+            function createFilters(initFilters) {
+                let filters = {};
+
+                for (let key in initFilters) {
+                    filters[key] = {};
+                    for (let i = 0; i < initFilters[key].length; i++) {
+                        filters[key][initFilters[key][i]] = false;
+                    }
+                }
+
+                filters.price = {
+                    min: 0,
+                    max: 1000
+                };
+
+                return filters
+            }
         }
 
-        FiltersHandler.prototype.createFilters = function() {
-            let filters = {};
-
-            for (let key in this._initFilters) {
-                filters[key] = {};
-                for (let i = 0; i < this._initFilters[key].length; i++) {
-                    filters[key][this._initFilters[key][i]] = false;
-                }
-            }
-
-            filters.price = {
-                min: 0,
-                max: 1000
-            };
-
-            return filters
+        FiltersHandler.prototype.getFilters = function() {
+            return this._initFilters
         };
 
-        FiltersHandler.prototype.applyFilter = function(newFilterGroup, newFilter, value) {
-            this._filteredModel = [];
+        FiltersHandler.prototype.applyFilters = function(newFilterGroup, newFilter, value) {
+
+
+
+            /*this._filteredModel = [];
 
             this._filters = newFilters;
             console.log(this._filters);
@@ -106,7 +113,7 @@
                 return this;
             }
 
-            this._filteredModel = [];
+            this._filteredModel = [];*/
 
 
 
@@ -118,7 +125,7 @@
         };
 
         FiltersHandler.prototype.setModel = function(model) {
-            this._model = model;
+            this._initModel = model;
             this._filteredModel = model;
 
             return this;
@@ -127,6 +134,21 @@
         return new FiltersHandler(hotelDetailsConstant)
     }
 })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 
  return {
