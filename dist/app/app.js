@@ -141,6 +141,10 @@
 		}).state('resort', {
 			url: '/resort',
 			templateUrl: 'app/partials/resort/resort.html'
+		}).state('booking', {
+			url: '/resort',
+			templateUrl: 'app/partials/booking/booking.html',
+			params: { id: '1' }
 		});
 	}
 })();
@@ -330,18 +334,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         locations: ['Namibia', 'Libya', 'South Africa', 'Tanzania', 'Papua New Guinea', 'Reunion', 'Swaziland', 'Sao Tome', 'Madagascar', 'Mauritius', 'Seychelles', 'Mayotte', 'Ukraine'],
 
-        guests: {
-            max: 5
-        },
+        guests: ['1', '2', '3', '4', '5'],
 
         mustHaves: ['restaurant', 'kids', 'pool', 'spa', 'wifi', 'pet', 'disable', 'beach', 'parking', 'conditioning', 'lounge', 'terrace', 'garden', 'gym', 'bicycles'],
 
         activities: ['Cooking classes', 'Cycling', 'Fishing', 'Golf', 'Hiking', 'Horse-riding', 'Kayaking', 'Nightlife', 'Sailing', 'Scuba diving', 'Shopping / markets', 'Snorkelling', 'Skiing', 'Surfing', 'Wildlife', 'Windsurfing', 'Wine tasting', 'Yoga'],
 
-        price: {
-            min: 0,
-            max: 1000
-        }
+        price: ["min", "max"]
     });
 })();
 'use strict';
@@ -485,6 +484,82 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         return new User(backendPathsConstant.auth);
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').controller('BookingController', BookingController);
+
+    BookingController.$inject = ['$stateParams'];
+
+    function BookingController($stateParams) {
+        console.log($stateParams);
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').directive('ahtlMap', ahtlMapDirective);
+
+    function ahtlMapDirective() {
+        return {
+            restrict: 'E',
+            template: '<div class="destinations__map"></div>',
+            link: ahtlMapDirectiveLink
+        };
+
+        function ahtlMapDirectiveLink($scope, elem, attr) {
+            if (window.google && 'maps' in window.google) {
+                initMap();
+                return;
+            }
+
+            var mapScript = document.createElement('script');
+            mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxCK2-uVyl69wn7K61NPAQDf7yH-jf3w';
+            mapScript.onload = function () {
+                initMap();
+            };
+            document.body.appendChild(mapScript);
+
+            function initMap() {
+                var locations = [["Otjozondjupa Region, Kalahari Desert, Namibia", -20.330869, 17.346563], ["Sirte District, Sahara Desert, Libya", 31.195005, 16.500483], ["Limpopo, South Africa", -23.789900, 30.175637], ["Bububu, Zanzibar Town Tanzania", -6.101247, 39.215758], ["Madang Province, Papua New Guinea", -5.510379, 145.980497], ["Saint Andre, Reunion", -20.919410, 55.642483], ["Lubombo Region, Swaziland", -26.784930, 31.734820], ["Cantagalo S?o Tom? and Pr?ncipe", 0.237637, 6.738835], ["Ampanihy Madagascar", -25.023296, 44.063869], ["Plaine Corail-La Fouche Corail Mauritius", -19.740817, 63.363294], ["South Agalega Islands Mauritius", -10.455412, 56.685301], ["North Agalega Islands Mauritius", -10.433995, 56.647268], ["Coetivy Seychelles", -7.140338, 56.270384], ["Dembeni Mayotte", -12.839928, 45.190855], ["Babyntsi Kyivs'ka oblast, Ukraine", 50.638800, 30.022539], ["Pechykhvosty, Volyns'ka oblast, Ukraine", 50.502495, 24.614732], ["Bilhorod-Dnistrovs'kyi district, Odessa Oblast, Ukraine", 46.061116, 30.412401], ["Petrushky, Kyivs'ka oblast, Ukraine", 50.420998, 30.161548], ["Velyka Doch, Chernihivs'ka oblast, Ukraine", 51.307518, 32.574232]];
+
+                var myLatLng = { lat: -25.363, lng: 131.044 };
+
+                // Create a map object and specify the DOM element for display.
+                var map = new google.maps.Map(document.getElementsByClassName('destinations__map')[0], {
+                    scrollwheel: false
+                });
+
+                var icons = {
+                    ahotel: {
+                        icon: 'assets/images/icon_map.png'
+                    }
+                };
+
+                for (i = 0; i < locations.length; i++) {
+                    var marker = new google.maps.Marker({
+                        title: locations[i][0],
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map,
+                        icon: icons["ahotel"].icon
+                    });
+                }
+
+                /*centering*/
+                var bounds = new google.maps.LatLngBounds();
+                for (var i = 0; i < locations.length; i++) {
+                    var LatLang = new google.maps.LatLng(locations[i][1], locations[i][2]);
+                    bounds.extend(LatLang);
+                }
+                map.fitBounds(bounds);
+            };
+        }
     }
 })();
 'use strict';
@@ -1039,18 +1114,97 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         function ahtlModalDirectiveLink($scope, elem) {
+            $scope.show = {};
+
             $scope.$on('modalOpen', function (event, data) {
                 if (data.show === 'image') {
                     $scope.src = data.src;
-                    $scope.$apply();
+                    $scope.show.img = true;
+                    $scope.$apply(); //todo apply?
+                    elem.css('display', 'block');
                 }
 
-                elem.css('display', 'block');
+                if (data.show === 'map') {
+                    $scope.show.map = true;
+
+                    window.google = undefined;
+
+                    if (window.google && 'maps' in window.google) {
+                        initMap();
+                    } else {
+
+                        var mapScript = document.createElement('script');
+                        mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxCK2-uVyl69wn7K61NPAQDf7yH-jf3w';
+                        mapScript.onload = function () {
+                            initMap();
+                            elem.css('display', 'block');
+                        };
+                        document.body.appendChild(mapScript);
+                    }
+                }
+
+                function initMap() {
+                    var myLatlng = { lat: data.coord.lat, lng: data.coord.lng };
+
+                    var map = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
+                        zoom: 4,
+                        center: myLatlng
+                    });
+
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        title: data.name
+                    });
+                }
             });
 
             $scope.closeDialog = function () {
                 elem.css('display', 'none');
+                $scope.show = {};
             };
+
+            function initMap(name, coord) {
+                var locations = [[name, coord.lat, coord.lng]];
+
+                // Create a map object and specify the DOM element for display.
+                var modalMap = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
+                    center: { lat: coord.lat, lng: coord.lng },
+                    scrollwheel: false,
+                    zoom: 9
+                });
+
+                var icons = {
+                    ahotel: {
+                        icon: 'assets/images/icon_map.png'
+                    }
+                };
+
+                new google.maps.Marker({
+                    title: name,
+                    position: new google.maps.LatLng(coord.lat, coord.lng),
+                    map: modalMap,
+                    icon: icons["ahotel"].icon
+                });
+
+                /*
+                                for (i = 0; i < locations.length; i++) {
+                                    var marker = new google.maps.Marker({
+                                        title: name,
+                                        position: new google.maps.LatLng(coord.lat, coord.lng),
+                                        map: modalMap,
+                                        icon: icons["ahotel"].icon
+                                    });
+                                }
+                
+                                /!*centering*!/
+                                var bounds = new google.maps.LatLngBounds ();
+                                for (var i = 0; i < locations.length; i++) {
+                                    var LatLang = new google.maps.LatLng (locations[i][1], locations[i][2]);
+                                    bounds.extend(LatLang);
+                                }
+                                modalMap.fitBounds(bounds);*/
+            }
         }
     }
 })();
@@ -1059,17 +1213,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
-    angular.module('ahotelApp').filter('activitiesfilter', activitiesFilter);
+    angular.module('ahotelApp').filter('activitiesFilter', activitiesFilter);
 
     activitiesFilter.$inject = ['$log'];
 
-    function activitiesFilter($log) {
+    function activitiesFilter($log, filtersService) {
         return function (arg, _stringLength) {
             var stringLength = parseInt(_stringLength);
 
             if (isNaN(stringLength)) {
                 $log.warn('Can\'t parse argument: ' + _stringLength);
-                return;
+                return arg;
             }
 
             var result = arg.join(', ').slice(0, stringLength);
@@ -1085,33 +1239,183 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').controller('ResortController', ResortController);
 
-    ResortController.$inject = ['hotelDetailsConstant', 'resortService'];
+    ResortController.$inject = ['resortService', 'hotelDetailsConstant', '$filter', '$scope'];
 
-    function ResortController(hotelDetailsConstant, resortService) {
+    function ResortController(resortService, hotelDetailsConstant, $filter, $scope) {
         var _this = this;
 
-        this.loading = true;
+        this.filters = initFilters();
 
-        this.renderFiltersList = hotelDetailsConstant;
+        var currentFilters = {};
+        this.onFilterChange = function (filterGroup, filter, value) {
+            //console.log(filterGroup, filter, value);
+            if (value) {
+                currentFilters[filterGroup] = currentFilters[filterGroup] || [];
+                currentFilters[filterGroup].push(filter);
+            } else {
+                currentFilters[filterGroup].splice(currentFilters[filterGroup].indexOf(filter), 1);
+                if (currentFilters[filterGroup].length === 0) {
+                    delete currentFilters[filterGroup];
+                }
+            }
 
-        this.filters = {};
-        this.filters.price = {
-            min: 0,
-            max: 1000
+            this.hotels = $filter('hotelFilter')(hotels, currentFilters);
+            this.getShowHotelCount = this.hotels.reduce(function (counter, item) {
+                return item._hide ? counter : ++counter;
+            }, 0);
+            $scope.$broadcast('showHotelCountChanged', this.getShowHotelCount);
         };
 
-        this.hotels = {};
-
+        var hotels = {};
         resortService.getResort().then(function (response) {
-            _this.hotels = response;
+            hotels = response;
+            _this.hotels = hotels;
+
+            $scope.$watch(function () {
+                return _this.filters.price;
+            }, function (newValue) {
+                currentFilters.price = [newValue];
+                //console.log(currentFilters);
+
+                _this.hotels = $filter('hotelFilter')(hotels, currentFilters);
+                _this.getShowHotelCount = _this.hotels.reduce(function (counter, item) {
+                    return item._hide ? counter : ++counter;
+                }, 0);
+                $scope.$broadcast('showHotelCountChanged', _this.getShowHotelCount);
+            }, true);
+
+            _this.getShowHotelCount = _this.hotels.reduce(function (counter, item) {
+                return item._hide ? counter : ++counter;
+            }, 0);
+            $scope.$broadcast('showHotelCountChanged', _this.getShowHotelCount);
         });
-        /*((response) => {
-                console.log(response)
-                this.loading = false;
-        },
-            (response) => {
-                console.log(response)
-            });*/
+
+        this.openMap = function (hotelName, hotelCoord, hotel) {
+            var data = {
+                show: 'map',
+                name: hotelName,
+                coord: hotelCoord
+            };
+            $scope.$root.$broadcast('modalOpen', data);
+        };
+
+        function initFilters() {
+            var filters = {};
+
+            for (var key in hotelDetailsConstant) {
+                filters[key] = {};
+                for (var i = 0; i < hotelDetailsConstant[key].length; i++) {
+                    filters[key][hotelDetailsConstant[key][i]] = false;
+                }
+            }
+
+            filters.price = {
+                min: 0,
+                max: 1000
+            };
+
+            return filters;
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').filter('hotelFilter', hotelFilter);
+
+    hotelFilter.$inject = ['$log'];
+
+    function hotelFilter($log) {
+        return function (hotels, filters) {
+            angular.forEach(hotels, function (hotel) {
+                hotel._hide = false;
+                isHotelMatchingFilters(hotel, filters);
+            });
+
+            function isHotelMatchingFilters(hotel, filters) {
+
+                angular.forEach(filters, function (filtersInGroup, filterGroup) {
+                    var matchAtLeaseOneFilter = false;
+
+                    if (filterGroup === 'guests') {
+                        filtersInGroup = [filtersInGroup[filtersInGroup.length - 1]];
+                    }
+
+                    for (var i = 0; i < filtersInGroup.length; i++) {
+                        if (getHotelProp(hotel, filterGroup, filtersInGroup[i])) {
+                            matchAtLeaseOneFilter = true;
+                            break;
+                        }
+                    }
+
+                    if (!matchAtLeaseOneFilter) {
+                        hotel._hide = true;
+                    }
+                });
+            }
+
+            function getHotelProp(hotel, filterGroup, filter) {
+                switch (filterGroup) {
+                    case 'locations':
+                        return hotel.location.country === filter;
+                    case 'types':
+                        return hotel.type === filter;
+                    case 'settings':
+                        return hotel.environment === filter;
+                    case 'mustHaves':
+                        return hotel.details[filter];
+                    case 'activities':
+                        return ~hotel.activities.indexOf(filter);
+                    case 'price':
+                        return hotel.price >= filter.min && hotel.price <= filter.max;
+                    case 'guests':
+                        return hotel.guests.max >= +filter[0];
+                }
+            }
+
+            return hotels.filter(function (hotel) {
+                return !hotel._hide;
+            });
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').directive('scrollToTop', scrollToTopDirective);
+
+    scrollToTopDirective.$inject = ['$window', '$log'];
+
+    function scrollToTopDirective($log) {
+        return {
+            restrict: 'A',
+            link: scrollToTopDirectiveLink
+        };
+
+        function scrollToTopDirectiveLink($scope, elem, attr) {
+            var selector = void 0,
+                height = void 0;
+
+            if (1) {
+                try {
+                    selector = $.trim(attr.scrollToTopConfig.slice(0, attr.scrollToTopConfig.indexOf(',')));
+                    height = parseInt(attr.scrollToTopConfig.slice(attr.scrollToTopConfig.indexOf(',') + 1));
+                } catch (e) {
+                    $log.warn('scroll-to-top-config is not defined');
+                } finally {
+                    selector = selector || 'html, body';
+                    height = height || 0;
+                }
+            }
+
+            angular.element(elem).on(attr.scrollToTop, function () {
+                $(selector).animate({ scrollTop: height }, "slow");
+            });
+        }
     }
 })();
 'use strict';
@@ -1135,7 +1439,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }).then(onResolve, onRejected);
 
             function onResolve(response) {
-                console.log(response.data);
+                //console.log(response.data)
                 return response.data;
             }
 
@@ -1377,6 +1681,70 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
+    angular.module('ahotelApp').controller('Pages', Pages);
+
+    Pages.$inject = ['$scope'];
+
+    function Pages($scope) {
+        var _this = this;
+
+        var hotelsPerPage = 5;
+
+        this.currentPage = 1;
+        this.pagesTotal = [];
+
+        this.showFrom = function () {
+            return (this.currentPage - 1) * hotelsPerPage;
+        };
+
+        this.showNext = function () {
+            return ++this.currentPage;
+        };
+
+        this.showPrev = function () {
+            return --this.currentPage;
+        };
+
+        this.setPage = function (page) {
+            this.currentPage = page + 1;
+        };
+
+        this.isLastPage = function () {
+            return this.pagesTotal.length === this.currentPage;
+        };
+
+        this.isFirstPage = function () {
+            return this.currentPage === 1;
+        };
+
+        $scope.$on('showHotelCountChanged', function (event, showHotelCount) {
+            _this.pagesTotal = new Array(Math.ceil(showHotelCount / hotelsPerPage));
+            _this.currentPage = 1;
+        });
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').filter('showFrom', showFrom);
+
+    function showFrom() {
+        return function (model, startPosition) {
+            if (!model) {
+                return {};
+            }
+
+            return model.slice(startPosition);
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
     angular.module('ahotelApp').directive('ahtlPriceSlider', priceSliderDirective);
 
     priceSliderDirective.$inject = ['HeaderTransitionsService'];
@@ -1395,6 +1763,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         function priceSliderDirectiveLink($scope, HeaderTransitionsService) {
+            /*console.log($scope.leftSlider);
+            console.log($scope.rightSlider);
+            $scope.rightSlider.max = 15;*/
             var rightBtn = $('.slide__pointer--right'),
                 leftBtn = $('.slide__pointer--left'),
                 slideAreaWidth = parseInt($('.slide').css('width')),
@@ -1555,6 +1926,67 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                         console.log(+slideAreaWidth - +newValue);
                         $('.slide__line--green').css('right', +slideAreaWidth - parseInt(newValue));
                     });*/
+            }
+        }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').directive('ahtlSlideOnClick', ahtlSlideOnClickDirective);
+
+    ahtlSlideOnClickDirective.$inject = ['$log'];
+
+    function ahtlSlideOnClickDirective($log) {
+        return {
+            restrict: 'EA',
+            link: ahtlSlideOnClickDirectiveLink
+        };
+
+        function ahtlSlideOnClickDirectiveLink($scope, elem) {
+            var slideEmitElements = $(elem).find('[slide-emit]');
+
+            if (!slideEmitElements.length) {
+                $log.warn('slide-emit not found');
+
+                return;
+            }
+
+            slideEmitElements.on('click', slideEmitOnClick);
+
+            function slideEmitOnClick() {
+                var slideOnElement = $(elem).find('[slide-on]');
+
+                if (!slideEmitElements.length) {
+                    $log.warn('slide-emit not found');
+
+                    return;
+                }
+
+                if (slideOnElement.attr('slide-on') !== '' && slideOnElement.attr('slide-on') !== 'closed') {
+                    $log.warn('Wrong init value for \'slide-on\' attribute, should be \'\' or \'closed\'.');
+
+                    return;
+                }
+
+                if (slideOnElement.attr('slide-on') === '') {
+                    slideOnElement.slideUp('slow', onSlideAnimationComplete);
+                    slideOnElement.attr('slide-on', 'closed');
+                } else {
+                    onSlideAnimationComplete();
+                    slideOnElement.slideDown('slow');
+                    slideOnElement.attr('slide-on', '');
+                }
+
+                function onSlideAnimationComplete() {
+                    var slideToggleElements = $(elem).find('[slide-on-toggle]');
+
+                    $.each(slideToggleElements, function () {
+                        $(this).toggleClass($(this).attr('slide-on-toggle'));
+                    });
+                }
             }
         }
     }
