@@ -127,7 +127,7 @@
             <p class="hotel__activities">
                 <span class="hotel__activities-em">Activities: </span>
                 {{hotel.activities | activitiesFilter: 75}}</p>
-            <a class="hotel__more" ui-sref="booking({id:{{hotel._id}}})">read more</a>
+            <a class="hotel__more" ui-sref="booking({hotel: {{hotel}}})">read more</a>
         </div>
 
         <div class="pages" ng-show="pages.pagesTotal.length > 0">

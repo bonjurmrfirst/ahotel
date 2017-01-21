@@ -17,7 +17,7 @@
 			.state('auth', {
 				url: '/auth',
 				templateUrl: 'app/partials/auth/auth.html',
-				params: {'type': 'login'}/*,
+				params: {'type': 'login or join'}/*,
 				onEnter: function ($rootScope) {
 					$rootScope.$state = "auth";
 				}*/
@@ -51,9 +51,9 @@
 				templateUrl: 'app/partials/resort/resort.html'
 			})
 			.state('booking', {
-				url: '/resort',
+				url: '/booking',
 				templateUrl: 'app/partials/booking/booking.html',
-				params: {id: '1'}
+				params: {'hotel': 'hotel object'}
 			});
 	}
 })();
