@@ -31,11 +31,11 @@
             ],
 
             guests: [
-                "1guest",
-                "2guest",
-                "3guest",
-                "4guest",
-                "5guest"
+                '1',
+                '2',
+                '3',
+                '4',
+                '5'
             ],
 
             mustHaves: [

@@ -3,11 +3,11 @@
 
     angular
         .module('ahotelApp')
-        .filter('activitiesfilter', activitiesFilter);
+        .filter('activitiesFilter', activitiesFilter);
 
     activitiesFilter.$inject = ['$log'];
 
-    function activitiesFilter($log) {
+    function activitiesFilter($log, filtersService) {
         return function (arg, _stringLength) {
             let stringLength = parseInt(_stringLength);
 
@@ -17,7 +17,7 @@
             }
 
             let result = arg.join(', ').slice(0, stringLength);
-            console.log(arg);
+
             return result.slice(0, result.lastIndexOf(',')) + '...'
         };
     }

@@ -1,0 +1,36 @@
+.pages
+    text-align: center
+
+    &__nav
+        display: inline-block
+
+    &__nav-item
+        display: inline-block
+        padding: 10px 15px
+        margin: 0 5px
+        border: 1px solid $color_green
+        cursor: pointer
+
+        &:hover
+            border-color: $color_light_green
+            background-color: $color_light_green
+
+        &:active
+            border-color: $color_dark_green
+            background-color: $color_dark_green
+
+        &--selected
+            background-color: $color_green
+            color: $color_text_white
+
+    &__btn
+
+        &:hover
+            color: $color_light_green
+
+        &:active
+            color: $color_dark_green
+
+        &:disabled
+            color: $color_text_gray
+            opacity: 0.5

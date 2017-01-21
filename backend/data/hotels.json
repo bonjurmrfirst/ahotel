@@ -1,8 +1,8 @@
 [
   {
     "name": "Hotel El Manantial",
-    "type": "bungalow",
-    "environment": "desert",
+    "type": "Bungalow",
+    "environment": "Desert",
     "location": {
       "country": "Namibia",
       "region": "Otjozondjupa Region, Kalahari Desert"
@@ -10,7 +10,7 @@
     "price": 100,
     "guests": {
       "min": 1,
-      "max": 5
+      "max": 1
     },
     "details": {
       "restaurant": "daily",
@@ -50,7 +50,7 @@
       "Yoga"
     ],
 
-    "desc": "A peaceful retreat in colonial-style splendour, stunningly situated in Purmamarca, the most idyllic village in the Quebrada de Humahuaca, 2 hours north of Jujuy",
+    "desc": "A peaceful retreat in colonial-style splendour, stunningly situated in Purmamarca, the most idyllic Village in the Quebrada de Humahuaca, 2 hours north of Jujuy",
     "descLocation": "Otjozondjupa region is one of the fourteen regions of Namibia, its capital is Otjiwarongo. An outstanding landmark within this region is the Waterberg Plateau Park. Administration offices are based in Otjiwarongo which is the largest town in the region.",
 
     "_": {
@@ -63,8 +63,8 @@
 
   {
     "name": "Legado Mitico",
-    "type": "bungalow",
-    "environment": "desert",
+    "type": "Bungalow",
+    "environment": "Desert",
     "location": {
       "country": "Libya",
       "region": "Sirte District, Sahara Desert"
@@ -125,8 +125,8 @@
 
   {
     "name": "Club Tapiz",
-    "type": "bungalow",
-    "environment": "desert",
+    "type": "Bungalow",
+    "environment": "Desert",
     "location": {
       "country": "South Africa",
       "region": "Limpopo"
@@ -134,7 +134,7 @@
     "price": 100,
     "guests": {
       "min": 1,
-      "max": 5
+      "max": 3
     },
     "details": {
       "restaurant": "daily",
@@ -187,8 +187,8 @@
 
   {
     "name": "Finca Adalgisa",
-    "type": "villa",
-    "environment": "coast",
+    "type": "Villa",
+    "environment": "Coast",
     "location": {
       "country": "Tanzania",
       "region": "Bububu, Zanzibar Town"
@@ -249,8 +249,8 @@
 
   {
     "name": "Legado Mitico",
-    "type": "villa",
-    "environment": "coast",
+    "type": "Villa",
+    "environment": "Coast",
     "location": {
       "country": "Papua New Guinea",
       "region": "Madang Province"
@@ -311,8 +311,8 @@
 
   {
     "name": "House of Jasmines",
-    "type": "villa",
-    "environment": "coast",
+    "type": "Villa",
+    "environment": "Coast",
     "location": {
       "country": "Reunion",
       "region": "Saint Andre"
@@ -373,8 +373,8 @@
 
   {
     "name": "House of Jasmines",
-    "type": "hotel",
-    "environment": "desert",
+    "type": "Hotel",
+    "environment": "Desert",
     "location": {
       "country": "Swaziland",
       "region": "Lubombo Region"
@@ -435,8 +435,8 @@
 
   {
     "name": "Posada de la Laguna",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Sao Tome",
       "region": "Cantagalo"
@@ -497,8 +497,8 @@
 
   {
     "name": "Estancia Rincon",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Madagascar",
       "region": "Ampanihy"
@@ -559,8 +559,8 @@
 
   {
     "name": "Yacutinga Lodge",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Mauritius",
       "region": "Plaine Corail-La Fouche Corail"
@@ -621,8 +621,8 @@
 
   {
     "name": "Aldebaran Hotel",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Mauritius",
       "region": "South Agalega Islands"
@@ -683,8 +683,8 @@
 
   {
     "name": "Bldebaran Hotel",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Mauritius",
       "region": "North Agalega Islands"
@@ -745,8 +745,8 @@
 
   {
     "name": "Estancia Peuma Hue",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Seychelles",
       "region": "Coetivy"
@@ -807,13 +807,13 @@
 
   {
     "name": "Eolo",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Mayotte",
       "region": "Dembeni"
     },
-    "price": 100,
+    "price": 870,
     "guests": {
       "min": 1,
       "max": 5
@@ -869,8 +869,8 @@
 
   {
     "name": "Babyntsi Hotel",
-    "type": "hotel",
-    "environment": "city",
+    "type": "Hotel",
+    "environment": "City",
     "location": {
       "country": "Ukraine",
       "region": "Babyntsi, Kyivs'ka oblast"
@@ -931,8 +931,8 @@
 
   {
     "name": "Pechykhvosty Hotel",
-    "type": "hotel",
-    "environment": "city",
+    "type": "Hotel",
+    "environment": "City",
     "location": {
       "country": "Ukraine",
       "region": "Pechykhvosty, Volyns'ka oblast"
@@ -993,8 +993,8 @@
 
   {
     "name": "Dnistrovs'kyi Hotel",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Ukraine",
       "region": "Bilhorod-Dnistrovs'kyi district, Odessa Oblast"
@@ -1055,8 +1055,8 @@
 
   {
     "name": "Petrushky Hotel",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Ukraine",
       "region": "Petrushky, Kyivs'ka oblast"
@@ -1064,7 +1064,7 @@
     "price": 100,
     "guests": {
       "min": 1,
-      "max": 5
+      "max": 2
     },
     "details": {
       "restaurant": "daily",
@@ -1084,7 +1084,6 @@
       "bicycles": "available"
     },
     "activities": [
-      "Cooking classes",
       "Cycling",
       "Fishing",
       "Golf",
@@ -1117,8 +1116,8 @@
 
   {
     "name": "Velyka Doch Hotel",
-    "type": "hotel",
-    "environment": "coast",
+    "type": "Hotel",
+    "environment": "Coast",
     "location": {
       "country": "Ukraine",
       "region": "Velyka Doch, Chernihivs'ka oblast"
@@ -1126,7 +1125,7 @@
     "price": 100,
     "guests": {
       "min": 1,
-      "max": 5
+      "max": 4
     },
     "details": {
       "restaurant": "daily",
@@ -1136,7 +1135,6 @@
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
-      "beach": "beach nearby, 10m",
       "parking": "off-street",
       "conditioning": "air cond.",
       "lounge": "yes",
@@ -1167,7 +1165,7 @@
     ],
 
     "desc": "Personalised service: this is a small place so you create the schedule",
-    "descLocation": "Chernihivs'ka oblast is an oblast (province) of northern Ukraine. The administrative center of the oblast is the city of Chernihiv however within the entire Oblast are 1,511 settlements of various sizes ranging from large cities to very small villages.",
+    "descLocation": "Chernihivs'ka oblast is an oblast (province) of northern Ukraine. The administrative center of the oblast is the city of Chernihiv however within the entire Oblast are 1,511 settlements of various sizes ranging from large cities to very small Villages.",
 
     "_": {
       "lat": 51.307518,
