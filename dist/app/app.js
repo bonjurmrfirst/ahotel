@@ -116,10 +116,10 @@
 		}).state('auth', {
 			url: '/auth',
 			templateUrl: 'app/partials/auth/auth.html',
-			params: { 'type': 'login' } /*,
-                               onEnter: function ($rootScope) {
-                               $rootScope.$state = "auth";
-                               }*/
+			params: { 'type': 'login or join' } /*,
+                                       onEnter: function ($rootScope) {
+                                       $rootScope.$state = "auth";
+                                       }*/
 		}).state('bungalows', {
 			url: '/bungalows',
 			templateUrl: 'app/partials/top/bungalows.html'
@@ -142,9 +142,9 @@
 			url: '/resort',
 			templateUrl: 'app/partials/resort/resort.html'
 		}).state('booking', {
-			url: '/resort',
+			url: '/booking',
 			templateUrl: 'app/partials/booking/booking.html',
-			params: { id: '1' }
+			params: { 'hotel': 'hotel object' }
 		});
 	}
 })();
@@ -493,10 +493,35 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').controller('BookingController', BookingController);
 
-    BookingController.$inject = ['$stateParams'];
+    BookingController.$inject = ['$stateParams', 'resortService', '$scope'];
 
-    function BookingController($stateParams) {
-        console.log($stateParams);
+    function BookingController($stateParams, resortService, $scope) {
+
+        this.hotel = null;
+        this.loaded = false;
+
+        /* dev only */
+        var self = this;
+        if ($stateParams.hotel._id) {
+            this.hotel = $stateParams.hotel;
+            self.loaded = true;
+        } else {
+            getHotels();
+        }
+
+        function getHotels() {
+            resortService.getResort().then(function (response) {
+                self.hotel = response[0];
+                self.loaded = true;
+            });
+        }
+        /* dev only */
+
+        //this.hotel = $stateParams.hotel;
+
+        this.getHotelImagesCount = function (count) {
+            return new Array(count - 1);
+        };
     }
 })();
 'use strict';
