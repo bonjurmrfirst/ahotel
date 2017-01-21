@@ -49,6 +49,11 @@
 			.state('resort', {
 				url: '/resort',
 				templateUrl: 'app/partials/resort/resort.html'
+			})
+			.state('booking', {
+				url: '/resort',
+				templateUrl: 'app/partials/booking/booking.html',
+				params: {id: '1'}
 			});
 	}
 })();

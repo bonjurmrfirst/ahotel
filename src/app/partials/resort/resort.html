@@ -120,14 +120,14 @@
             </p>
             <div>
                 <span>{{hotel.type}}, </span>
-                <a class="hotel__map" href="" ng-click="resort.openMap(hotel.name, hotel._, hotel)">Map</a>
+                <a class="hotel__map" href="" ng-click="resort.openMap(hotel.name, hotel._gmaps, hotel)">Map</a>
             </div>
             <p class="hotel__price">Price: {{hotel.price}}$</p>
             <p class="hotel__desc">{{hotel.desc}}</p>
             <p class="hotel__activities">
                 <span class="hotel__activities-em">Activities: </span>
                 {{hotel.activities | activitiesFilter: 75}}</p>
-            <a class="hotel__more" href="">read more</a>
+            <a class="hotel__more" ui-sref="booking({id:{{hotel._id}}})">read more</a>
         </div>
 
         <div class="pages" ng-show="pages.pagesTotal.length > 0">
