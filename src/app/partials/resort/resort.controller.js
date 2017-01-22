@@ -5,12 +5,13 @@
         .module('ahotelApp')
         .controller('ResortController', ResortController);
 
-    ResortController.$inject = ['resortService', 'hotelDetailsConstant', '$filter', '$scope'];
+    ResortController.$inject = ['resortService', '$filter', '$scope', '$state'];
 
-    function ResortController(resortService, hotelDetailsConstant, $filter, $scope) {
-        this.filters = initFilters();
+    function ResortController(resortService, $filter, $scope, $state) {
+        let currentFilters = $state.$current.data.currentFilters; // temp
 
-        let currentFilters = {};
+        this.filters = $filter('hotelFilter').initFilters();
+
         this.onFilterChange = function(filterGroup, filter, value) {
             //console.log(filterGroup, filter, value);
             if (value) {
@@ -23,7 +24,7 @@
                 }
             }
 
-            this.hotels = $filter('hotelFilter')(hotels, currentFilters);
+            this.hotels = $filter('hotelFilter').applyFilters(hotels, currentFilters);
             this.getShowHotelCount = this.hotels.reduce((counter, item) => item._hide ? counter : ++counter, 0);
             $scope.$broadcast('showHotelCountChanged', this.getShowHotelCount);
         };
@@ -39,7 +40,7 @@
                     currentFilters.price = [newValue];
                     //console.log(currentFilters);
 
-                    this.hotels = $filter('hotelFilter')(hotels, currentFilters);
+                    this.hotels = $filter('hotelFilter').applyFilters(hotels, currentFilters);
                     this.getShowHotelCount = this.hotels.reduce((counter, item) => item._hide ? counter : ++counter, 0);
                     $scope.$broadcast('showHotelCountChanged', this.getShowHotelCount);                }, true);
 
@@ -56,22 +57,6 @@
             $scope.$root.$broadcast('modalOpen', data)
         };
 
-        function initFilters() {
-            let filters = {};
 
-            for (let key in hotelDetailsConstant) {
-                filters[key] = {};
-                for (let i = 0; i < hotelDetailsConstant[key].length; i++) {
-                    filters[key][hotelDetailsConstant[key][i]] = false;
-                }
-            }
-
-            filters.price = {
-                min: 0,
-                max: 1000
-            };
-
-            return filters
-        }
     }
 })();

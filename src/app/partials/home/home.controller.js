@@ -5,9 +5,12 @@
         .module('ahotelApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['trendHotelsImgPaths'];
+    HomeController.$inject = ['resortService'];
 
-    function HomeController(trendHotelsImgPaths) {
-        this.hotels = trendHotelsImgPaths;
+    function HomeController(resortService) {
+        resortService.getResort({prop: '_trend', value: true}).then((response) => {
+            //todo if not response
+            this.hotels = response;
+        });
     }
 })();

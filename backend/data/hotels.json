@@ -59,18 +59,19 @@
     },
 
     "_id": 1,
-    "_gallery": 4
+    "_gallery": 4,
+    "_trend": false
   },
 
   {
-    "name": "Legado Mitico",
+    "name": "Bitico",
     "type": "Bungalow",
     "environment": "Desert",
     "location": {
       "country": "Libya",
       "region": "Sirte District, Sahara Desert"
     },
-    "price": 100,
+    "price": 150,
     "guests": {
       "min": 1,
       "max": 5
@@ -122,7 +123,8 @@
     },
 
     "_id": 2,
-    "_gallery": 6
+    "_gallery": 6,
+    "_trend": true
   },
 
   {
@@ -133,7 +135,8 @@
       "country": "South Africa",
       "region": "Limpopo"
     },
-    "price": 100,
+    "price": 250,
+    "discount": 3,
     "guests": {
       "min": 1,
       "max": 3
@@ -184,7 +187,9 @@
       "lng": 30.175637
     },
 
-    "_id": 3
+    "_id": 3,
+    "_gallery": 3,
+    "_trend": false
   },
 
   {
@@ -195,7 +200,7 @@
       "country": "Tanzania",
       "region": "Bububu, Zanzibar Town"
     },
-    "price": 100,
+    "price": 300,
     "guests": {
       "min": 1,
       "max": 5
@@ -246,7 +251,9 @@
       "lng": 39.215758
     },
 
-    "_id": 4
+    "_id": 4,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -257,7 +264,7 @@
       "country": "Papua New Guinea",
       "region": "Madang Province"
     },
-    "price": 100,
+    "price": 350,
     "guests": {
       "min": 1,
       "max": 5
@@ -308,7 +315,9 @@
       "lng": 145.980497
     },
 
-    "_id": 5
+    "_id": 5,
+    "_gallery": 6,
+    "_trend": true
   },
 
   {
@@ -319,7 +328,7 @@
       "country": "Reunion",
       "region": "Saint Andre"
     },
-    "price": 100,
+    "price": 400,
     "guests": {
       "min": 1,
       "max": 5
@@ -370,7 +379,9 @@
       "lng": 55.642483
     },
 
-    "_id": 6
+    "_id": 6,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -381,7 +392,8 @@
       "country": "Swaziland",
       "region": "Lubombo Region"
     },
-    "price": 100,
+    "price": 450,
+    "discount": 5,
     "guests": {
       "min": 1,
       "max": 5
@@ -432,7 +444,9 @@
       "lng": 31.734820
     },
 
-    "_id": 7
+    "_id": 7,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -443,7 +457,7 @@
       "country": "Sao Tome",
       "region": "Cantagalo"
     },
-    "price": 100,
+    "price": 500,
     "guests": {
       "min": 1,
       "max": 5
@@ -494,7 +508,9 @@
       "lng": 6.738835
     },
 
-    "_id": 8
+    "_id": 8,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -505,7 +521,8 @@
       "country": "Madagascar",
       "region": "Ampanihy"
     },
-    "price": 100,
+    "price": 550,
+    "discount": 15,
     "guests": {
       "min": 1,
       "max": 5
@@ -556,7 +573,9 @@
       "lng": 44.063869
     },
 
-    "_id": 9
+    "_id": 9,
+    "_gallery": 6,
+    "_trend": true
   },
 
   {
@@ -567,7 +586,7 @@
       "country": "Mauritius",
       "region": "Plaine Corail-La Fouche Corail"
     },
-    "price": 100,
+    "price": 500,
     "guests": {
       "min": 1,
       "max": 5
@@ -618,7 +637,9 @@
       "lng": 63.363294
     },
 
-    "_id": 10
+    "_id": 10,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -629,7 +650,7 @@
       "country": "Mauritius",
       "region": "South Agalega Islands"
     },
-    "price": 100,
+    "price": 615,
     "guests": {
       "min": 1,
       "max": 5
@@ -680,7 +701,9 @@
       "lng": 56.685301
     },
 
-    "_id": 11
+    "_id": 11,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -691,7 +714,8 @@
       "country": "Mauritius",
       "region": "North Agalega Islands"
     },
-    "price": 100,
+    "price": 768,
+    "discount": 10,
     "guests": {
       "min": 1,
       "max": 5
@@ -742,7 +766,9 @@
       "lng": 56.647268
     },
 
-    "_id": 12
+    "_id": 12,
+    "_gallery": 6,
+    "_trend": true
   },
 
   {
@@ -804,7 +830,9 @@
       "lng": 56.270384
     },
 
-    "_id": 13
+    "_id": 13,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -815,7 +843,7 @@
       "country": "Mayotte",
       "region": "Dembeni"
     },
-    "price": 870,
+    "price": 336,
     "guests": {
       "min": 1,
       "max": 5
@@ -866,7 +894,9 @@
       "lng": 45.190855
     },
 
-    "_id": 14
+    "_id": 14,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -877,7 +907,7 @@
       "country": "Ukraine",
       "region": "Babyntsi, Kyivs'ka oblast"
     },
-    "price": 100,
+    "price": 666,
     "guests": {
       "min": 1,
       "max": 5
@@ -928,7 +958,9 @@
       "lng": 30.022539
     },
 
-    "_id": 15
+    "_id": 15,
+    "_gallery": 6,
+    "_trend": true
   },
 
   {
@@ -939,7 +971,7 @@
       "country": "Ukraine",
       "region": "Pechykhvosty, Volyns'ka oblast"
     },
-    "price": 100,
+    "price": 333,
     "guests": {
       "min": 1,
       "max": 5
@@ -990,7 +1022,9 @@
       "lng": 24.614732
     },
 
-    "_id": 16
+    "_id": 16,
+    "_gallery": 6,
+    "_trend": true
   },
 
   {
@@ -1001,7 +1035,7 @@
       "country": "Ukraine",
       "region": "Bilhorod-Dnistrovs'kyi district, Odessa Oblast"
     },
-    "price": 100,
+    "price": 999,
     "guests": {
       "min": 1,
       "max": 5
@@ -1052,7 +1086,9 @@
       "lng": 30.412401
     },
 
-    "_id": 17
+    "_id": 17,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -1063,7 +1099,7 @@
       "country": "Ukraine",
       "region": "Petrushky, Kyivs'ka oblast"
     },
-    "price": 100,
+    "price": 30,
     "guests": {
       "min": 1,
       "max": 2
@@ -1113,7 +1149,9 @@
       "lng": 30.161548
     },
 
-    "_id": 18
+    "_id": 18,
+    "_gallery": 6,
+    "_trend": false
   },
 
   {
@@ -1124,7 +1162,7 @@
       "country": "Ukraine",
       "region": "Velyka Doch, Chernihivs'ka oblast"
     },
-    "price": 100,
+    "price": 110,
     "guests": {
       "min": 1,
       "max": 4
@@ -1174,6 +1212,8 @@
       "lng": 32.574232
     },
 
-    "_id": 19
+    "_id": 19,
+    "_gallery": 6,
+    "_trend": false
   }
 ]

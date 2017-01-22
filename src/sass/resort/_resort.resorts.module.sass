@@ -29,6 +29,7 @@
         float: right
         margin-left: 3%
         width: 33%
+        height: auto
         min-width: 216px
         max-width: 300px
         padding: 3px
@@ -68,6 +69,12 @@
 
     &__price
         margin-top: 15px
+
+    &__discount
+        @include fontStyle(cabB)
+        @include remFallback(1.2)
+        margin-top: 5px
+        color: #ff0000
 
     &__desc
         margin-top: 10px

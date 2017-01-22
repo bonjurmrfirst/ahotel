@@ -113,7 +113,7 @@
     <div class="resorts" ng-controller="Pages as pages" slide-on-toggle="resorts--clear">
         <span class="resorts__found">We have found {{resort.getShowHotelCount}} hotels</span>
         <div class="hotel" ng-repeat="hotel in resort.hotels | showFrom : pages.showFrom() | limitTo: 5 track by hotel._id">
-            <img class="hotel__img" ng-src="assets/images/resort/{{hotel._id}}/preview.jpg">
+            <img class="hotel__img" ng-src="assets/images/booking/{{hotel._id}}/preview.jpg" width="400" height="300">
             <h3 class="hotel__name">{{hotel.name}}</h3>
             <p class="hotel__location">
                 {{hotel.location.region}}
@@ -123,11 +123,12 @@
                 <a class="hotel__map" href="" ng-click="resort.openMap(hotel.name, hotel._gmaps, hotel)">Map</a>
             </div>
             <p class="hotel__price">Price: {{hotel.price}}$</p>
+            <p class="hotel__discount" ng-show="hotel.discount">Discount: {{hotel.discount}}%</p>
             <p class="hotel__desc">{{hotel.desc}}</p>
             <p class="hotel__activities">
                 <span class="hotel__activities-em">Activities: </span>
                 {{hotel.activities | activitiesFilter: 75}}</p>
-            <a class="hotel__more" ui-sref="booking({hotel: {{hotel}}})">read more</a>
+            <a class="hotel__more" ui-sref="booking({hotelId: {{hotel._id}}})">read more</a>
         </div>
 
         <div class="pages" ng-show="pages.pagesTotal.length > 0">

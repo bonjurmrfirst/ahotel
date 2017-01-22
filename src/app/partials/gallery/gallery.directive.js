@@ -62,10 +62,12 @@
                 let imgSrc = event.target.src;
 
                 if (imgSrc) {
-                    $scope.$root.$broadcast('modalOpen', {
-                        show: 'image',
-                        src: imgSrc
-                    });
+                    $scope.$apply(function() {
+                        $scope.$root.$broadcast('modalOpen', {
+                            show: 'image',
+                            src: imgSrc
+                        });
+                    })
                 }
             });
 

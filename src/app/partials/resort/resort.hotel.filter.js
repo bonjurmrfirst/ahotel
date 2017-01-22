@@ -5,10 +5,44 @@
         .module('ahotelApp')
         .filter('hotelFilter', hotelFilter);
 
-    hotelFilter.$inject = ['$log'];
+    hotelFilter.$inject = ['$log', 'hotelDetailsConstant'];
 
-    function hotelFilter($log) {
-        return function(hotels, filters) {
+    function hotelFilter($log, hotelDetailsConstant) {
+        let savedFilters = {};
+
+        return {
+            loadFilters: loadFilters,
+            applyFilters: applyFilters,
+            initFilters: initFilters
+        };
+
+        function loadFilters() {
+
+        }
+
+        function initFilters() {
+            console.log(savedFilters);
+            let filters = {};
+
+            for (let key in hotelDetailsConstant) {
+                filters[key] = {};
+                for (let i = 0; i < hotelDetailsConstant[key].length; i++) {
+                    filters[key][hotelDetailsConstant[key][i]] = savedFilters[key] && savedFilters[key].indexOf(hotelDetailsConstant[key][i]) !== -1 ? true : false;
+                    //filters[key][hotelDetailsConstant[key][i]] = savedFilters[key][hotelDetailsConstant[key][i]] || false;
+                }
+            }
+
+            filters.price = {
+                min: 0,
+                max: 1000
+            };
+
+            return filters
+        }
+
+        function applyFilters(hotels, filters) {
+            savedFilters = filters;
+
             angular.forEach(hotels, function(hotel) {
                 hotel._hide = false;
                 isHotelMatchingFilters(hotel, filters);

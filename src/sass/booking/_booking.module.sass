@@ -18,10 +18,25 @@
         vertical-align: top
         text-align: left
 
-    &__imgs
+    &__img-wrapper
         display: inline-block
         width: 30%
-        height: 100px
+
+        &:hover .hotel-detailed__img:not(:hover)
+            opacity: 0.5
+            @include transition(opacity)
+
+    &__img
+        display: block
+        width: 100%
+        height: auto
+        padding: 5px 0
+        cursor: pointer
+        -webkit-backface-visibility: hidden
+
+        &:hover
+            opacity: 1
+            @include transition(opacity)
 
     &__name
         @include fontStyle(cabL)
@@ -51,6 +66,12 @@
     &__price
         margin-top: 20px
 
+    &__discount
+        @include fontStyle(cabB)
+        @include remFallback(1.2)
+        margin-top: 5px
+        color: #ff0000
+
     &__desc-location
         margin-top: 20px
 
@@ -75,3 +96,51 @@
         color: $color_reverse
 
     &__activities
+
+.booking-form
+    margin: 40px 3%
+    padding: 20px 0
+    background-color: $color_reverse
+
+    &__item
+        color: $color_text_white
+        margin: 0 20px
+        opacity: 0.8
+
+    &__btn-guests
+        background-color: $color_dark_reverse
+        border-radius: 10px
+        color: $color_reverse
+
+        &:hover
+            background-color: $color_light_reverse
+
+        &:active
+            background-color: $color_reverse
+            color: $color_dark_reverse
+
+        &-hidden
+            visibility: hidden
+
+.formSearch__query--booking-date
+    display: inline-block
+    width: 200px
+    margin: 0
+    text-align: center
+    color: $color_text_white
+
+.formSearch__query--booking-guests
+    display: inline-block
+    width: 30px
+    margin: 0
+    text-align: center
+    color: $color_text_white
+
+    &-invalid
+        color: red
+        border-color: red
+
+.form-login__btn--booking
+    @include fontStyle(cabHi)
+    width: 150px
+    height: 41px

@@ -45,8 +45,8 @@
             <figcaption class="img-group__caption">
                 <span class="img-group__name">{{hotel.name}}</span>
             </figcaption>
-            <a class="img-group__details" href="">
-                <img class="img-group__img" ng-src="{{hotel.src}}" width="400" height="300">
+            <a class="img-group__details" ui-sref="booking({hotelId: {{hotel._id}}})">
+                <img class="img-group__img" ng-src="assets/images/trend/{{hotel._id}}.jpg" width="400" height="300">
             </a>
         </figure>
     </figure>

@@ -20,7 +20,7 @@
                 if (data.show === 'image') {
                     $scope.src = data.src;
                     $scope.show.img = true;
-                    $scope.$apply();//todo apply?
+                    //$scope.$apply();//todo apply?
                     elem.css('display', 'block');
                 }
 
@@ -47,9 +47,18 @@
                 function initMap() {
                     var myLatlng = {lat: data.coord.lat, lng: data.coord.lng};
 
+                    var icons = {
+                        ahotel: {
+                            icon: 'assets/images/icon_map.png'
+                        }
+                    };
+
                     var map = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
+                        title: data.name,
+                        map: map,
                         zoom: 4,
-                        center: myLatlng
+                        center: myLatlng,
+                        icon: icons["ahotel"].icon
                     });
 
                     var marker = new google.maps.Marker({

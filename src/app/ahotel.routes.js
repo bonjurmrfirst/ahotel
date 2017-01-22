@@ -48,12 +48,15 @@
 			})
 			.state('resort', {
 				url: '/resort',
-				templateUrl: 'app/partials/resort/resort.html'
+				templateUrl: 'app/partials/resort/resort.html',
+				data: {
+					currentFilters: {}
+				}
 			})
 			.state('booking', {
-				url: '/booking',
+				url: '/booking?hotelId',
 				templateUrl: 'app/partials/booking/booking.html',
-				params: {'hotel': 'hotel object'}
+				params: {'hotelId': 'hotel Id'}
 			});
 	}
 })();
