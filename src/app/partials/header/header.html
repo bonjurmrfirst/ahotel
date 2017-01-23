@@ -68,7 +68,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav__item-container" ng-controller="HeaderController as auth">
+            <li class="nav__item-container" ng-controller="AuthController as auth">
                 <span class="nav__item nav__item--right nav__item--login">{{$logged ? 'Sign out' : 'Sign In'}}</span>
                 <div class="sub-nav sub-nav--right" data-autoheight-on>
                     <ul>
@@ -87,9 +87,19 @@
             <li class="nav__item-container">
                 <span class="nav__item nav__item--right nav__item--search">Search</span>
                 <div class="sub-nav sub-nav--right sub-nav--search">
-                    <form class="formSearch" name="formSearch" action="/search" method="post">
-                        <input name="formSearchQuery" class="formSearch__query" placeholder="Destination or hotel" id="formSearchQuery">
-                        <input class="formSearch__submit" type="submit" value="SEARCH">
+                    <form class="formSearch" name="searchForm" novalidate>
+                        <input class="formSearch__query"
+                               name="query"
+                               ng-model="searchForm.query.value"
+                               placeholder="Hotel, country, region..."
+                               id="formSearchQuery"
+                               required
+                               autocomplete="off">
+                        <input class="formSearch__submit"
+                               ng-disabled="searchForm.query.$invalid"
+                               type="submit"
+                               ui-sref="search({query: searchForm.query.$viewValue})"
+                               value="SEARCH">
                     </form>
                 </div>
             </li>

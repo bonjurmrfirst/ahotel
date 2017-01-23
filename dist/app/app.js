@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    angular.module('ahotelApp', ['ui.router', 'preload', 'ngAnimate']);
+    angular.module('ahotelApp', ['ui.router', 'preload', 'ngAnimate', '720kb.socialshare']);
 })();
 'use strict';
 
@@ -140,11 +140,18 @@
 			templateUrl: 'app/partials/destinations/destinations.html'
 		}).state('resort', {
 			url: '/resort',
-			templateUrl: 'app/partials/resort/resort.html'
+			templateUrl: 'app/partials/resort/resort.html',
+			data: {
+				currentFilters: {}
+			}
 		}).state('booking', {
-			url: '/booking',
+			url: '/booking?hotelId',
 			templateUrl: 'app/partials/booking/booking.html',
-			params: { 'hotel': 'hotel object' }
+			params: { 'hotelId': 'hotel Id' }
+		}).state('search', {
+			url: '/search?query',
+			templateUrl: 'app/partials/search/search.html',
+			params: { 'query': 'search query' }
 		});
 	}
 })();
@@ -157,7 +164,7 @@
 
     run.$inject = ['$rootScope', 'backendPathsConstant', 'preloadService', '$window'];
 
-    function run($rootScope, backendPathsConstant, preloadService, $window, log) {
+    function run($rootScope, backendPathsConstant, preloadService, $window) {
         $rootScope.$logged = false;
 
         $rootScope.$state = {
@@ -166,10 +173,14 @@
             stateHistory: []
         };
 
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams /*, fromState, fromParams todo*/) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState /*, fromParams todo*/) {
             $rootScope.$state.currentStateName = toState.name;
             $rootScope.$state.currentStateParams = toParams;
             $rootScope.$state.stateHistory.push(toState.name);
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState /*, fromParams todo*/) {
+            //$timeout(() => $('body').scrollTop(0), 0);
         });
 
         $window.onload = function () {
@@ -348,6 +359,55 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
+    angular.module('ahotelApp').factory('resortService', resortService);
+
+    resortService.$inject = ['$http', 'backendPathsConstant', '$q'];
+
+    function resortService($http, backendPathsConstant, $q) {
+        var model = null;
+
+        function getResort(filter) {
+            //todo errors: no hotels, no filter...
+            if (model) {
+                return $q.when(applyFilter(model));
+            }
+
+            return $http({
+                method: 'GET',
+                url: backendPathsConstant.hotels
+            }).then(onResolve, onRejected);
+
+            function onResolve(response) {
+                model = response.data;
+                return applyFilter(model);
+            }
+
+            function onRejected(response) {
+                model = response;
+                return applyFilter(model);
+            }
+
+            function applyFilter() {
+                if (!filter) {
+                    return model;
+                }
+
+                return model.filter(function (hotel) {
+                    return hotel[filter.prop] == filter.value;
+                });
+            }
+        }
+
+        return {
+            getResort: getResort
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
     angular.module('ahotelApp').controller('AuthController', AuthController);
 
     AuthController.$inject = ['$rootScope', '$scope', 'authService', '$state'];
@@ -493,35 +553,124 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').controller('BookingController', BookingController);
 
-    BookingController.$inject = ['$stateParams', 'resortService', '$scope'];
+    BookingController.$inject = ['$stateParams', 'resortService', '$state', '$rootScope'];
 
-    function BookingController($stateParams, resortService, $scope) {
+    function BookingController($stateParams, resortService, $state, $rootScope) {
+        var _this = this;
 
         this.hotel = null;
         this.loaded = false;
 
-        /* dev only */
-        var self = this;
-        if ($stateParams.hotel._id) {
-            this.hotel = $stateParams.hotel;
-            self.loaded = true;
-        } else {
-            getHotels();
-        }
+        console.log($state);
 
-        function getHotels() {
-            resortService.getResort().then(function (response) {
-                self.hotel = response[0];
-                self.loaded = true;
-            });
-        }
-        /* dev only */
+        resortService.getResort({
+            prop: '_id',
+            value: $stateParams.hotelId }).then(function (response) {
+            _this.hotel = response[0];
+            _this.loaded = true;
+        });
 
         //this.hotel = $stateParams.hotel;
 
         this.getHotelImagesCount = function (count) {
             return new Array(count - 1);
         };
+
+        this.openImage = function ($event) {
+            var imgSrc = $event.target.src;
+
+            if (imgSrc) {
+                $rootScope.$broadcast('modalOpen', {
+                    show: 'image',
+                    src: imgSrc
+                });
+            }
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    angular.module('ahotelApp').controller('BookingFormController', BookingFormController);
+
+    function BookingFormController() {
+        'use strict';
+
+        this.form = {
+            date: 'pick date',
+            guests: 1
+        };
+
+        this.addGuest = function () {
+            this.form.guests !== 5 ? this.form.guests++ : this.form.guests;
+        };
+
+        this.removeGuest = function () {
+            this.form.guests !== 1 ? this.form.guests-- : this.form.guests;
+        };
+
+        this.submit = function () {};
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    datePickerDirective.$inject = ["$interval"];
+    angular.module('ahotelApp').directive('datePicker', datePickerDirective);
+
+    function datePickerDirective($interval) {
+        return {
+            require: 'ngModel',
+            /*scope: {
+                ngModel: '='
+            },*/
+            link: datePickerDirectiveLink
+        };
+
+        function datePickerDirectiveLink(scope, element, attrs, ctrl) {
+            //todo all
+            $('[date-picker]').dateRangePicker({
+                language: 'en',
+                startDate: new Date(),
+                endDate: new Date().setFullYear(new Date().getFullYear() + 1)
+            }).bind('datepicker-first-date-selected', function (event, obj) {
+                /* This event will be triggered when first date is selected */
+                console.log('first-date-selected', obj);
+                // obj will be something like this:
+                // {
+                // 		date1: (Date object of the earlier date)
+                // }
+            }).bind('datepicker-change', function (event, obj) {
+                /* This event will be triggered when second date is selected */
+                console.log('change', obj);
+                ctrl.$setViewValue(obj.value);
+                ctrl.$render();
+                scope.$apply();
+                // obj will be something like this:
+                // {
+                // 		date1: (Date object of the earlier date),
+                // 		date2: (Date object of the later date),
+                //	 	value: "2013-06-05 to 2013-06-07"
+                // }
+            }).bind('datepicker-apply', function (event, obj) {
+                /* This event will be triggered when user clicks on the apply button */
+                console.log('apply', obj);
+            }).bind('datepicker-close', function () {
+                /* This event will be triggered before date range picker close animation */
+                console.log('before close');
+            }).bind('datepicker-closed', function () {
+                /* This event will be triggered after date range picker close animation */
+                console.log('after close');
+            }).bind('datepicker-open', function () {
+                /* This event will be triggered before date range picker open animation */
+                console.log('before open');
+            }).bind('datepicker-opened', function () {
+                /* This event will be triggered after date range picker open animation */
+                console.log('after open');
+            });
+        }
     }
 })();
 'use strict';
@@ -531,7 +680,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').directive('ahtlMap', ahtlMapDirective);
 
-    function ahtlMapDirective() {
+    ahtlMapDirective.$inject = ['resortService'];
+
+    function ahtlMapDirective(resortService) {
         return {
             restrict: 'E',
             template: '<div class="destinations__map"></div>',
@@ -539,52 +690,86 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         function ahtlMapDirectiveLink($scope, elem, attr) {
-            if (window.google && 'maps' in window.google) {
-                initMap();
-                return;
-            }
+            var hotels = null;
 
-            var mapScript = document.createElement('script');
-            mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxCK2-uVyl69wn7K61NPAQDf7yH-jf3w';
-            mapScript.onload = function () {
-                initMap();
-            };
-            document.body.appendChild(mapScript);
+            resortService.getResort().then(function (response) {
+                hotels = response;
+                createMap();
+            });
 
-            function initMap() {
-                var locations = [["Otjozondjupa Region, Kalahari Desert, Namibia", -20.330869, 17.346563], ["Sirte District, Sahara Desert, Libya", 31.195005, 16.500483], ["Limpopo, South Africa", -23.789900, 30.175637], ["Bububu, Zanzibar Town Tanzania", -6.101247, 39.215758], ["Madang Province, Papua New Guinea", -5.510379, 145.980497], ["Saint Andre, Reunion", -20.919410, 55.642483], ["Lubombo Region, Swaziland", -26.784930, 31.734820], ["Cantagalo S?o Tom? and Pr?ncipe", 0.237637, 6.738835], ["Ampanihy Madagascar", -25.023296, 44.063869], ["Plaine Corail-La Fouche Corail Mauritius", -19.740817, 63.363294], ["South Agalega Islands Mauritius", -10.455412, 56.685301], ["North Agalega Islands Mauritius", -10.433995, 56.647268], ["Coetivy Seychelles", -7.140338, 56.270384], ["Dembeni Mayotte", -12.839928, 45.190855], ["Babyntsi Kyivs'ka oblast, Ukraine", 50.638800, 30.022539], ["Pechykhvosty, Volyns'ka oblast, Ukraine", 50.502495, 24.614732], ["Bilhorod-Dnistrovs'kyi district, Odessa Oblast, Ukraine", 46.061116, 30.412401], ["Petrushky, Kyivs'ka oblast, Ukraine", 50.420998, 30.161548], ["Velyka Doch, Chernihivs'ka oblast, Ukraine", 51.307518, 32.574232]];
+            function createMap() {
+                if (window.google && 'maps' in window.google) {
+                    initMap();
+                    return;
+                }
 
-                var myLatLng = { lat: -25.363, lng: 131.044 };
-
-                // Create a map object and specify the DOM element for display.
-                var map = new google.maps.Map(document.getElementsByClassName('destinations__map')[0], {
-                    scrollwheel: false
-                });
-
-                var icons = {
-                    ahotel: {
-                        icon: 'assets/images/icon_map.png'
-                    }
+                var mapScript = document.createElement('script');
+                mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxCK2-uVyl69wn7K61NPAQDf7yH-jf3w';
+                mapScript.onload = function () {
+                    initMap();
                 };
+                document.body.appendChild(mapScript);
 
-                for (i = 0; i < locations.length; i++) {
-                    var marker = new google.maps.Marker({
-                        title: locations[i][0],
-                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                        map: map,
-                        icon: icons["ahotel"].icon
+                function initMap() {
+                    var locations = [];
+
+                    for (var i = 0; i < hotels.length; i++) {
+                        locations.push([hotels[i].name, hotels[i]._gmaps.lat, hotels[i]._gmaps.lng]);
+                    }
+
+                    var myLatLng = { lat: -25.363, lng: 131.044 };
+
+                    // Create a map object and specify the DOM element for display.
+                    var map = new google.maps.Map(document.getElementsByClassName('destinations__map')[0], {
+                        scrollwheel: false
                     });
-                }
 
-                /*centering*/
-                var bounds = new google.maps.LatLngBounds();
-                for (var i = 0; i < locations.length; i++) {
-                    var LatLang = new google.maps.LatLng(locations[i][1], locations[i][2]);
-                    bounds.extend(LatLang);
-                }
-                map.fitBounds(bounds);
-            };
+                    var icons = {
+                        ahotel: {
+                            icon: 'assets/images/icon_map.png'
+                        }
+                    };
+
+                    for (var _i = 0; _i < locations.length; _i++) {
+                        var marker = new google.maps.Marker({
+                            title: locations[_i][0],
+                            position: new google.maps.LatLng(locations[_i][1], locations[_i][2]),
+                            map: map,
+                            icon: icons["ahotel"].icon
+                        });
+
+                        marker.addListener('click', function () {
+                            map.setZoom(8);
+                            map.setCenter(this.getPosition());
+                        });
+                    }
+
+                    /*centering*/
+                    var bounds = new google.maps.LatLngBounds();
+                    for (var _i2 = 0; _i2 < locations.length; _i2++) {
+                        var LatLang = new google.maps.LatLng(locations[_i2][1], locations[_i2][2]);
+                        bounds.extend(LatLang);
+                    }
+                    map.fitBounds(bounds);
+                };
+            }
         }
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').controller('SocialShareController', SocialShareController);
+
+    SocialShareController.$inject = ['Socialshare'];
+
+    function SocialShareController(Socialshare) {
+        var share = {
+            content: 'Ahotel Limited is an international hospitality brand that ' + 'manages and develops resorts, hotels and spas in Asia, America, Africa and Middle East.',
+            url: 'https://enigmatic-depths-59034.herokuapp.com/'
+        };
     }
 })();
 'use strict';
@@ -655,9 +840,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 var imgSrc = event.target.src;
 
                 if (imgSrc) {
-                    $scope.$root.$broadcast('modalOpen', {
-                        show: 'image',
-                        src: imgSrc
+                    $scope.$apply(function () {
+                        $scope.$root.$broadcast('modalOpen', {
+                            show: 'image',
+                            src: imgSrc
+                        });
                     });
                 }
             });
@@ -1092,36 +1279,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').controller('HomeController', HomeController);
 
-    HomeController.$inject = ['trendHotelsImgPaths'];
+    HomeController.$inject = ['resortService'];
 
-    function HomeController(trendHotelsImgPaths) {
-        this.hotels = trendHotelsImgPaths;
+    function HomeController(resortService) {
+        var _this = this;
+
+        resortService.getResort({ prop: '_trend', value: true }).then(function (response) {
+            //todo if not response
+            _this.hotels = response;
+        });
     }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('ahotelApp').constant('trendHotelsImgPaths', [{
-        name: 'Hotel1',
-        src: 'assets/images/home/trend6.jpg'
-    }, {
-        name: 'Hotel2',
-        src: 'assets/images/home/trend6.jpg'
-    }, {
-        name: 'Hotel3',
-        src: 'assets/images/home/trend6.jpg'
-    }, {
-        name: 'Hotel4',
-        src: 'assets/images/home/trend6.jpg'
-    }, {
-        name: 'Hotel5',
-        src: 'assets/images/home/trend6.jpg'
-    }, {
-        name: 'Hotel6',
-        src: 'assets/images/home/trend6.jpg'
-    }]);
 })();
 'use strict';
 
@@ -1145,7 +1312,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 if (data.show === 'image') {
                     $scope.src = data.src;
                     $scope.show.img = true;
-                    $scope.$apply(); //todo apply?
+                    //$scope.$apply();//todo apply?
                     elem.css('display', 'block');
                 }
 
@@ -1172,6 +1339,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     var myLatlng = { lat: data.coord.lat, lng: data.coord.lng };
 
                     var map = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
+                        title: data.name,
+                        map: map,
                         zoom: 4,
                         center: myLatlng
                     });
@@ -1180,6 +1349,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                         position: myLatlng,
                         map: map,
                         title: data.name
+                    });
+
+                    marker.addListener('click', function () {
+                        map.setZoom(10);
+                        map.setCenter(this.getPosition());
                     });
                 }
             });
@@ -1264,14 +1438,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').controller('ResortController', ResortController);
 
-    ResortController.$inject = ['resortService', 'hotelDetailsConstant', '$filter', '$scope'];
+    ResortController.$inject = ['resortService', '$filter', '$scope', '$state'];
 
-    function ResortController(resortService, hotelDetailsConstant, $filter, $scope) {
+    function ResortController(resortService, $filter, $scope, $state) {
         var _this = this;
 
-        this.filters = initFilters();
+        var currentFilters = $state.$current.data.currentFilters; // temp
 
-        var currentFilters = {};
+        this.filters = $filter('hotelFilter').initFilters();
+
         this.onFilterChange = function (filterGroup, filter, value) {
             //console.log(filterGroup, filter, value);
             if (value) {
@@ -1284,7 +1459,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
             }
 
-            this.hotels = $filter('hotelFilter')(hotels, currentFilters);
+            this.hotels = $filter('hotelFilter').applyFilters(hotels, currentFilters);
             this.getShowHotelCount = this.hotels.reduce(function (counter, item) {
                 return item._hide ? counter : ++counter;
             }, 0);
@@ -1302,7 +1477,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 currentFilters.price = [newValue];
                 //console.log(currentFilters);
 
-                _this.hotels = $filter('hotelFilter')(hotels, currentFilters);
+                _this.hotels = $filter('hotelFilter').applyFilters(hotels, currentFilters);
                 _this.getShowHotelCount = _this.hotels.reduce(function (counter, item) {
                     return item._hide ? counter : ++counter;
                 }, 0);
@@ -1323,14 +1498,37 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             };
             $scope.$root.$broadcast('modalOpen', data);
         };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').filter('hotelFilter', hotelFilter);
+
+    hotelFilter.$inject = ['$log', 'hotelDetailsConstant'];
+
+    function hotelFilter($log, hotelDetailsConstant) {
+        var savedFilters = {};
+
+        return {
+            loadFilters: loadFilters,
+            applyFilters: applyFilters,
+            initFilters: initFilters
+        };
+
+        function loadFilters() {}
 
         function initFilters() {
+            console.log(savedFilters);
             var filters = {};
 
             for (var key in hotelDetailsConstant) {
                 filters[key] = {};
                 for (var i = 0; i < hotelDetailsConstant[key].length; i++) {
-                    filters[key][hotelDetailsConstant[key][i]] = false;
+                    filters[key][hotelDetailsConstant[key][i]] = savedFilters[key] && savedFilters[key].indexOf(hotelDetailsConstant[key][i]) !== -1 ? true : false;
+                    //filters[key][hotelDetailsConstant[key][i]] = savedFilters[key][hotelDetailsConstant[key][i]] || false;
                 }
             }
 
@@ -1341,19 +1539,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             return filters;
         }
-    }
-})();
-'use strict';
 
-(function () {
-    'use strict';
+        function applyFilters(hotels, filters) {
+            savedFilters = filters;
 
-    angular.module('ahotelApp').filter('hotelFilter', hotelFilter);
-
-    hotelFilter.$inject = ['$log'];
-
-    function hotelFilter($log) {
-        return function (hotels, filters) {
             angular.forEach(hotels, function (hotel) {
                 hotel._hide = false;
                 isHotelMatchingFilters(hotel, filters);
@@ -1362,15 +1551,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             function isHotelMatchingFilters(hotel, filters) {
 
                 angular.forEach(filters, function (filtersInGroup, filterGroup) {
-                    var matchAtLeaseOneFilter = false;
+                    var matchAtLeaseOneFilter = false,
+                        reverseFilterMatching = false; // for activities and musthaves groups
 
                     if (filterGroup === 'guests') {
                         filtersInGroup = [filtersInGroup[filtersInGroup.length - 1]];
                     }
 
+                    if (filterGroup === 'mustHaves' || filterGroup === 'activities') {
+                        matchAtLeaseOneFilter = true;
+                        reverseFilterMatching = true;
+                    }
+
                     for (var i = 0; i < filtersInGroup.length; i++) {
-                        if (getHotelProp(hotel, filterGroup, filtersInGroup[i])) {
+                        if (!reverseFilterMatching && getHotelProp(hotel, filterGroup, filtersInGroup[i])) {
                             matchAtLeaseOneFilter = true;
+                            break;
+                        }
+
+                        if (reverseFilterMatching && !getHotelProp(hotel, filterGroup, filtersInGroup[i])) {
+                            matchAtLeaseOneFilter = false;
                             break;
                         }
                     }
@@ -1403,7 +1603,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             return hotels.filter(function (hotel) {
                 return !hotel._hide;
             });
-        };
+        }
     }
 })();
 'use strict';
@@ -1448,29 +1648,51 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
-    angular.module('ahotelApp').factory('resortService', resortService);
+    angular.module('ahotelApp').controller('SearchController', SearchController);
 
-    resortService.$inject = ['$http', 'backendPathsConstant'];
+    SearchController.$inject = ['$state', 'resortService'];
 
-    function resortService($http, backendPathsConstant) {
-        return {
-            getResort: getResort
-        };
+    function SearchController($state, resortService) {
+        var _this = this;
 
-        function getResort() {
-            return $http({
-                method: 'GET',
-                url: backendPathsConstant.hotels
-            }).then(onResolve, onRejected);
+        this.query = $state.params.query;
+        console.log(this.query);
+        this.hotels = null;
 
-            function onResolve(response) {
-                //console.log(response.data)
-                return response.data;
-            }
+        resortService.getResort().then(function (response) {
+            _this.hotels = response;
+            search.call(_this);
+        });
 
-            function onRejected(response) {
-                return response;
-            }
+        function search() {
+            var parsedQuery = $.trim(this.query).replace(/\s+/g, ' ').split(' ');
+            var result = [];
+
+            angular.forEach(this.hotels, function (hotel) {
+                //console.log(hotel);
+                var hotelContent = hotel.name + hotel.location.country + hotel.location.region + hotel.desc + hotel.descLocation;
+                //console.log(hotelContent)
+                //for ()
+                var matchesCounter = 0;
+                for (var i = 0; i < parsedQuery.length; i++) {
+                    var qRegExp = new RegExp(parsedQuery[i], 'gi');
+                    matchesCounter += (hotelContent.match(qRegExp) || []).length;
+                }
+
+                if (matchesCounter > 0) {
+                    result[hotel._id] = {};
+                    result[hotel._id].matchesCounter = matchesCounter;
+                }
+            });
+
+            this.searchResults = this.hotels.filter(function (hotel) {
+                return result[hotel._id];
+            }).map(function (hotel) {
+                hotel._matches = result[hotel._id].matchesCounter;
+                return hotel;
+            });
+
+            console.log(this.searchResults);
         }
     }
 })();

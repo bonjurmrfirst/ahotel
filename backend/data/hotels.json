@@ -14,13 +14,12 @@
     },
     "details": {
       "restaurant": "daily",
-      "kids": "all ages welcome",
+      "kids": "4+",
       "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
-      "pet": "pet friendly",
       "disable": "disable access",
-      "beach": "beach nearby, 10m",
+      "beach": "30km",
       "parking": "off-street",
       "conditioning": "air cond.",
       "lounge": "yes",
@@ -31,7 +30,6 @@
     },
     "activities": [
       "Cooking classes",
-      "Cycling",
       "Fishing",
       "Golf",
       "Hiking",
@@ -41,7 +39,6 @@
       "Sailing",
       "Scuba diving",
       "Shopping / markets",
-      "Snorkelling",
       "Skiing",
       "Surfing",
       "Wildlife",
@@ -82,13 +79,11 @@
       "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
-      "pet": "pet friendly",
       "disable": "disable access",
       "beach": "beach nearby, 10m",
-      "parking": "off-street",
+      "parking": "yes",
       "conditioning": "air cond.",
       "lounge": "yes",
-      "terrace": "yes",
       "garden": "yes",
       "gym": "yes",
       "bicycles": "available"
@@ -110,7 +105,6 @@
       "Surfing",
       "Wildlife",
       "Windsurfing",
-      "Wine tasting",
       "Yoga"
     ],
 
@@ -144,10 +138,9 @@
     "details": {
       "restaurant": "daily",
       "kids": "all ages welcome",
-      "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
-      "pet": "pet friendly",
+      "pet": "cats only",
       "disable": "disable access",
       "beach": "beach nearby, 10m",
       "parking": "off-street",
@@ -165,22 +158,17 @@
       "Golf",
       "Hiking",
       "Horse-riding",
-      "Kayaking",
       "Nightlife",
-      "Sailing",
       "Scuba diving",
       "Shopping / markets",
-      "Snorkelling",
-      "Skiing",
       "Surfing",
       "Wildlife",
-      "Windsurfing",
       "Wine tasting",
       "Yoga"
     ],
 
     "desc": "A charming little hotel with an excellent restaurant and its own bodega in the wine-growing region.",
-    "descLocation": "Limpopo  is the northernmost province of South Africa. It is named after the Limpopo River, which forms the province's western and northern borders. The name \"Limpopo\" has its etymological origin in the Northern Sotho language word diphororo t?a meetse, meaning \"strong gushing waterfalls\". The capital is Polokwane, formerly called Pietersburg.",
+    "descLocation": "Limpopo  is the northernmost province of South Africa. It is named after the Limpopo River, which forms the province's western and northern borders. The name \"Limpopo\" has its etymological origin in the Northern Sotho language word diphororo tea meetse, meaning \"strong gushing waterfalls\". The capital is Polokwane, formerly called Pietersburg.",
 
     "_gmaps": {
       "lat": -23.789900,
@@ -223,14 +211,12 @@
       "bicycles": "available"
     },
     "activities": [
-      "Cooking classes",
       "Cycling",
       "Fishing",
       "Golf",
       "Hiking",
       "Horse-riding",
       "Kayaking",
-      "Nightlife",
       "Sailing",
       "Scuba diving",
       "Shopping / markets",
@@ -243,7 +229,7 @@
       "Yoga"
     ],
 
-    "desc": "All who stay here profess to love it and it’s easy to see why.",
+    "desc": "All who stay here profess to love it and its easy to see why.",
     "descLocation": "Bububu is a town on the Tanzanian island of Unguja, the main island of Zanzibar. It is located on the central west coast, 10 kilometres north of the Zanzibari capital of Stone Town. The town is predominantly a densely populated industrial town, but it is also noted for its beach, which is one of the most renowned within easy reach of the capital.",
 
     "_gmaps": {
@@ -271,14 +257,13 @@
     },
     "details": {
       "restaurant": "daily",
-      "kids": "all ages welcome",
+      "kids": "8+",
       "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
       "beach": "beach nearby, 10m",
-      "parking": "off-street",
       "conditioning": "air cond.",
       "lounge": "yes",
       "terrace": "yes",
@@ -287,10 +272,8 @@
       "bicycles": "available"
     },
     "activities": [
-      "Cooking classes",
       "Cycling",
       "Fishing",
-      "Golf",
       "Hiking",
       "Horse-riding",
       "Kayaking",
@@ -354,9 +337,7 @@
       "Cooking classes",
       "Cycling",
       "Fishing",
-      "Golf",
       "Hiking",
-      "Horse-riding",
       "Kayaking",
       "Nightlife",
       "Sailing",
@@ -372,7 +353,7 @@
     ],
 
     "desc": "A charming and intimate boutique hotel with luxurious rooms and a superb little spa.",
-    "descLocation": "Saint Andre is the sixth-largest commune in the French overseas department of R?union. It is located on the northeast part of the island of R?union.",
+    "descLocation": "Saint Andre is the sixth-largest commune in the French overseas department of Reunion. It is located on the northeast part of the island of Reunion.",
 
     "_gmaps": {
       "lat": -20.919410,
@@ -421,7 +402,6 @@
       "Fishing",
       "Golf",
       "Hiking",
-      "Horse-riding",
       "Kayaking",
       "Nightlife",
       "Sailing",
@@ -437,7 +417,7 @@
     ],
 
     "desc": "Superb spa offering an extensive menu of excellent massages and facials",
-    "descLocation": "Lubombo located in the east of the country. It has an area of 5,849.11 km? and a population of 207,731 (2007). Its administrative center is Siteki. It borders all three other regions: Hhohho to the north, Manzini to the west, and Shiselweni to the south. It is divided into 11 tinkhundla.",
+    "descLocation": "Lubombo located in the east of the country. It has an area of 5,849.11 km and a population of 207,731 (2007). Its administrative center is Siteki. It borders all three other regions: Hhohho to the north, Manzini to the west, and Shiselweni to the south. It is divided into 11 tinkhundla.",
 
     "_gmaps": {
       "lat": -26.784930,
@@ -485,7 +465,6 @@
       "Fishing",
       "Golf",
       "Hiking",
-      "Horse-riding",
       "Kayaking",
       "Nightlife",
       "Sailing",
@@ -501,7 +480,7 @@
     ],
 
     "desc": "The setting is extremely peaceful and the views are wonderfully tranquil",
-    "descLocation": "Cantagalo is a district of S?o Tom? Province. Out of the seven districts that make up the equatorial Atlantic islands of S?o Tom? and Pr?ncipe. It is fourth largest in terms of population and covers approximately 119 square kilometers. Its population is 15,113 (2008 est.).[1] The district capital is Santana.",
+    "descLocation": "Cantagalo is a district of Sao Tome Province. Out of the seven districts that make up the equatorial Atlantic islands of Sao Tome and Principe. It is fourth largest in terms of population and covers approximately 119 square kilometers. Its population is 15,113 (2008 est.).[1] The district capital is Santana.",
 
     "_gmaps": {
       "lat": 0.237637,
@@ -529,7 +508,7 @@
     },
     "details": {
       "restaurant": "daily",
-      "kids": "all ages welcome",
+      "kids": "2+",
       "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
@@ -538,14 +517,11 @@
       "beach": "beach nearby, 10m",
       "parking": "off-street",
       "conditioning": "air cond.",
-      "lounge": "yes",
       "terrace": "yes",
       "garden": "yes",
-      "gym": "yes",
       "bicycles": "available"
     },
     "activities": [
-      "Cooking classes",
       "Cycling",
       "Fishing",
       "Golf",
@@ -609,7 +585,6 @@
       "bicycles": "available"
     },
     "activities": [
-      "Cooking classes",
       "Cycling",
       "Fishing",
       "Golf",
@@ -630,7 +605,7 @@
     ],
 
     "desc": "A chic but relaxed mood: nothing pretentious, just chilled-out elegance",
-    "descLocation": "Mauritius officially the Republic of Mauritius (French: R?publique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agal?ga, St. Brandon and two disputed territories).",
+    "descLocation": "Mauritius officially the Republic of Mauritius (French: Republique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agalaga, St. Brandon and two disputed territories).",
 
     "_gmaps": {
       "lat": -19.740817,
@@ -657,7 +632,7 @@
     },
     "details": {
       "restaurant": "daily",
-      "kids": "all ages welcome",
+      "kids": "2+",
       "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
@@ -669,12 +644,10 @@
       "lounge": "yes",
       "terrace": "yes",
       "garden": "yes",
-      "gym": "yes",
       "bicycles": "available"
     },
     "activities": [
       "Cooking classes",
-      "Cycling",
       "Fishing",
       "Golf",
       "Hiking",
@@ -689,12 +662,11 @@
       "Surfing",
       "Wildlife",
       "Windsurfing",
-      "Wine tasting",
-      "Yoga"
+      "Wine tasting"
     ],
 
     "desc": "Superb restaurant using local produce, with an excellent wine list.",
-    "descLocation": "Mauritius officially the Republic of Mauritius (French: R?publique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agal?ga, St. Brandon and two disputed territories).",
+    "descLocation": "Mauritius officially the Republic of Mauritius (French: Republique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agalaga, St. Brandon and two disputed territories).",
 
     "_gmaps": {
       "lat": -10.455412,
@@ -707,7 +679,7 @@
   },
 
   {
-    "name": "Bldebaran Hotel",
+    "name": "Baldebaran Hotel",
     "type": "Hotel",
     "environment": "Coast",
     "location": {
@@ -731,10 +703,8 @@
       "beach": "beach nearby, 10m",
       "parking": "off-street",
       "conditioning": "air cond.",
-      "lounge": "yes",
       "terrace": "yes",
       "garden": "yes",
-      "gym": "yes",
       "bicycles": "available"
     },
     "activities": [
@@ -745,10 +715,8 @@
       "Hiking",
       "Horse-riding",
       "Kayaking",
-      "Nightlife",
       "Sailing",
       "Scuba diving",
-      "Shopping / markets",
       "Snorkelling",
       "Skiing",
       "Surfing",
@@ -759,7 +727,7 @@
     ],
 
     "desc": "Good little spa, with a sauna, a Jacuzzi and fantastic massages. ",
-    "descLocation": "Mauritius officially the Republic of Mauritius (French: R?publique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agal?ga, St. Brandon and two disputed territories).",
+    "descLocation": "Mauritius officially the Republic of Mauritius (French: Republique de Maurice), is an island nation in the Indian Ocean about 2,000 kilometres (1,200 mi) off the southeast coast of the African continent. The country includes the island of Mauritius, Rodrigues [560 kilometres (350 mi) east], and the outer islands (Agalaga, St. Brandon and two disputed territories).",
 
     "_gmaps": {
       "lat": -10.433995,
@@ -790,7 +758,7 @@
       "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
-      "pet": "pet friendly",
+      "pet": "dogs only",
       "disable": "disable access",
       "beach": "beach nearby, 10m",
       "parking": "off-street",
@@ -798,7 +766,6 @@
       "lounge": "yes",
       "terrace": "yes",
       "garden": "yes",
-      "gym": "yes",
       "bicycles": "available"
     },
     "activities": [
@@ -812,7 +779,6 @@
       "Nightlife",
       "Sailing",
       "Scuba diving",
-      "Shopping / markets",
       "Snorkelling",
       "Skiing",
       "Surfing",
@@ -823,7 +789,7 @@
     ],
 
     "desc": "A friendly atmosphere: meet other guests at the daily wine tasting and swap travel notes",
-    "descLocation": "Coetivy Along with ?le Platte, the nearest neighbor 171 km (106 mi) northwest, it comprises the Southern Coral Group and therefore belongs to the Outer Islands.",
+    "descLocation": "Coetivy Along with le Platte, the nearest neighbor 171 km (106 mi) northwest, it comprises the Southern Coral Group and therefore belongs to the Outer Islands.",
 
     "_gmaps": {
       "lat": -7.140338,
@@ -882,8 +848,7 @@
       "Surfing",
       "Wildlife",
       "Windsurfing",
-      "Wine tasting",
-      "Yoga"
+      "Wine tasting"
     ],
 
     "desc": "Excellent attention from the friendly and professional staff",
@@ -920,7 +885,6 @@
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
-      "beach": "beach nearby, 10m",
       "parking": "off-street",
       "conditioning": "air cond.",
       "lounge": "yes",
@@ -937,15 +901,8 @@
       "Hiking",
       "Horse-riding",
       "Kayaking",
-      "Nightlife",
       "Sailing",
-      "Scuba diving",
-      "Shopping / markets",
-      "Snorkelling",
-      "Skiing",
-      "Surfing",
       "Wildlife",
-      "Windsurfing",
       "Wine tasting",
       "Yoga"
     ],
@@ -984,7 +941,6 @@
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
-      "beach": "beach nearby, 10m",
       "parking": "off-street",
       "conditioning": "air cond.",
       "lounge": "yes",
@@ -1001,21 +957,14 @@
       "Hiking",
       "Horse-riding",
       "Kayaking",
-      "Nightlife",
-      "Sailing",
-      "Scuba diving",
-      "Shopping / markets",
-      "Snorkelling",
       "Skiing",
-      "Surfing",
       "Wildlife",
-      "Windsurfing",
       "Wine tasting",
       "Yoga"
     ],
 
-    "desc": "A clever combination of peaceful simplicity in the d?cor, but with real comfort",
-    "descLocation": "Volyns'ka oblast is an oblast (province) in north-western Ukraine. Its administrative center is Lutsk. Kovel is the westernmost town and the last station in Ukraine of the rail line running from Kiev to Warsaw. Population: 1,042,918?(2015 est.)",
+    "desc": "A clever combination of peaceful simplicity in the decor, but with real comfort",
+    "descLocation": "Volyns'ka oblast is an oblast (province) in north-western Ukraine. Its administrative center is Lutsk. Kovel is the westernmost town and the last station in Ukraine of the rail line running from Kiev to Warsaw. Population: 1,042,918(2015 est.)",
 
     "_gmaps": {
       "lat": 50.502495,
@@ -1071,15 +1020,13 @@
       "Shopping / markets",
       "Snorkelling",
       "Skiing",
-      "Surfing",
       "Wildlife",
-      "Windsurfing",
       "Wine tasting",
       "Yoga"
     ],
 
     "desc": "Excellent beds, good bathrooms and a welcoming lounge",
-    "descLocation": "Bilhorod-Dnistrovs'kyi district is a city and port situated on the right bank of the Dniester Liman (on the Dniester estuary leading to the Black Sea[2]) in Odessa Oblast of southwestern Ukraine, in the historical region of Bessarabia. Administratively, Bilhorod-Dnistrovskyi is incorporated as a town of oblast significance. It also serves as the administrative center of Bilhorod-Dnistrovskyi Raion, one of twenty-six districts of Odessa Oblast, though it is not a part of the district. It is a location of a big freight seaport. Population: 50,086?(2015 est.)",
+    "descLocation": "Bilhorod-Dnistrovs'kyi district is a city and port situated on the right bank of the Dniester Liman (on the Dniester estuary leading to the Black Sea[2]) in Odessa Oblast of southwestern Ukraine, in the historical region of Bessarabia. Administratively, Bilhorod-Dnistrovskyi is incorporated as a town of oblast significance. It also serves as the administrative center of Bilhorod-Dnistrovskyi Raion, one of twenty-six districts of Odessa Oblast, though it is not a part of the district. It is a location of a big freight seaport. Population: 50,086(2015 est.)",
 
     "_gmaps": {
       "lat": 46.061116,
@@ -1112,7 +1059,6 @@
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
-      "beach": "beach nearby, 10m",
       "parking": "off-street",
       "conditioning": "air cond.",
       "lounge": "yes",
@@ -1127,22 +1073,15 @@
       "Golf",
       "Hiking",
       "Horse-riding",
-      "Kayaking",
       "Nightlife",
-      "Sailing",
-      "Scuba diving",
       "Shopping / markets",
-      "Snorkelling",
-      "Skiing",
-      "Surfing",
       "Wildlife",
-      "Windsurfing",
       "Wine tasting",
       "Yoga"
     ],
 
     "desc": "A swimming pool (summer only) with excellent views",
-    "descLocation": "Kyivs'ka oblast is an oblast (province) in central Ukraine. The administrative center of the oblast is the city of Kiev (Ukrainian: Êè¿â, Kyiv), which also serves as the capital of Ukraine. Despite being located in the center of the Kiev Oblast, and hosting the governing bodies of the oblast, Kiev itself is a self-governing city with special status and not under oblast jurisdiction.",
+    "descLocation": "Kyivs'ka oblast is an oblast (province) in central Ukraine. The administrative center of the oblast is the city of Kiev, which also serves as the capital of Ukraine. Despite being located in the center of the Kiev Oblast, and hosting the governing bodies of the oblast, Kiev itself is a self-governing city with special status and not under oblast jurisdiction.",
 
     "_gmaps": {
       "lat": 50.420998,
@@ -1173,7 +1112,6 @@
       "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
-      "pet": "pet friendly",
       "disable": "disable access",
       "parking": "off-street",
       "conditioning": "air cond.",
@@ -1190,16 +1128,10 @@
       "Golf",
       "Hiking",
       "Horse-riding",
-      "Kayaking",
       "Nightlife",
-      "Sailing",
-      "Scuba diving",
-      "Shopping / markets",
       "Snorkelling",
       "Skiing",
-      "Surfing",
       "Wildlife",
-      "Windsurfing",
       "Wine tasting",
       "Yoga"
     ],

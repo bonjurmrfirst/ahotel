@@ -51,15 +51,27 @@
             function isHotelMatchingFilters(hotel, filters) {
 
                 angular.forEach(filters, function(filtersInGroup, filterGroup) {
-                    let matchAtLeaseOneFilter = false;
+                    let matchAtLeaseOneFilter = false,
+                        reverseFilterMatching = false; // for activities and musthaves groups
 
                     if (filterGroup === 'guests') {
                         filtersInGroup = [filtersInGroup[filtersInGroup.length - 1]];
                     }
 
+
+                    if (filterGroup === 'mustHaves' || filterGroup === 'activities') {
+                        matchAtLeaseOneFilter = true;
+                        reverseFilterMatching = true;
+                    }
+
                     for (var i = 0; i < filtersInGroup.length; i++) {
-                        if (getHotelProp(hotel, filterGroup, filtersInGroup[i])) {
+                        if (!reverseFilterMatching && getHotelProp(hotel, filterGroup, filtersInGroup[i])) {
                             matchAtLeaseOneFilter = true;
+                            break;
+                        }
+
+                        if (reverseFilterMatching && !getHotelProp(hotel, filterGroup, filtersInGroup[i])) {
+                            matchAtLeaseOneFilter = false;
                             break;
                         }
                     }

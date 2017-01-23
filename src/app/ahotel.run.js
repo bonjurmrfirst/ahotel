@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .run(run);
 
-    run.$inject = ['$rootScope' , 'backendPathsConstant', 'preloadService', '$window', '$timeout'];
+    run.$inject = ['$rootScope' , 'backendPathsConstant', 'preloadService', '$window'];
 
-    function run($rootScope, backendPathsConstant, preloadService, $window, $timeout) {
+    function run($rootScope, backendPathsConstant, preloadService, $window) {
         $rootScope.$logged = false;
 
         $rootScope.$state = {

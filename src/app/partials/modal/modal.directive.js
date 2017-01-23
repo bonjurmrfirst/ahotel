@@ -47,24 +47,22 @@
                 function initMap() {
                     var myLatlng = {lat: data.coord.lat, lng: data.coord.lng};
 
-                    var icons = {
-                        ahotel: {
-                            icon: 'assets/images/icon_map.png'
-                        }
-                    };
-
                     var map = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
                         title: data.name,
                         map: map,
                         zoom: 4,
                         center: myLatlng,
-                        icon: icons["ahotel"].icon
                     });
 
                     var marker = new google.maps.Marker({
                         position: myLatlng,
                         map: map,
                         title: data.name
+                    });
+
+                    marker.addListener('click', function() {
+                        map.setZoom(10);
+                        map.setCenter(this.getPosition());
                     });
                 }
             });

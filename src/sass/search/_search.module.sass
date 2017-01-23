@@ -1,0 +1,34 @@
+.result
+    margin-top: 20px
+
+    &__name
+        @include fontStyle(cabL)
+        @include remFallback(2)
+        color: $color_green
+
+        &:hover
+            color: $color_light_green
+                
+        &:active
+            color: $color_dark_green
+
+    &__location
+        @include fontStyle(cabB)
+        margin-top: 5px
+        color: $color_reverse
+
+    &__desc
+        margin-top: 5px
+
+    &__desc-location
+        margin-top: 10px
+
+    &__matches
+        @include fontStyle(cabHi)
+        @include remFallback(0.7)
+
+.no-result
+    @include remFallback(1.5)
+
+    &__query
+        @include fontStyle(cabHi)

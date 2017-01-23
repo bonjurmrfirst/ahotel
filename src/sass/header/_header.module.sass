@@ -220,6 +220,7 @@
     border: 0
     border-bottom: 1px solid $color_dark_reverse
     background-color: transparent
+    text-transform: none
     cursor: text
 
 .formSearch__submit
@@ -237,6 +238,12 @@
 
     &:active
         background-color: $color_dark_reverse
+
+    &:disabled
+        background-color: $color_light_reverse
+        opacity: 0.7
+        cursor: default
+
 // Search form
 // Sub nav END
 

@@ -57,6 +57,11 @@
 				url: '/booking?hotelId',
 				templateUrl: 'app/partials/booking/booking.html',
 				params: {'hotelId': 'hotel Id'}
-			});
+			})
+			.state('search', {
+				url: '/search?query',
+				templateUrl: 'app/partials/search/search.html',
+				params: {'query': 'search query'}
+			})
 	}
 })();

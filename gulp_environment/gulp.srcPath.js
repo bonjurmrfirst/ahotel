@@ -12,7 +12,8 @@ module.exports = {
 		minified: [
 			'./src/assets/vendor/placeholder.js',
 			'./src/assets/vendor/promise.js',
-			'./src/assets/vendor/daterangepicker.min.js'
+			'./src/assets/vendor/daterangepicker.min.js',
+			'./src/assets/vendor/angular-socialshare.min.js'
 		]
 	},
 	sass: './src/sass/**/*.sass',
