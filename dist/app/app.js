@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    angular.module('ahotelApp', ['ui.router', 'preload', 'ngAnimate', '720kb.socialshare']);
+    angular.module('ahotelApp', ['ui.router' /*, 'preload'*/, 'ngAnimate', '720kb.socialshare']);
 })();
 'use strict';
 
@@ -85,19 +85,21 @@
         }
     }
 })();*/
-'use strict';
-
-(function () {
+/*
+(function() {
     'use strict';
 
-    angular.module('ahotelApp').config(config);
+    angular
+        .module('ahotelApp')
+        .config(config);
 
     config.$inject = ['preloadServiceProvider', 'backendPathsConstant'];
 
     function config(preloadServiceProvider, backendPathsConstant) {
-        preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get', 100, 'warning');
+            preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get', 100, 'warning');
     }
-})();
+})();*/
+"use strict";
 'use strict';
 
 (function () {
@@ -162,9 +164,9 @@
 
     angular.module('ahotelApp').run(run);
 
-    run.$inject = ['$rootScope', 'backendPathsConstant', 'preloadService', '$window'];
+    run.$inject = ['$rootScope', 'backendPathsConstant', /*'preloadService',*/'$window'];
 
-    function run($rootScope, backendPathsConstant, preloadService, $window) {
+    function run($rootScope, backendPathsConstant, /*preloadService,*/$window) {
         $rootScope.$logged = false;
 
         $rootScope.$state = {
@@ -183,10 +185,9 @@
             //$timeout(() => $('body').scrollTop(0), 0);
         });
 
-        $window.onload = function () {
-            //todo onload �������� � ������
-            preloadService.preloadImages('gallery', { url: backendPathsConstant.gallery, method: 'GET', action: 'get' }); //todo del method, action by default
-        };
+        /*$window.onload = function() { //todo onload �������� � ������
+            preloadService.preloadImages('gallery', {url: backendPathsConstant.gallery, method: 'GET', action: 'get'}); //todo del method, action by default
+        };*/
 
         //log.sendOnUnload();
     }
@@ -761,30 +762,81 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
-    angular.module('ahotelApp').controller('SocialShareController', SocialShareController);
-
-    SocialShareController.$inject = ['Socialshare'];
-
-    function SocialShareController(Socialshare) {
-        var share = {
-            content: 'Ahotel Limited is an international hospitality brand that ' + 'manages and develops resorts, hotels and spas in Asia, America, Africa and Middle East.',
-            url: 'https://enigmatic-depths-59034.herokuapp.com/'
-        };
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
     angular.module('ahotelApp').directive('ahtlGallery', ahtlGalleryDirective);
 
-    ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant', 'preloadService'];
+    ahtlGalleryDirective.$inject = ['$timeout'];
 
-    function ahtlGalleryDirective($http, $timeout, backendPathsConstant, preloadService) {
-        //todo not only load but listSrc too accept
-        AhtlGalleryController.$inject = ["$scope"];
+    function ahtlGalleryDirective($timeout) {
+        ahtlGalleryController.$inject = ["$scope"];
         return {
+            restrict: 'EA',
+            scope: {},
+            templateUrl: 'app/partials/gallery/gallery.template.html',
+            controller: ahtlGalleryController,
+            controllerAs: 'gallery',
+            link: ahtlGalleryDirectiveLink
+        };
+
+        function ahtlGalleryController($scope) {
+            this.imgs = new Array(20);
+            this.imgsLoaded = [];
+
+            this.openImage = function (imageName) {
+                var imageSrc = 'assets/images/gallery/' + imageName + '.jpg';
+
+                $scope.$root.$broadcast('modalOpen', {
+                    show: 'image',
+                    src: imageSrc
+                });
+            };
+
+            $timeout(function () {
+                return $scope.$root.$broadcast('ahtlGallery:loaded');
+            });
+        }
+
+        function ahtlGalleryDirectiveLink($scope, elem, a, ctrl) {
+            $scope.$on('ahtlGallery:loaded', alignImages);
+
+            function alignImages() {
+                $timeout(function () {
+                    var container = document.querySelector('.container');
+
+                    var masonry = new Masonry(container, {
+                        columnWidth: '.item',
+                        itemSelector: '.item',
+                        gutter: '.gutter-sizer',
+                        transitionDuration: '0.2s',
+                        initLayout: false
+                    });
+
+                    masonry.on('layoutComplete', onLayoutComplete);
+
+                    masonry.layout();
+
+                    function onLayoutComplete() {
+                        $timeout(function () {
+                            return $(container).css('opacity', '1');
+                        }, 0);
+                    }
+                });
+            }
+        }
+    }
+})();
+
+/*
+(function() {
+    'use strict';
+
+    angular
+        .module('ahotelApp')
+            .directive('ahtlGallery', ahtlGalleryDirective);
+
+        ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant', 'preloadService'];
+
+        function ahtlGalleryDirective($http, $timeout, backendPathsConstant, preloadService) { //todo not only load but listSrc too accept
+            return {
             restrict: 'EA',
             scope: {
                 showFirstImgCount: '=ahtlGalleryShowFirst',
@@ -797,28 +849,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         function AhtlGalleryController($scope) {
-            var _this = this;
-
-            var allImagesSrc = [],
+            let allImagesSrc = [],
                 showFirstImgCount = $scope.showFirstImgCount,
                 showNextImgCount = $scope.showNextImgCount;
 
-            this.loadMore = function () {
+            this.loadMore = function() {
                 showFirstImgCount = Math.min(showFirstImgCount + showNextImgCount, allImagesSrc.length);
                 this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
                 this.isAllImagesLoaded = this.showFirst >= allImagesSrc.length;
 
-                /*$timeout(_setImageAligment, 0);*/
+                /!*$timeout(_setImageAligment, 0);*!/
             };
 
-            this.allImagesLoaded = function () {
-                return this.showFirst ? this.showFirst.length === this.imagesCount : true;
+            this.allImagesLoaded = function() {
+                return (this.showFirst) ? this.showFirst.length === this.imagesCount: true
             };
 
-            this.alignImages = function () {
+            this.alignImages = () => {
                 if ($('.gallery img').length < showFirstImgCount) {
                     console.log('oops');
-                    $timeout(_this.alignImages, 0);
+                    $timeout(this.alignImages, 0)
                 } else {
                     $timeout(_setImageAligment);
                     $(window).on('resize', _setImageAligment);
@@ -827,39 +877,40 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             this.alignImages();
 
-            _getImageSources(function (response) {
+            _getImageSources((response) => {
                 allImagesSrc = response;
-                _this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
-                _this.imagesCount = allImagesSrc.length;
+                this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
+                this.imagesCount = allImagesSrc.length;
                 //$timeout(_setImageAligment);
-            });
+            })
         }
 
         function ahtlGalleryLink($scope, elem) {
-            elem.on('click', function (event) {
-                var imgSrc = event.target.src;
+            elem.on('click', (event) => {
+                let imgSrc = event.target.src;
 
                 if (imgSrc) {
-                    $scope.$apply(function () {
+                    $scope.$apply(function() {
                         $scope.$root.$broadcast('modalOpen', {
                             show: 'image',
                             src: imgSrc
                         });
-                    });
+                    })
                 }
             });
 
-            /* var $images = $('.gallery img');
-             var loaded_images_count = 0;*/
-            /*$scope.alignImages = function() {
+           /!* var $images = $('.gallery img');
+            var loaded_images_count = 0;*!/
+            /!*$scope.alignImages = function() {
                 $images.load(function() {
                     loaded_images_count++;
-                      if (loaded_images_count == $images.length) {
+
+                    if (loaded_images_count == $images.length) {
                         _setImageAligment();
                     }
                 });
                 //$timeout(_setImageAligment, 0); // todo
-            };*/
+            };*!/
 
             //$scope.alignImages();
         }
@@ -868,45 +919,41 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             cb(preloadService.getPreloadCache('gallery'));
         }
 
-        function _setImageAligment() {
-            //todo arguments naming, errors
-            var figures = $('.gallery__figure');
+        function _setImageAligment() { //todo arguments naming, errors
+                const figures = $('.gallery__figure');
 
-            var galleryWidth = parseInt(figures.closest('.gallery').css('width')),
-                imageWidth = parseInt(figures.css('width'));
+                const galleryWidth = parseInt(figures.closest('.gallery').css('width')),
+                    imageWidth = parseInt(figures.css('width'));
 
-            var columnsCount = Math.round(galleryWidth / imageWidth),
-                columnsHeight = new Array(columnsCount + 1).join('0').split('').map(function () {
-                return 0;
-            }),
-                //todo del join-split
-            currentColumnsHeight = columnsHeight.slice(0),
-                columnPointer = 0;
-
-            $(figures).css('margin-top', '0');
-
-            $.each(figures, function (index) {
-                currentColumnsHeight[columnPointer] = parseInt($(this).css('height'));
-
-                if (index > columnsCount - 1) {
-                    $(this).css('margin-top', -(Math.max.apply(null, columnsHeight) - columnsHeight[columnPointer]) + 'px');
-                }
-
-                //currentColumnsHeight[columnPointer] = parseInt($(this).css('height')) + columnsHeight[columnPointer];
-
-                if (columnPointer === columnsCount - 1) {
+                let columnsCount = Math.round(galleryWidth / imageWidth),
+                    columnsHeight = new Array(columnsCount + 1).join('0').split('').map(() => {return 0}), //todo del join-split
+                    currentColumnsHeight = columnsHeight.slice(0),
                     columnPointer = 0;
-                    for (var i = 0; i < columnsHeight.length; i++) {
-                        columnsHeight[i] += currentColumnsHeight[i];
+
+                $(figures).css('margin-top', '0');
+
+                $.each(figures, function(index) {
+                    currentColumnsHeight[columnPointer] = parseInt($(this).css('height'));
+
+                    if (index > columnsCount - 1) {
+                        $(this).css('margin-top', -(Math.max.apply(null, columnsHeight) - columnsHeight[columnPointer]) + 'px');
                     }
-                } else {
-                    columnPointer++;
-                }
-            });
+
+                    //currentColumnsHeight[columnPointer] = parseInt($(this).css('height')) + columnsHeight[columnPointer];
+
+                    if (columnPointer === columnsCount - 1) {
+                        columnPointer = 0;
+                        for (let i = 0; i < columnsHeight.length; i++) {
+                            columnsHeight[i] += currentColumnsHeight[i];
+                        }
+                    } else {
+                        columnPointer++;
+                    }
+                });
         }
     }
 })();
-/*        .controller('GalleryController', GalleryController);
+/!*        .controller('GalleryController', GalleryController);
 
     GalleryController.$inject = ['$scope'];
 
@@ -935,9 +982,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 return 'ERROR'; //todo
             });
     }
-})();*/
+})();*!/
 
-/*
+/!*
         .directive('ahtlGallery', ahtlGalleryDirective);
 
     ahtlGalleryDirective.$inject = ['$http', 'backendPathsConstant'];
@@ -968,7 +1015,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
     }
-})();*/
+})();*!/
+*/
 'use strict';
 
 (function () {

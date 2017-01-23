@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .directive('ahtlGallery', ahtlGalleryDirective);
 
-    ahtlGalleryDirective.$inject = [];
+    ahtlGalleryDirective.$inject = ['$timeout'];
 
-    function ahtlGalleryDirective() {
+    function ahtlGalleryDirective($timeout) {
         return {
             restrict: 'EA',
             scope: {},
@@ -17,31 +17,46 @@
             link: ahtlGalleryDirectiveLink
         };
 
-        function ahtlGalleryController() {
+        function ahtlGalleryController($scope) {
             this.imgs = new Array(20);
+            this.imgsLoaded = [];
+
+            this.openImage = function(imageName) {
+                let imageSrc = 'assets/images/gallery/' + imageName + '.jpg';
+
+                $scope.$root.$broadcast('modalOpen', {
+                    show: 'image',
+                    src: imageSrc
+                });
+            };
+
+            $timeout(() => $scope.$root.$broadcast('ahtlGallery:loaded'));
         }
 
-        function ahtlGalleryDirectiveLink() {
-            $(window).load(function() {
-                let container = document.querySelector('.container');
+        function ahtlGalleryDirectiveLink($scope, elem, a, ctrl) {
+            $scope.$on('ahtlGallery:loaded', alignImages);
 
-                let masonry = new Masonry(container, {
-                    // options
-                    columnWidth: '.item',
-                    itemSelector: '.item',
-                    gutter: '.gutter-sizer',
-                    transitionDuration: '0.2s',
-                    initLayout: false
-                });
+            function alignImages(){
+                $timeout(() => {
+                    let container = document.querySelector('.container');
 
-                masonry.on('layoutComplete', onLayoutComplete);
+                    let masonry = new Masonry(container, {
+                        columnWidth: '.item',
+                        itemSelector: '.item',
+                        gutter: '.gutter-sizer',
+                        transitionDuration: '0.2s',
+                        initLayout: false
+                    });
 
-                masonry.layout();
+                    masonry.on('layoutComplete', onLayoutComplete);
 
-                function onLayoutComplete() {
-                    setTimeout(() => $(container).css('opacity', '1'), 0);
-                }
-            });
+                    masonry.layout();
+
+                    function onLayoutComplete() {
+                        $timeout(() => $(container).css('opacity', '1'), 0);
+                    }
+                })
+            }
         }
     }
 })();
