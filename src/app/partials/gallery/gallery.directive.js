@@ -15,7 +15,7 @@
             link: ahtlGalleryDirectiveLink
         };
 
-        function ahtlGalleryDirectiveLink() {
+        function ahtlGalleryDirectiveLink($scope) {
             let imagesInGallery = 20;
 
             for (let i = 0; i < 20; i++) {
@@ -37,7 +37,7 @@
             }
 
             function imageClicked(image) {
-                let imageSrc = 'assets/images/gallery/' + image + '.jpg';
+                let imageSrc = 'assets/images/gallery/' + ++image + '.jpg';
 
                 $scope.$apply(() => {
                     $scope.$root.$broadcast('modalOpen', {

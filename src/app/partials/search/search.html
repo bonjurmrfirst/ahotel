@@ -7,7 +7,8 @@
         <p class="result__desc-location">{{hotel.descLocation}}</p>
         <span class="result__matches">Matches: {{hotel._matches}}</span>
     </div>
-    <div ng-hide="!search.searchResults">
+
+    <div ng-hide="search.searchResults.length">
         <p class="no-result">Your search –
             <br>
             <span class="no-result__query">"{{search.query}}"</span>

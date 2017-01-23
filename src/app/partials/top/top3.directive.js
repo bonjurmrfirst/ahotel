@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .directive('ahtlTop3', ahtlTop3Directive);
 
-    ahtlTop3Directive.$inject = ['top3Service', 'hotelDetailsConstant'];
+    ahtlTop3Directive.$inject = ['resortService', 'hotelDetailsConstant'];
 
-    function ahtlTop3Directive(top3Service, hotelDetailsConstant) {
+    function ahtlTop3Directive(resortService, hotelDetailsConstant) {
         return {
             restrict: 'E',
             controller: AhtlTop3Controller,
@@ -16,7 +16,7 @@
         };
 
         function AhtlTop3Controller($scope, $element, $attrs) {
-            this.details = hotelDetailsConstant.mustHave;
+            this.details = hotelDetailsConstant.mustHaves;
             this.resortType = $attrs.ahtlTop3type;
             this.resort = null;
 
@@ -31,10 +31,12 @@
                 return detailClassName + isResortIncludeDetailClassName
             };
 
-            top3Service.getTop3Places(this.resortType)
-                .then((response) => {
-                    this.resort = response.data;
-                    console.log(this.resort);
+            resortService.getResort({prop: 'type', value: this.resortType}).then((response) => {
+                    this.resort = response;
+
+                    if (this.resortType === 'Hotel') {
+                        this.resort = this.resort.filter((hotel) => hotel._showInTop === true)
+                    }
                 }
             );
 

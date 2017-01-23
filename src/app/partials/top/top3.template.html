@@ -1,10 +1,10 @@
 <div class="top3">
     <div class="top3__item" ng-repeat="item in top3.resort">
         <div class="top3__img-container">
-            <img class="top3__img" ng-src="{{top3.getImgSrc($index)}}"
-                 width="400" height="200">
+            <img class="top3__img" ng-src="assets/images/booking/{{item._id}}/preview.jpg"
+                 width="400" height="300">
         </div>
-        <h3 class="top3__header">{{item.main.name}}</h3>
+        <h3 class="top3__header">{{item.name}}</h3>
         <p class="top3__desc">{{item.desc}}</p>
         <ul class="top3__details">
             <li ng-repeat="detail in top3.details">

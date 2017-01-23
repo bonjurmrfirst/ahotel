@@ -13,13 +13,13 @@
       "max": 1
     },
     "details": {
-      "restaurant": "daily",
+      "restaurant": "24h",
       "kids": "4+",
       "pool": "outdoor",
       "spa": "spa treatments",
       "wifi": "yes",
       "disable": "disable access",
-      "beach": "30km",
+      "beach": "yes",
       "parking": "off-street",
       "conditioning": "air cond.",
       "lounge": "yes",
@@ -137,8 +137,8 @@
     },
     "details": {
       "restaurant": "daily",
+      "pool": "outdoor",
       "kids": "all ages welcome",
-      "spa": "spa treatments",
       "wifi": "yes",
       "pet": "cats only",
       "disable": "disable access",
@@ -148,7 +148,6 @@
       "lounge": "yes",
       "terrace": "yes",
       "garden": "yes",
-      "gym": "yes",
       "bicycles": "available"
     },
     "activities": [
@@ -325,7 +324,7 @@
       "pet": "pet friendly",
       "disable": "disable access",
       "beach": "beach nearby, 10m",
-      "parking": "off-street",
+      "parking": "underground parking",
       "conditioning": "air cond.",
       "lounge": "yes",
       "terrace": "yes",
@@ -426,7 +425,8 @@
 
     "_id": 7,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": false
   },
 
   {
@@ -450,7 +450,7 @@
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
-      "beach": "beach nearby, 10m",
+      "beach": "beach nearby, 100m",
       "parking": "off-street",
       "conditioning": "air cond.",
       "lounge": "yes",
@@ -489,7 +489,8 @@
 
     "_id": 8,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": false
   },
 
   {
@@ -551,7 +552,8 @@
 
     "_id": 9,
     "_gallery": 6,
-    "_trend": true
+    "_trend": true,
+    "_showInTop": true
   },
 
   {
@@ -570,8 +572,8 @@
     "details": {
       "restaurant": "daily",
       "kids": "all ages welcome",
-      "pool": "outdoor",
-      "spa": "spa treatments",
+      "pool": "3 pools",
+      "spa": "yes",
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
@@ -614,7 +616,8 @@
 
     "_id": 10,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": true
   },
 
   {
@@ -675,7 +678,8 @@
 
     "_id": 11,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": false
   },
 
   {
@@ -736,7 +740,8 @@
 
     "_id": 12,
     "_gallery": 6,
-    "_trend": true
+    "_trend": true,
+    "_showInTop": true
   },
 
   {
@@ -798,7 +803,8 @@
 
     "_id": 13,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": false
   },
 
   {
@@ -818,18 +824,17 @@
       "restaurant": "daily",
       "kids": "all ages welcome",
       "pool": "outdoor",
-      "spa": "spa treatments",
+      "spa": "in City",
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
       "beach": "beach nearby, 10m",
-      "parking": "off-street",
+      "parking": "underground parking",
       "conditioning": "air cond.",
       "lounge": "yes",
       "terrace": "yes",
       "garden": "yes",
-      "gym": "yes",
-      "bicycles": "available"
+      "bicycles": "yes"
     },
     "activities": [
       "Cooking classes",
@@ -861,7 +866,8 @@
 
     "_id": 14,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": false
   },
 
   {
@@ -885,10 +891,9 @@
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
-      "parking": "off-street",
+      "parking": "yes",
       "conditioning": "air cond.",
       "lounge": "yes",
-      "terrace": "yes",
       "garden": "yes",
       "gym": "yes",
       "bicycles": "available"
@@ -917,7 +922,8 @@
 
     "_id": 15,
     "_gallery": 6,
-    "_trend": true
+    "_trend": true,
+    "_showInTop": true
   },
 
   {
@@ -941,7 +947,7 @@
       "wifi": "yes",
       "pet": "pet friendly",
       "disable": "disable access",
-      "parking": "off-street",
+      "parking": "yes",
       "conditioning": "air cond.",
       "lounge": "yes",
       "terrace": "yes",
@@ -973,7 +979,8 @@
 
     "_id": 16,
     "_gallery": 6,
-    "_trend": true
+    "_trend": true,
+    "_showInTop": false
   },
 
   {
@@ -1035,7 +1042,8 @@
 
     "_id": 17,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": true
   },
 
   {
@@ -1090,7 +1098,8 @@
 
     "_id": 18,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": false
   },
 
   {
@@ -1113,7 +1122,7 @@
       "spa": "spa treatments",
       "wifi": "yes",
       "disable": "disable access",
-      "parking": "off-street",
+      "parking": "underground",
       "conditioning": "air cond.",
       "lounge": "yes",
       "terrace": "yes",
@@ -1146,6 +1155,7 @@
 
     "_id": 19,
     "_gallery": 6,
-    "_trend": false
+    "_trend": false,
+    "_showInTop": true
   }
 ]

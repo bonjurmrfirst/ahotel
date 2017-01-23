@@ -30,28 +30,6 @@ app.get('/', function(request, response) {
     response.render(appRoot + '/index');
 });
 
-app.get('/api/top3', function(request, response) {
-    if (request.query.action === 'get') {
-        if (request.query.type === 'bungalows') {
-            response.setHeader('Content-Type', 'application/json');
-            response.send(require('./backend/top3.json'));
-            return
-        }
-
-        if (request.query.type === 'hotels') {
-
-        }
-
-        if (request.query.type === 'villas') {
-
-        }
-
-        response.status(204).send();
-    } else {
-        response.status(400).send();
-    }
-});
-
 var users = [];
 app.post('/api/users', function(request, response) {
     var
