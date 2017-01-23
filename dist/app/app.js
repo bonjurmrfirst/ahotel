@@ -767,59 +767,67 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     ahtlGalleryDirective.$inject = ['$timeout'];
 
     function ahtlGalleryDirective($timeout) {
-        ahtlGalleryController.$inject = ["$scope"];
         return {
             restrict: 'EA',
             scope: {},
             templateUrl: 'app/partials/gallery/gallery.align.html',
-            controller: ahtlGalleryController,
-            controllerAs: 'gallery',
+            /*controller: ahtlGalleryController,
+            controllerAs: 'gallery',*/
             link: ahtlGalleryDirectiveLink
         };
 
-        function ahtlGalleryController($scope) {
+        /*function ahtlGalleryController($scope) {
             this.imgs = new Array(20);
             this.imgsLoaded = [];
-
-            this.openImage = function (imageName) {
-                var imageSrc = 'assets/images/gallery/' + imageName + '.jpg';
-
-                $scope.$root.$broadcast('modalOpen', {
+              this.openImage = function(imageName) {
+                let imageSrc = 'assets/images/gallery/' + imageName + '.jpg';
+                  $scope.$root.$broadcast('modalOpen', {
                     show: 'image',
                     src: imageSrc
                 });
             };
-
-            $timeout(function () {
-                return $scope.$root.$broadcast('ahtlGallery:loaded');
-            });
-        }
+              $timeout(() => $scope.$root.$broadcast('ahtlGallery:loaded'));
+        }*/
 
         function ahtlGalleryDirectiveLink($scope, elem, a, ctrl) {
-            $scope.$on('ahtlGallery:loaded', alignImages);
+            /*console.log($(elem).find('img'));
+              $scope.$on('ahtlGallery:loaded', alignImages);*/
+            var imagesInGallery = 20;
+
+            for (var i = 0; i < 20; i++) {
+                var img = $('<div class="item"><img src="assets/images/gallery/preview' + (i + 1) + '.jpg" width="300"></div>');
+                img.find('img').on('load', imageLoaded);
+                $('[gallery-container]').append(img);
+            }
+
+            var imagesLoaded = 0;
+            function imageLoaded() {
+                imagesLoaded++;
+                console.log(imagesLoaded);
+
+                if (imagesLoaded === imagesInGallery) {
+                    console.log('align');
+                    alignImages();
+                }
+            }
 
             function alignImages() {
-                $timeout(function () {
-                    var container = document.querySelector('.container');
 
-                    var masonry = new Masonry(container, {
-                        columnWidth: '.item',
-                        itemSelector: '.item',
-                        gutter: '.gutter-sizer',
-                        transitionDuration: '0.2s',
-                        initLayout: false
-                    });
+                var container = document.querySelector('.container');
 
-                    masonry.on('layoutComplete', onLayoutComplete);
-
-                    masonry.layout();
-
-                    function onLayoutComplete() {
-                        $timeout(function () {
-                            return $(container).css('opacity', '1');
-                        }, 0);
-                    }
+                var masonry = new Masonry(container, {
+                    columnWidth: '.item',
+                    itemSelector: '.item',
+                    gutter: '.gutter-sizer',
+                    transitionDuration: '0.2s',
+                    initLayout: true
                 });
+
+                /*masonry.on('layoutComplete', onLayoutComplete);
+                  masonry.layout();
+                  function onLayoutComplete() {
+                    $timeout(() => $(container).css('opacity', '1'), 0);
+                }*/
             }
         }
     }
@@ -1017,6 +1025,72 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 })();*!/
 */
+
+/*2
+(function() {
+    'use strict';
+
+    angular
+        .module('ahotelApp')
+        .directive('ahtlGallery', ahtlGalleryDirective);
+
+    ahtlGalleryDirective.$inject = ['$timeout'];
+
+    function ahtlGalleryDirective($timeout) {
+        return {
+            restrict: 'EA',
+            scope: {},
+            templateUrl: 'app/partials/gallery/gallery.align.html',
+            controller: ahtlGalleryController,
+            controllerAs: 'gallery',
+            link: ahtlGalleryDirectiveLink
+        };
+
+        function ahtlGalleryController($scope) {
+            this.imgs = new Array(20);
+            this.imgsLoaded = [];
+
+            this.openImage = function(imageName) {
+                let imageSrc = 'assets/images/gallery/' + imageName + '.jpg';
+
+                $scope.$root.$broadcast('modalOpen', {
+                    show: 'image',
+                    src: imageSrc
+                });
+            };
+
+            $timeout(() => $scope.$root.$broadcast('ahtlGallery:loaded'));
+        }
+
+        function ahtlGalleryDirectiveLink($scope, elem, a, ctrl) {
+            console.log($(elem).find('img'));
+
+            $scope.$on('ahtlGallery:loaded', alignImages);
+
+            function alignImages(){
+                $timeout(() => {
+                    let container = document.querySelector('.container');
+
+                    let masonry = new Masonry(container, {
+                        columnWidth: '.item',
+                        itemSelector: '.item',
+                        gutter: '.gutter-sizer',
+                        transitionDuration: '0.2s',
+                        initLayout: false
+                    });
+
+                    masonry.on('layoutComplete', onLayoutComplete);
+
+                    masonry.layout();
+
+                    function onLayoutComplete() {
+                        $timeout(() => $(container).css('opacity', '1'), 0);
+                    }
+                })
+            }
+        }
+    }
+})();*/
 'use strict';
 
 (function () {
