@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .run(run);
 
-    run.$inject = ['$rootScope' , 'backendPathsConstant', 'preloadService', '$window'];
+    run.$inject = ['$rootScope' , 'backendPathsConstant', /*'preloadService',*/ '$window'];
 
-    function run($rootScope, backendPathsConstant, preloadService, $window) {
+    function run($rootScope, backendPathsConstant, /*preloadService,*/ $window) {
         $rootScope.$logged = false;
 
         $rootScope.$state = {
@@ -26,9 +26,9 @@
             //$timeout(() => $('body').scrollTop(0), 0);
         });
 
-        $window.onload = function() { //todo onload пернести в сервис
+        /*$window.onload = function() { //todo onload пернести в сервис
             preloadService.preloadImages('gallery', {url: backendPathsConstant.gallery, method: 'GET', action: 'get'}); //todo del method, action by default
-        };
+        };*/
 
         //log.sendOnUnload();
     }

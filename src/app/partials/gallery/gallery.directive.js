@@ -3,6 +3,55 @@
 
     angular
         .module('ahotelApp')
+        .directive('ahtlGallery', ahtlGalleryDirective);
+
+    ahtlGalleryDirective.$inject = [];
+
+    function ahtlGalleryDirective() {
+        return {
+            restrict: 'EA',
+            scope: {},
+            templateUrl: 'app/partials/gallery/gallery.template.html',
+            controller: ahtlGalleryController,
+            controllerAs: 'gallery',
+            link: ahtlGalleryDirectiveLink
+        };
+
+        function ahtlGalleryController() {
+            this.imgs = new Array(20);
+        }
+
+        function ahtlGalleryDirectiveLink() {
+            $(window).load(function() {
+                let container = document.querySelector('.container');
+
+                let masonry = new Masonry(container, {
+                    // options
+                    columnWidth: '.item',
+                    itemSelector: '.item',
+                    gutter: '.gutter-sizer',
+                    transitionDuration: '0.2s',
+                    initLayout: false
+                });
+
+                masonry.on('layoutComplete', onLayoutComplete);
+
+                masonry.layout();
+
+                function onLayoutComplete() {
+                    setTimeout(() => $(container).css('opacity', '1'), 0);
+                }
+            });
+        }
+    }
+})();
+
+/*
+(function() {
+    'use strict';
+
+    angular
+        .module('ahotelApp')
             .directive('ahtlGallery', ahtlGalleryDirective);
 
         ahtlGalleryDirective.$inject = ['$http', '$timeout', 'backendPathsConstant', 'preloadService'];
@@ -30,7 +79,7 @@
                 this.showFirst = allImagesSrc.slice(0, showFirstImgCount);
                 this.isAllImagesLoaded = this.showFirst >= allImagesSrc.length;
 
-                /*$timeout(_setImageAligment, 0);*/
+                /!*$timeout(_setImageAligment, 0);*!/
             };
 
             this.allImagesLoaded = function() {
@@ -71,9 +120,9 @@
                 }
             });
 
-           /* var $images = $('.gallery img');
-            var loaded_images_count = 0;*/
-            /*$scope.alignImages = function() {
+           /!* var $images = $('.gallery img');
+            var loaded_images_count = 0;*!/
+            /!*$scope.alignImages = function() {
                 $images.load(function() {
                     loaded_images_count++;
 
@@ -82,7 +131,7 @@
                     }
                 });
                 //$timeout(_setImageAligment, 0); // todo
-            };*/
+            };*!/
 
             //$scope.alignImages();
         }
@@ -125,7 +174,7 @@
         }
     }
 })();
-/*        .controller('GalleryController', GalleryController);
+/!*        .controller('GalleryController', GalleryController);
 
     GalleryController.$inject = ['$scope'];
 
@@ -154,9 +203,9 @@
                 return 'ERROR'; //todo
             });
     }
-})();*/
+})();*!/
 
-/*
+/!*
         .directive('ahtlGallery', ahtlGalleryDirective);
 
     ahtlGalleryDirective.$inject = ['$http', 'backendPathsConstant'];
@@ -187,4 +236,5 @@
 
 
     }
-})();*/
+})();*!/
+*/

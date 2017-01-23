@@ -1,3 +1,4 @@
+/*
 (function() {
     'use strict';
 
@@ -10,4 +11,4 @@
     function config(preloadServiceProvider, backendPathsConstant) {
             preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get', 100, 'warning');
     }
-})();
+})();*/

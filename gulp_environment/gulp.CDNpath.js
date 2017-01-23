@@ -29,5 +29,9 @@ module.exports = [{
 	{
 		domain: 'bower_components/es6-promise-polyfill/promise.js',
 		cdn: 'https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.0.5/es6-promise.min.js'
+	},
+	{
+		domain: 'assets/vendor/masonry.js',
+		cdn: 'https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js'
 	}
 ];
