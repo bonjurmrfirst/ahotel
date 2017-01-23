@@ -33,5 +33,9 @@ module.exports = [{
 	{
 		domain: 'assets/vendor/masonry.js',
 		cdn: 'https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js'
+	},
+	{
+		domain: 'bower_components/angular-socialshare/dist/angular-socialshare.min.js',
+		cdn: 'assets/vendor/angular-socialshare.min.js'
 	}
 ];

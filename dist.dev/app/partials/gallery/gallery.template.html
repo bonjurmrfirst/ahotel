@@ -4,8 +4,7 @@
         <div class="item" ng-repeat="img in gallery.imgs track by $index">
             <img ng-src="assets/images/gallery/preview{{$index + 1}}.jpg"
                  ng-click="gallery.openImage($index + 1)"
-                 width="300"
-                 ng-init="gallery.imgsLoaded[$index] = 'loaded'"/>
+                 width="300"/>
         </div>
     </div>
 </div>
