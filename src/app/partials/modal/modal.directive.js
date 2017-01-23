@@ -20,7 +20,6 @@
                 if (data.show === 'image') {
                     $scope.src = data.src;
                     $scope.show.img = true;
-                    //$scope.$apply();//todo apply?
                     elem.css('display', 'block');
                 }
 
@@ -50,8 +49,9 @@
                     var map = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
                         title: data.name,
                         map: map,
-                        zoom: 4,
-                        center: myLatlng,
+                        mapTypeId: 'roadmap',
+                        zoom: 8,
+                        center: myLatlng
                     });
 
                     var marker = new google.maps.Marker({
@@ -61,7 +61,7 @@
                     });
 
                     marker.addListener('click', function() {
-                        map.setZoom(10);
+                        map.setZoom(12);
                         map.setCenter(this.getPosition());
                     });
                 }

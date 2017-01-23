@@ -256,6 +256,9 @@
     background-color: black
     opacity: 0.5
 
+    @media #{$mw850}
+        top: 572px
+
     &__header
         @include fontStyle(cabBL)
         @include remFallback(1.3)
@@ -278,5 +281,6 @@
 .js_nav--fixed
     position: fixed
     top: 0
-    right: 3%
-    left: 3%
+    right: 0
+    left: 0
+    min-width: 768px

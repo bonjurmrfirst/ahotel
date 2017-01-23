@@ -12,69 +12,59 @@
             restrict: 'EA',
             scope: {},
             templateUrl: 'app/partials/gallery/gallery.align.html',
-            /*controller: ahtlGalleryController,
-            controllerAs: 'gallery',*/
             link: ahtlGalleryDirectiveLink
         };
 
-        /*function ahtlGalleryController($scope) {
-            this.imgs = new Array(20);
-            this.imgsLoaded = [];
-
-            this.openImage = function(imageName) {
-                let imageSrc = 'assets/images/gallery/' + imageName + '.jpg';
-
-                $scope.$root.$broadcast('modalOpen', {
-                    show: 'image',
-                    src: imageSrc
-                });
-            };
-
-            $timeout(() => $scope.$root.$broadcast('ahtlGallery:loaded'));
-        }*/
-
-        function ahtlGalleryDirectiveLink($scope, elem, a, ctrl) {
-            /*console.log($(elem).find('img'));
-
-            $scope.$on('ahtlGallery:loaded', alignImages);*/
+        function ahtlGalleryDirectiveLink() {
             let imagesInGallery = 20;
 
             for (let i = 0; i < 20; i++) {
                 let img = $('<div class="item"><img src="assets/images/gallery/preview' + (i + 1) + '.jpg" width="300"></div>')
-                img.find('img').on('load', imageLoaded);
+                img.find('img')
+                    .on('load', imageLoaded)
+                    .on('click', imageClicked.bind(null, i));
                 $('[gallery-container]').append(img);
             }
 
             let imagesLoaded = 0;
             function imageLoaded() {
                 imagesLoaded++;
-                console.log(imagesLoaded);
 
                 if (imagesLoaded === imagesInGallery) {
-                    console.log('align');
-                   alignImages()
+                    console.log('aligned');
+                    alignImages()
                 }
+            }
+
+            function imageClicked(image) {
+                let imageSrc = 'assets/images/gallery/' + image + '.jpg';
+
+                $scope.$apply(() => {
+                    $scope.$root.$broadcast('modalOpen', {
+                        show: 'image',
+                        src: imageSrc
+                    });
+                });
             }
 
             function alignImages(){
 
-                    let container = document.querySelector('.container');
+                let container = document.querySelector('.container');
 
-                    let masonry = new Masonry(container, {
-                        columnWidth: '.item',
-                        itemSelector: '.item',
-                        gutter: '.gutter-sizer',
-                        transitionDuration: '0.2s',
-                        initLayout: true
-                    });
+                let masonry = new Masonry(container, {
+                    columnWidth: '.item',
+                    itemSelector: '.item',
+                    gutter: '.gutter-sizer',
+                    transitionDuration: '0.2s',
+                });
 
-                    /*masonry.on('layoutComplete', onLayoutComplete);
+                masonry.on('layoutComplete', onLayoutComplete);
 
-                    masonry.layout();
+                masonry.layout();
 
-                    function onLayoutComplete() {
-                        $timeout(() => $(container).css('opacity', '1'), 0);
-                    }*/
+                function onLayoutComplete() {
+                    $timeout(() => $(container).css('opacity', '1'), 0);
+                }
 
             }
         }

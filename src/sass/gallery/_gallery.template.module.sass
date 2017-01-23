@@ -1,4 +1,7 @@
 .container
+    opacity: 0
+    @include transition(opacity)
+
     &:hover img
         margin: 0 auto
         opacity: 0.5
@@ -21,6 +24,7 @@
     cursor: pointer
     @include transition(opacity)
     opacity: 1
+    -webkit-backface-visibility: hidden
 
     &:hover
         @include transition(opacity)

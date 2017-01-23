@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .run(run);
 
-    run.$inject = ['$rootScope' , 'backendPathsConstant', /*'preloadService',*/ '$window'];
+    run.$inject = ['$rootScope' , 'backendPathsConstant', /*'preloadService',*/ '$window', '$timeout'];
 
-    function run($rootScope, backendPathsConstant, /*preloadService,*/ $window) {
+    function run($rootScope, backendPathsConstant, /*preloadService,*/ $window, $timeout) {
         $rootScope.$logged = false;
 
         $rootScope.$state = {
@@ -23,6 +23,7 @@
         });
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState/*, fromParams todo*/) {
+            $timeout(() => $('body').scrollTop(0), 0);
             //$timeout(() => $('body').scrollTop(0), 0);
         });
 
