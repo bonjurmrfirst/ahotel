@@ -37,6 +37,12 @@
                     return model
                 }
 
+                if (filter.prop === '_id' && filter.value === 'random') {
+                    let discountModel = model.filter((hotel) => hotel['discount']);
+                    let rndHotel = Math.floor(Math.random() * (discountModel.length));
+                    return [discountModel[rndHotel]]
+                }
+
                 return model.filter((hotel) => hotel[filter.prop] == filter.value);
             }
         }

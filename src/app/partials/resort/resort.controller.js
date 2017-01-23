@@ -48,7 +48,7 @@
             $scope.$broadcast('showHotelCountChanged', this.getShowHotelCount);
         });
 
-        this.openMap = function(hotelName, hotelCoord, hotel) {
+        this.openMap = function(hotelName, hotelCoord) {
             let data = {
                 show: 'map',
                 name: hotelName,
