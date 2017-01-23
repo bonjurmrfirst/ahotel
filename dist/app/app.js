@@ -771,7 +771,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return {
             restrict: 'EA',
             scope: {},
-            templateUrl: 'app/partials/gallery/gallery.template.html',
+            templateUrl: 'app/partials/gallery/gallery.align.html',
             controller: ahtlGalleryController,
             controllerAs: 'gallery',
             link: ahtlGalleryDirectiveLink

@@ -11,7 +11,7 @@
         return {
             restrict: 'EA',
             scope: {},
-            templateUrl: 'app/partials/gallery/gallery.template.html',
+            templateUrl: 'app/partials/gallery/gallery.align.html',
             controller: ahtlGalleryController,
             controllerAs: 'gallery',
             link: ahtlGalleryDirectiveLink
