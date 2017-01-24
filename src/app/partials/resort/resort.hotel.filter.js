@@ -64,7 +64,7 @@
                         reverseFilterMatching = true;
                     }
 
-                    for (var i = 0; i < filtersInGroup.length; i++) {
+                    for (let i = 0; i < filtersInGroup.length; i++) {
                         if (!reverseFilterMatching && getHotelProp(hotel, filterGroup, filtersInGroup[i])) {
                             matchAtLeaseOneFilter = true;
                             break;

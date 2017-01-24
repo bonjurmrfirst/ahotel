@@ -4,9 +4,11 @@
 	angular.module('ahotelApp')
 		.config(config);
 
-	config.$inject = ['$stateProvider', '$urlRouterProvider'];
+	config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-	function config($stateProvider, $urlRouterProvider) {
+	function config($stateProvider, $urlRouterProvider, $locationProvider) {
+		$locationProvider.html5Mode(true);
+
 		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
@@ -17,10 +19,7 @@
 			.state('auth', {
 				url: '/auth',
 				templateUrl: 'app/partials/auth/auth.html',
-				params: {'type': 'login or join'}/*,
-				onEnter: function ($rootScope) {
-					$rootScope.$state = "auth";
-				}*/
+				params: {'type': 'login'}
 			})
 			.state('bungalows', {
 				url: '/bungalows',
@@ -62,6 +61,6 @@
 				url: '/search?query',
 				templateUrl: 'app/partials/search/search.html',
 				params: {'query': 'search query'}
-			})
+			});
 	}
 })();

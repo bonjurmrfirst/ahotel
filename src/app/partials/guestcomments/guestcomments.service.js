@@ -27,8 +27,11 @@
             return response;
         }
 
-        function onReject(response) {
-            return response;
+        function onReject() {
+            $log.error(`Cant get ${backendPathsConstant.hotels}`);
+            $rootScope.$broadcast('displayError', {show: true});
+
+            return null;
         }
 
         function sendComment(comment) {
@@ -50,8 +53,11 @@
                 return response;
             }
 
-            function onReject(response) {
-                return response;
+            function onReject() {
+                $log.error(`Cant get ${backendPathsConstant.hotels}`);
+                $rootScope.$broadcast('displayError', {show: true});
+
+                return null
             }
         }
     }

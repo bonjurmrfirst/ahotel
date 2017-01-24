@@ -31,6 +31,11 @@
 
         let hotels = {};
         resortService.getResort().then((response) => {
+            if (!response) {
+                this.error = true;
+                return
+            }
+
             hotels = response;
             this.hotels = hotels;
 

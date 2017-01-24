@@ -19,7 +19,6 @@ app.set('view engine', 'html');
 //app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
-
 app.use(function(req,res,next){
    console.log(req.path);
     next();
@@ -93,6 +92,7 @@ app.post('/api/guestcomments', function(request, response) {
         allComments.push({'name': request.body.comment.name, 'comment': request.body.comment.comment});
         require('fs').writeFile('./backend/guestcomments.json', JSON.stringify(allComments), function (err) {
             console.log(err);
+            response.status(500)
         });
     }
 
@@ -116,6 +116,16 @@ app.use(favicon('./favicon.ico'));
 
 app.use('/api/hotels', hotels);
 
+app.get('/booking', function(req, res) {
+    'use strict';
+
+    res.send();
+});
+
+app.all('/*', function(req, res, next) {
+    // Just send the index.html for other files to support HTML5Mode
+    res.sendFile(appRoot + '/index.html', { root: __dirname });
+});
 /*
 
  */

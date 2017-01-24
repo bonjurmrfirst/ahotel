@@ -15,10 +15,10 @@
 		};
 
 		function link() {
-			let header = new HeaderTransitionsService('.l-header', '.nav__item-container');
+			let header = new HeaderTransitionsService('[data-header]', '[data-header-item]');
 
 			header.animateTransition(
-				'.sub-nav', {
+				'[data-header-subnav]', {
 					cssEnumerableRule: 'height',
 					delay: 300})
 				.recalculateHeightOnClick(

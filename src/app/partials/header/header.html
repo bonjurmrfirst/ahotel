@@ -2,7 +2,7 @@
     <script src="assets/vendor/placeholder.js"></script>
 <![endif]-->
 
-<header ahtl-stiky-header class="l-header">
+<header ahtl-stiky-header data-header class="l-header">
     <h1 class="logo">
         <a href="/">
             <img class="logo__img" src="assets/images/logo.png" height="105" width="200" alt="Ahotel">
@@ -11,9 +11,9 @@
 
     <nav class="nav">
         <ul class="nav__container">
-            <li class="nav__item-container">
+            <li class="nav__item-container" data-header-item>
                 <span class="nav__item">Resort</span>
-                <div class="sub-nav">
+                <div class="sub-nav" data-header-subnav>
                     <ul>
                         <li class="sub-nav__item">
                             <a  class="sub-nav__link" ui-sref="hotels">Hotels</a>
@@ -35,9 +35,9 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav__item-container">
+            <li class="nav__item-container" data-header-item>
                 <span class="nav__item">Offers</span>
-                <div class="sub-nav">
+                <div class="sub-nav" data-header-subnav>
                     <ul>
                         <li class="sub-nav__item">
                             <a  class="sub-nav__link" ui-sref="resort">Show all offers</a>
@@ -53,9 +53,9 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav__item-container">
+            <li class="nav__item-container" data-header-item>
                 <span class="nav__item">Inspiration</span>
-                <div class="sub-nav">
+                <div class="sub-nav" data-header-subnav>
                     <ul>
                         <li class="sub-nav__item">
                             <a class="sub-nav__link" ui-sref="gallery">Gallery</a>
@@ -68,9 +68,9 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav__item-container" ng-controller="AuthController as auth">
+            <li class="nav__item-container" data-header-item ng-controller="HeaderAuthController as auth">
                 <span class="nav__item nav__item--right nav__item--login">{{$logged ? 'Sign out' : 'Sign In'}}</span>
-                <div class="sub-nav sub-nav--right" data-autoheight-on>
+                <div class="sub-nav sub-nav--right" data-header-subnav data-autoheight-on >
                     <ul>
                         <li class="sub-nav__item" ng-hide="$logged">
                             <a  class="sub-nav__link" ui-sref="auth({type: 'login'})">Sign In</a>
@@ -84,9 +84,9 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav__item-container">
+            <li class="nav__item-container" data-header-item>
                 <span class="nav__item nav__item--right nav__item--search">Search</span>
-                <div class="sub-nav sub-nav--right sub-nav--search">
+                <div class="sub-nav sub-nav--right sub-nav--search" data-header-subnav>
                     <form class="formSearch" name="searchForm" novalidate>
                         <input class="formSearch__query"
                                name="query"
@@ -108,9 +108,9 @@
 </header>
 
 <div ng-hide="$state.currentStateName === 'auth' ||
-                $state.currentStateName === 'gallery' ||
-                $state.currentStateName === 'guestcomments' ||
-                $state.currentStateName === 'booking'"><!--todo-->
+              $state.currentStateName === 'gallery' ||
+              $state.currentStateName === 'guestcomments' ||
+              $state.currentStateName === 'booking'">
     <ahtl-slider></ahtl-slider>
 
     <div class="where-to-go">

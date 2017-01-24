@@ -14,7 +14,7 @@
 				if(slidingDirection === 'right') {
 					$(element).animate({'left': '100%'}, 500, done);
 				} else {
-					$(element).animate({'left': '-200%'}, 500, done); //200? $)
+					$(element).animate({'left': '-200%'}, 500, done);
 				}
 			},
 

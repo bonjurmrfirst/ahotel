@@ -17,6 +17,10 @@
                 prop: '_id',
                 value: $stateParams.hotelId})
             .then((response) => {
+                if (!response) {
+                    this.error = true;
+                    return
+                }
                 this.hotel = response[0];
                 this.loaded = true;
             });
@@ -25,7 +29,7 @@
 
         this.getHotelImagesCount = function(count) {
             return new Array(count - 1);
-        }
+        };
 
         this.openImage = function($event) {
             let imgSrc = $event.target.src;

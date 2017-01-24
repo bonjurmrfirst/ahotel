@@ -33,7 +33,7 @@
                 .then((response) => {
                     if (response === 'OK') {
                         console.log(response);
-                        var previousState = $rootScope.$state.stateHistory[$rootScope.$state.stateHistory.length - 2] || 'home';
+                        let previousState = $rootScope.$state.stateHistory[$rootScope.$state.stateHistory.length - 2] || 'home';
                         console.log(previousState);
                         $state.go(previousState)
                     } else {

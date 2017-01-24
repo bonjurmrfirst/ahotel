@@ -18,6 +18,9 @@
             let hotels = null;
 
             resortService.getResort().then((response) => {
+                if (!response) {
+                    return
+                }
                 hotels = response;
                 createMap();
             });
@@ -42,21 +45,21 @@
                         locations.push([hotels[i].name, hotels[i]._gmaps.lat, hotels[i]._gmaps.lng]);
                     }
 
-                    var myLatLng = {lat: -25.363, lng: 131.044};
+                    let myLatLng = {lat: -25.363, lng: 131.044};
 
                     // Create a map object and specify the DOM element for display.
-                    var map = new google.maps.Map(document.getElementsByClassName('destinations__map')[0], {
+                    let map = new google.maps.Map(document.getElementsByClassName('destinations__map')[0], {
                         scrollwheel: false
                     });
 
-                    var icons = {
+                    let icons = {
                         ahotel: {
                             icon: 'assets/images/icon_map.png'
                         }
                     };
 
                     for (let i = 0; i < locations.length; i++) {
-                        var marker = new google.maps.Marker({
+                        let marker = new google.maps.Marker({
                             title: locations[i][0],
                             position: new google.maps.LatLng(locations[i][1], locations[i][2]),
                             map: map,
@@ -70,9 +73,9 @@
                     }
 
                     /*centering*/
-                    var bounds = new google.maps.LatLngBounds();
+                    let bounds = new google.maps.LatLngBounds();
                     for (let i = 0; i < locations.length; i++) {
-                        var LatLang = new google.maps.LatLng(locations[i][1], locations[i][2]);
+                        let LatLang = new google.maps.LatLng(locations[i][1], locations[i][2]);
                         bounds.extend(LatLang);
                     }
                     map.fitBounds(bounds);

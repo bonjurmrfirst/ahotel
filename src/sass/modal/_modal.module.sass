@@ -39,7 +39,31 @@
         right: 0
         bottom: 0
 
-        opacity: 9999999999999
+    &__text
+        display: table
+        position:  absolute
+        width: 100%
+        height: 80%
+        top: 10%
+        text-align: center
+
+    &__text-wrapper
+        display: table-cell
+        vertical-align: middle
+
+    &__text-header
+        @include fontStyle(cabL)
+        @include remFallback(4)
+        color: $color_green
+        background-color: $color_reverse
+        animation: slide 0.5s forwards
+        animation-delay: 2s
+
+    &__text-message
+        @include fontStyle(cabL)
+        @include remFallback(2)
+        color: $color_reverse
+        background-color: $color_green
 
     &__close
         @include remFallback(2)

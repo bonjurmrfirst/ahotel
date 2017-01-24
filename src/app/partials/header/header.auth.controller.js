@@ -3,11 +3,11 @@
 
     angular
         .module('ahotelApp')
-        .controller('HeaderController', HeaderController);
+        .controller('HeaderAuthController', HeaderAuthController);
 
-    HeaderController.$inject = ['authService'];
+    HeaderAuthController.$inject = ['authService'];
 
-    function HeaderController(authService) {
+    function HeaderAuthController(authService) {
         this.signOut = function () {
             authService.signOut();
         }

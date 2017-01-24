@@ -7,10 +7,12 @@
     </figure>
 
     <p class="guestcomments-lead">Read what guests have to say about their experiences at our hotels.</p>
-    <button class="about__btn about__btn--comment" ng-click="guestComments.writeComment()" ng-hide="guestComments.openForm">Write comment</button>
+    <button class="about__btn about__btn--comment"
+            ng-if="!guestComments.loadCommentsError"
+            ng-click="guestComments.writeComment()" ng-hide="guestComments.openForm">Write comment</button>
     <span class="guestcomments__please-login" ng-show="guestComments.showPleaseLogiMessage">Please log in first</span>
 
-    <form class="form-comment"
+    <form class="form-comment" ng-if="!guestComments.loadCommentsError"
           ng-class="{'form-comment__opened': guestComments.openForm && $logged}"
           name="guestComments.formComment"
           ng-submit="guestComments.addComment()"
@@ -41,7 +43,7 @@
                value="Send">
      </form>
 
-    <div class="comment" ng-repeat="comment in guestComments.comments | reverse">
+    <div class="comment" ng-if="!guestComments.loadCommentsError" ng-repeat="comment in guestComments.comments | reverse">
         <p class="comment__author">{{comment.name}}</p>
         <p class="comment__text">{{comment.comment}}</p>
     </div>

@@ -1,4 +1,5 @@
 <div class="l-booking" ng-controller="BookingController as booking">
+    <div class="booking-error" ng-if="booking.error">Booking is not available now. Please try again later.</div>
     <div ng-if="booking.loaded">
         <div class="hotel-head"
              ng-style="{'background-image': 'url(\'../assets/images/booking/' + booking.hotel._id + '/1.jpg\')'}">
@@ -7,6 +8,7 @@
         <form class="booking-form"
               ng-controller="BookingFormController as bookingForm"
               name="form"
+              ng-submit="bookingForm.submit()"
               novalidate
               role="form">
             <label class="booking-form__item">

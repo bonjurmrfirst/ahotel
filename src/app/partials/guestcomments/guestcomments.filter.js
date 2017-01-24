@@ -7,7 +7,6 @@
 
     function reverse() {
         return function(items) {
-            //to errors
             return items.slice().reverse();
         }
     }

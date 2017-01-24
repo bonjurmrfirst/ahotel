@@ -5,9 +5,9 @@
         .module('ahotelApp')
         .factory('resortService', resortService);
 
-    resortService.$inject = ['$http', 'backendPathsConstant', '$q'];
+    resortService.$inject = ['$http', 'backendPathsConstant', '$q', '$log', '$rootScope'];
 
-    function resortService($http, backendPathsConstant, $q) {
+    function resortService($http, backendPathsConstant, $q, $log, $rootScope) {
         let model = null;
 
         function getResort(filter) {
@@ -28,8 +28,10 @@
             }
 
             function onRejected(response) {
-                model = response;
-                return applyFilter(model)
+                $log.error(`Cant get ${backendPathsConstant.hotels}`);
+                $rootScope.$broadcast('displayError', {show: true});
+
+                return null
             }
 
             function applyFilter() {
@@ -43,7 +45,17 @@
                     return [discountModel[rndHotel]]
                 }
 
-                return model.filter((hotel) => hotel[filter.prop] == filter.value);
+                let result;
+
+                try {
+                    result = model.filter((hotel) => hotel[filter.prop] == filter.value);
+                } catch(e) {
+                    $log.error('Cant parse response');
+                    $rootScope.$broadcast('displayError', {show: true, message: 'Error occurred'});
+                    result = null;
+                }
+
+                return result
             }
         }
 

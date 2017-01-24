@@ -1,4 +1,4 @@
 # Ahotel
 ## test project
 
-https://enigmatic-depths-59034.herokuapp.com/
+uploaded on heroku: https://enigmatic-depths-59034.herokuapp.com/

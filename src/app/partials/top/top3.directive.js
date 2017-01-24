@@ -32,6 +32,9 @@
             };
 
             resortService.getResort({prop: 'type', value: this.resortType}).then((response) => {
+                    if (!response) {
+                        return
+                    }
                     this.resort = response;
 
                     if (this.resortType === 'Hotel') {

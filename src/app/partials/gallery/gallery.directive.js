@@ -31,7 +31,10 @@
                 imagesLoaded++;
 
                 if (imagesLoaded === imagesInGallery) {
-                    console.log('aligned');
+                    if( $("html").hasClass("ie8") ) {
+                        return
+                    }
+
                     alignImages()
                 }
             }

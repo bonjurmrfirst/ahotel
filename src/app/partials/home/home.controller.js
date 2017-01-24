@@ -9,7 +9,6 @@
 
     function HomeController(resortService) {
         resortService.getResort({prop: '_trend', value: true}).then((response) => {
-            //todo if not response
             this.hotels = response;
         });
     }

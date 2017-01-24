@@ -8,6 +8,10 @@
             auth: '/api/users',
             gallery: '/api/gallery',
             guestcomments: '/api/guestcomments',
-            hotels: '/api/hotels'
-        });
+            hotels: '/api/hotels',
+            booking: '/booking'
+        })
+        .constant('templatesPathsConstant', [
+            'app/partials/auth/auth.html'
+        ])
 })();

@@ -14,6 +14,9 @@
 
         resortService.getResort()
             .then((response) => {
+                if (!response) {
+                    return
+                }
                 this.hotels = response;
                 search.call(this);
             });
@@ -46,9 +49,8 @@
                 .map((hotel) => {
                     hotel._matches = result[hotel._id].matchesCounter;
                     return hotel;
-                })
+                });
 
-            console.log(this.searchResults);
         }
     }
 })();

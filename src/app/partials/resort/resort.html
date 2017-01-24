@@ -111,7 +111,8 @@
         </div>
     </div>
     <div class="resorts" ng-controller="Pages as pages" slide-on-toggle="resorts--clear">
-        <span class="resorts__found">We have found {{resort.getShowHotelCount}} hotels</span>
+        <span ng-if="!resort.error" class="resorts__found">We have found {{resort.getShowHotelCount}} hotels</span>
+        <span class="resorts__found" ng-if="resort.error">Error occurred. We havnt found any hotels.</span>
         <div class="hotel" ng-repeat="hotel in resort.hotels | showFrom : pages.showFrom() | limitTo: 5 track by hotel._id">
             <img class="hotel__img" ng-src="assets/images/booking/{{hotel._id}}/preview.jpg" width="400" height="300">
             <h3 class="hotel__name">{{hotel.name}}</h3>

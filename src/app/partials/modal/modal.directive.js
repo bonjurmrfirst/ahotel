@@ -43,10 +43,17 @@
                     }
                 }
 
-                function initMap() {
-                    var myLatlng = {lat: data.coord.lat, lng: data.coord.lng};
+                if (data.show === 'text') {
+                    $scope.show.text = true;
+                    $scope.show.header = data.header;
+                    $scope.show.message = data.message;
+                    elem.css('display', 'block');
+                }
 
-                    var map = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
+                function initMap() {
+                    let myLatlng = {lat: data.coord.lat, lng: data.coord.lng};
+
+                    let map = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
                         title: data.name,
                         map: map,
                         mapTypeId: 'roadmap',
@@ -54,7 +61,7 @@
                         center: myLatlng
                     });
 
-                    var marker = new google.maps.Marker({
+                    let marker = new google.maps.Marker({
                         position: myLatlng,
                         map: map,
                         title: data.name
@@ -73,18 +80,18 @@
             };
 
             function initMap(name, coord) {
-                var locations = [
+                let locations = [
                     [name, coord.lat, coord.lng]
                 ];
 
                 // Create a map object and specify the DOM element for display.
-                var modalMap = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
+                let modalMap = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
                     center: {lat: coord.lat, lng: coord.lng},
                     scrollwheel: false,
                     zoom: 9
                 });
 
-                var icons = {
+                let icons = {
                     ahotel: {
                         icon: 'assets/images/icon_map.png'
                     }

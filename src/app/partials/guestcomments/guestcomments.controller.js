@@ -23,14 +23,23 @@
 
         guestcommentsService.getGuestComments().then(
             (response) => {
+                if (!response || !response.data) {
+                    this.loadCommentsError = true;
+                    return
+                }
                 this.comments = response.data;
-                console.log(response);
             }
         );
 
         this.addComment = function() {
-            guestcommentsService.sendComment(this.formData)
+            guestcommentsService
+                .sendComment(this.formData)
                 .then((response) => {
+                    if (!response) {
+                        this.loadCommentsError = true;
+                        return
+                    }
+
                     this.comments.push({'name': this.formData.name, 'comment': this.formData.comment});
                     this.openForm = false;
                     this.formData = null;
