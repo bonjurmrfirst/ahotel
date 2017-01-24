@@ -32,7 +32,7 @@
                 }
 
                 let mapScript = document.createElement('script');
-                mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxCK2-uVyl69wn7K61NPAQDf7yH-jf3w';
+                mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxCK2-uVyl69wn7K61NPAQDf7yH-jf3w&language=en';
                 mapScript.onload = function () {
                     initMap();
                 };
