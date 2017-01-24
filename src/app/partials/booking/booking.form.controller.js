@@ -7,6 +7,7 @@
 
     function BookingFormController($http, backendPathsConstant, $scope, $log) {
         'use strict';
+        this.showForm = true;
 
         this.form = {
             date: 'pick date',
@@ -28,7 +29,10 @@
                 data: this.form
             }).then(onResolve, onRejected);
 
+            let self = this;
             function onResolve(response) {
+                self.showForm = false;
+
                 $scope.$root.$broadcast('modalOpen', {
                     show: 'text',
                     header: 'Your request is in process.',
