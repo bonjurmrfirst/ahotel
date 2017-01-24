@@ -63,6 +63,7 @@
     "gulp-logger": "0.0.2",
     "gulp-minify": "0.0.14",
     "gulp-ng-annotate": "^2.0.0",
+    "gulp-nodemon": "^2.2.1",
     "gulp-postcss": "^6.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",

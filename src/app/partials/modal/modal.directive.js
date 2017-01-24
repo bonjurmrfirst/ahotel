@@ -30,7 +30,6 @@
 
                     if (window.google && 'maps' in window.google) {
                         initMap();
-
                     } else {
 
                         let mapScript = document.createElement('script');
