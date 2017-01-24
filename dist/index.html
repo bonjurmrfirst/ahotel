@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <base href="/">
     <title>Ahotel</title>
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
@@ -33,6 +34,9 @@
         <ui-view></ui-view>
         <ng-include src="'app/partials/footer/footer.html'"></ng-include>
     </div>
+
+    <div class="error" ahtl-display-error></div>
+
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/console-polyfill/0.2.3/index.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/livingston-css3-mediaqueries-js/1.0.0/css3-mediaqueries.min.js"></script>

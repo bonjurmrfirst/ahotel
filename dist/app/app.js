@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    angular.module('ahotelApp', ['ui.router' /*, 'preload'*/, 'ngAnimate', '720kb.socialshare']);
+    angular.module('ahotelApp', ['ui.router', 'ngAnimate', '720kb.socialshare']);
 })();
 'use strict';
 
@@ -85,21 +85,6 @@
         }
     }
 })();*/
-/*
-(function() {
-    'use strict';
-
-    angular
-        .module('ahotelApp')
-        .config(config);
-
-    config.$inject = ['preloadServiceProvider', 'backendPathsConstant'];
-
-    function config(preloadServiceProvider, backendPathsConstant) {
-            preloadServiceProvider.config(backendPathsConstant.gallery, 'GET', 'get', 100, 'warning');
-    }
-})();*/
-"use strict";
 'use strict';
 
 (function () {
@@ -107,9 +92,11 @@
 
 	angular.module('ahotelApp').config(config);
 
-	config.$inject = ['$stateProvider', '$urlRouterProvider'];
+	config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-	function config($stateProvider, $urlRouterProvider) {
+	function config($stateProvider, $urlRouterProvider, $locationProvider) {
+		$locationProvider.html5Mode(true);
+
 		$urlRouterProvider.otherwise('/');
 
 		$stateProvider.state('home', {
@@ -118,10 +105,7 @@
 		}).state('auth', {
 			url: '/auth',
 			templateUrl: 'app/partials/auth/auth.html',
-			params: { 'type': 'login or join' } /*,
-                                       onEnter: function ($rootScope) {
-                                       $rootScope.$state = "auth";
-                                       }*/
+			params: { 'type': 'login' }
 		}).state('bungalows', {
 			url: '/bungalows',
 			templateUrl: 'app/partials/top/bungalows.html'
@@ -164,9 +148,9 @@
 
     angular.module('ahotelApp').run(run);
 
-    run.$inject = ['$rootScope', 'backendPathsConstant', /*'preloadService',*/'$window'];
+    run.$inject = ['$rootScope', '$timeout'];
 
-    function run($rootScope, backendPathsConstant, /*preloadService,*/$window) {
+    function run($rootScope, $timeout) {
         $rootScope.$logged = false;
 
         $rootScope.$state = {
@@ -175,152 +159,17 @@
             stateHistory: []
         };
 
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState /*, fromParams todo*/) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             $rootScope.$state.currentStateName = toState.name;
             $rootScope.$state.currentStateParams = toParams;
             $rootScope.$state.stateHistory.push(toState.name);
         });
 
-        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState /*, fromParams todo*/) {
-            //$timeout(() => $('body').scrollTop(0), 0);
+        $rootScope.$on('$stateChangeSuccess', function () {
+            $timeout(function () {
+                return $(window).scrollTop(0);
+            });
         });
-
-        /*$window.onload = function() { //todo onload �������� � ������
-            preloadService.preloadImages('gallery', {url: backendPathsConstant.gallery, method: 'GET', action: 'get'}); //todo del method, action by default
-        };*/
-
-        //log.sendOnUnload();
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('preload', []);
-})();
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-(function () {
-    'use strict';
-
-    angular.module('preload').provider('preloadService', preloadService);
-
-    function preloadService() {
-        var config = null;
-
-        this.config = function () {
-            var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '/api';
-            var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'get';
-            var action = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'get';
-            var timeout = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-            var log = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'debug';
-
-            config = {
-                url: url,
-                method: method,
-                action: action,
-                timeout: timeout,
-                log: log
-            };
-        };
-
-        this.$get = ["$http", "$timeout", function ($http, $timeout) {
-            var preloadCache = [],
-                logger = function logger(message) {
-                var log = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'debug';
-
-                if (config.log === 'silent') {
-                    return;
-                }
-
-                if (config.log === 'debug' && log === 'debug') {
-                    console.debug(message);
-                }
-
-                if (log === 'warning') {
-                    console.warn(message);
-                }
-            };
-
-            function preloadImages(preloadName, images) {
-                //todo errors
-                var imagesSrcList = [];
-
-                if (typeof images === 'array') {
-                    imagesSrcList = images;
-
-                    preloadCache.push({
-                        name: preloadName,
-                        src: imagesSrcList
-                    });
-
-                    preload(imagesSrcList);
-                } else if ((typeof images === 'undefined' ? 'undefined' : _typeof(images)) === 'object') {
-                    $http({
-                        images: images.method || config.method,
-                        url: images.url || config.url,
-                        params: {
-                            images: images.action || config.action
-                        }
-                    }).then(function (response) {
-                        imagesSrcList = response.data;
-
-                        preloadCache.push({
-                            name: preloadName,
-                            src: imagesSrcList
-                        });
-
-                        if (config.timeout === false) {
-                            preload(imagesSrcList);
-                        } else {
-                            //window.onload = preload;
-                            $timeout(preload.bind(null, imagesSrcList), config.timeout);
-                        }
-                    }, function (response) {
-                        return 'ERROR'; //todo
-                    });
-                } else {
-                        return; //todo
-                    }
-
-                function preload(imagesSrcList) {
-                    for (var i = 0; i < imagesSrcList.length; i++) {
-                        var image = new Image();
-                        image.src = imagesSrcList[i];
-                        image.onload = function (e) {
-                            //resolve(image);
-                            logger(this.src, 'debug');
-                        };
-                        image.onerror = function (e) {
-                            console.log(e);
-                        };
-                    }
-                }
-            }
-
-            function getPreload(preloadName) {
-                logger('preloadService: get request ' + '"' + preloadName + '"', 'debug');
-                if (!preloadName) {
-                    return preloadCache;
-                }
-
-                for (var i = 0; i < preloadCache.length; i++) {
-                    if (preloadCache[i].name === preloadName) {
-                        return preloadCache[i].src;
-                    }
-                }
-
-                logger('No preloads found', 'warning');
-            }
-
-            return {
-                preloadImages: preloadImages,
-                getPreloadCache: getPreload
-            };
-        }];
     }
 })();
 'use strict';
@@ -333,8 +182,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         auth: '/api/users',
         gallery: '/api/gallery',
         guestcomments: '/api/guestcomments',
-        hotels: '/api/hotels'
-    });
+        hotels: '/api/hotels',
+        booking: '/booking'
+    }).constant('templatesPathsConstant', ['app/partials/auth/auth.html']);
 })();
 'use strict';
 
@@ -362,9 +212,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').factory('resortService', resortService);
 
-    resortService.$inject = ['$http', 'backendPathsConstant', '$q'];
+    resortService.$inject = ['$http', 'backendPathsConstant', '$q', '$log', '$rootScope'];
 
-    function resortService($http, backendPathsConstant, $q) {
+    function resortService($http, backendPathsConstant, $q, $log, $rootScope) {
         var model = null;
 
         function getResort(filter) {
@@ -384,8 +234,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
 
             function onRejected(response) {
-                model = response;
-                return applyFilter(model);
+                $log.error('Cant get ' + backendPathsConstant.hotels);
+                $rootScope.$broadcast('displayError', { show: true });
+
+                return null;
             }
 
             function applyFilter() {
@@ -393,15 +245,221 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     return model;
                 }
 
-                return model.filter(function (hotel) {
-                    return hotel[filter.prop] == filter.value;
-                });
+                if (filter.prop === '_id' && filter.value === 'random') {
+                    var discountModel = model.filter(function (hotel) {
+                        return hotel['discount'];
+                    });
+                    var rndHotel = Math.floor(Math.random() * discountModel.length);
+                    return [discountModel[rndHotel]];
+                }
+
+                var result = void 0;
+
+                try {
+                    result = model.filter(function (hotel) {
+                        return hotel[filter.prop] == filter.value;
+                    });
+                } catch (e) {
+                    $log.error('Cant parse response');
+                    $rootScope.$broadcast('displayError', { show: true, message: 'Error occurred' });
+                    result = null;
+                }
+
+                return result;
             }
         }
 
         return {
             getResort: getResort
         };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').directive('ahtlDisplayError', displayErrorDirective);
+
+    displayErrorDirective.$inject = ['$state'];
+
+    function displayErrorDirective() {
+        return {
+            restrict: 'A',
+            link: function link($scope, elem) {
+                var defaultErrorMsg = 'Could not connect to server. Refresh the page or try again later.';
+
+                $scope.$on('displayError', function (event, data) {
+                    var show = data.show ? 'block' : 'none';
+
+                    $(elem).text(data.message || defaultErrorMsg);
+                    $(elem).css('display', show);
+                });
+
+                $scope.$on('$stateChangeStart', function () {
+                    $(elem).css('display', 'none');
+                });
+            }
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    angular.module('ahotelApp').controller('BookingController', BookingController);
+
+    BookingController.$inject = ['$stateParams', 'resortService', '$state', '$rootScope'];
+
+    function BookingController($stateParams, resortService, $state, $rootScope) {
+        var _this = this;
+
+        this.hotel = null;
+        this.loaded = false;
+
+        console.log($state);
+
+        resortService.getResort({
+            prop: '_id',
+            value: $stateParams.hotelId }).then(function (response) {
+            if (!response) {
+                _this.error = true;
+                return;
+            }
+            _this.hotel = response[0];
+            _this.loaded = true;
+        });
+
+        //this.hotel = $stateParams.hotel;
+
+        this.getHotelImagesCount = function (count) {
+            return new Array(count - 1);
+        };
+
+        this.openImage = function ($event) {
+            var imgSrc = $event.target.src;
+
+            if (imgSrc) {
+                $rootScope.$broadcast('modalOpen', {
+                    show: 'image',
+                    src: imgSrc
+                });
+            }
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    angular.module('ahotelApp').controller('BookingFormController', BookingFormController);
+
+    BookingFormController.$inject = ['$http', 'backendPathsConstant', '$scope', '$log'];
+
+    function BookingFormController($http, backendPathsConstant, $scope, $log) {
+        'use strict';
+
+        this.form = {
+            date: 'pick date',
+            guests: 1
+        };
+
+        this.addGuest = function () {
+            this.form.guests !== 5 ? this.form.guests++ : this.form.guests;
+        };
+
+        this.removeGuest = function () {
+            this.form.guests !== 1 ? this.form.guests-- : this.form.guests;
+        };
+
+        this.submit = function () {
+            $http({
+                method: 'GET',
+                url: backendPathsConstant.booking,
+                data: this.form
+            }).then(onResolve, onRejected);
+
+            function onResolve(response) {
+                $scope.$root.$broadcast('modalOpen', {
+                    show: 'text',
+                    header: 'Your request is in process.',
+                    message: 'We will send you email with all information about your travel.'
+                });
+            }
+
+            function onRejected(response) {
+                $log.error('Cant post /booking');
+                $scope.$root.$broadcast('displayError', {
+                    show: true,
+                    message: 'Server is not responding. Try again or call hotline: +0 123 456 89'
+                });
+            }
+            /*
+            }, (response) => {
+            if (!response) {
+                       */
+        };
+    }
+})();
+'use strict';
+
+(function () {
+    'use strict';
+
+    datePickerDirective.$inject = ["$interval"];
+    angular.module('ahotelApp').directive('datePicker', datePickerDirective);
+
+    function datePickerDirective($interval) {
+        return {
+            require: 'ngModel',
+            /*scope: {
+                ngModel: '='
+            },*/
+            link: datePickerDirectiveLink
+        };
+
+        function datePickerDirectiveLink(scope, element, attrs, ctrl) {
+            //todo all
+            $('[date-picker]').dateRangePicker({
+                language: 'en',
+                startDate: new Date(),
+                endDate: new Date().setFullYear(new Date().getFullYear() + 1)
+            }).bind('datepicker-first-date-selected', function (event, obj) {
+                /* This event will be triggered when first date is selected */
+                console.log('first-date-selected', obj);
+                // obj will be something like this:
+                // {
+                // 		date1: (Date object of the earlier date)
+                // }
+            }).bind('datepicker-change', function (event, obj) {
+                /* This event will be triggered when second date is selected */
+                console.log('change', obj);
+                ctrl.$setViewValue(obj.value);
+                ctrl.$render();
+                scope.$apply();
+                // obj will be something like this:
+                // {
+                // 		date1: (Date object of the earlier date),
+                // 		date2: (Date object of the later date),
+                //	 	value: "2013-06-05 to 2013-06-07"
+                // }
+            }).bind('datepicker-apply', function (event, obj) {
+                /* This event will be triggered when user clicks on the apply button */
+                console.log('apply', obj);
+            }).bind('datepicker-close', function () {
+                /* This event will be triggered before date range picker close animation */
+                console.log('before close');
+            }).bind('datepicker-closed', function () {
+                /* This event will be triggered after date range picker close animation */
+                console.log('after close');
+            }).bind('datepicker-open', function () {
+                /* This event will be triggered before date range picker open animation */
+                console.log('before open');
+            }).bind('datepicker-opened', function () {
+                /* This event will be triggered after date range picker open animation */
+                console.log('after open');
+            });
+        }
     }
 })();
 'use strict';
@@ -552,133 +610,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
-    angular.module('ahotelApp').controller('BookingController', BookingController);
-
-    BookingController.$inject = ['$stateParams', 'resortService', '$state', '$rootScope'];
-
-    function BookingController($stateParams, resortService, $state, $rootScope) {
-        var _this = this;
-
-        this.hotel = null;
-        this.loaded = false;
-
-        console.log($state);
-
-        resortService.getResort({
-            prop: '_id',
-            value: $stateParams.hotelId }).then(function (response) {
-            _this.hotel = response[0];
-            _this.loaded = true;
-        });
-
-        //this.hotel = $stateParams.hotel;
-
-        this.getHotelImagesCount = function (count) {
-            return new Array(count - 1);
-        };
-
-        this.openImage = function ($event) {
-            var imgSrc = $event.target.src;
-
-            if (imgSrc) {
-                $rootScope.$broadcast('modalOpen', {
-                    show: 'image',
-                    src: imgSrc
-                });
-            }
-        };
-    }
-})();
-'use strict';
-
-(function () {
-    angular.module('ahotelApp').controller('BookingFormController', BookingFormController);
-
-    function BookingFormController() {
-        'use strict';
-
-        this.form = {
-            date: 'pick date',
-            guests: 1
-        };
-
-        this.addGuest = function () {
-            this.form.guests !== 5 ? this.form.guests++ : this.form.guests;
-        };
-
-        this.removeGuest = function () {
-            this.form.guests !== 1 ? this.form.guests-- : this.form.guests;
-        };
-
-        this.submit = function () {};
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    datePickerDirective.$inject = ["$interval"];
-    angular.module('ahotelApp').directive('datePicker', datePickerDirective);
-
-    function datePickerDirective($interval) {
-        return {
-            require: 'ngModel',
-            /*scope: {
-                ngModel: '='
-            },*/
-            link: datePickerDirectiveLink
-        };
-
-        function datePickerDirectiveLink(scope, element, attrs, ctrl) {
-            //todo all
-            $('[date-picker]').dateRangePicker({
-                language: 'en',
-                startDate: new Date(),
-                endDate: new Date().setFullYear(new Date().getFullYear() + 1)
-            }).bind('datepicker-first-date-selected', function (event, obj) {
-                /* This event will be triggered when first date is selected */
-                console.log('first-date-selected', obj);
-                // obj will be something like this:
-                // {
-                // 		date1: (Date object of the earlier date)
-                // }
-            }).bind('datepicker-change', function (event, obj) {
-                /* This event will be triggered when second date is selected */
-                console.log('change', obj);
-                ctrl.$setViewValue(obj.value);
-                ctrl.$render();
-                scope.$apply();
-                // obj will be something like this:
-                // {
-                // 		date1: (Date object of the earlier date),
-                // 		date2: (Date object of the later date),
-                //	 	value: "2013-06-05 to 2013-06-07"
-                // }
-            }).bind('datepicker-apply', function (event, obj) {
-                /* This event will be triggered when user clicks on the apply button */
-                console.log('apply', obj);
-            }).bind('datepicker-close', function () {
-                /* This event will be triggered before date range picker close animation */
-                console.log('before close');
-            }).bind('datepicker-closed', function () {
-                /* This event will be triggered after date range picker close animation */
-                console.log('after close');
-            }).bind('datepicker-open', function () {
-                /* This event will be triggered before date range picker open animation */
-                console.log('before open');
-            }).bind('datepicker-opened', function () {
-                /* This event will be triggered after date range picker open animation */
-                console.log('after open');
-            });
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
     angular.module('ahotelApp').directive('ahtlMap', ahtlMapDirective);
 
     ahtlMapDirective.$inject = ['resortService'];
@@ -694,6 +625,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var hotels = null;
 
             resortService.getResort().then(function (response) {
+                if (!response) {
+                    return;
+                }
                 hotels = response;
                 createMap();
             });
@@ -771,44 +705,40 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             restrict: 'EA',
             scope: {},
             templateUrl: 'app/partials/gallery/gallery.align.html',
-            /*controller: ahtlGalleryController,
-            controllerAs: 'gallery',*/
             link: ahtlGalleryDirectiveLink
         };
 
-        /*function ahtlGalleryController($scope) {
-            this.imgs = new Array(20);
-            this.imgsLoaded = [];
-              this.openImage = function(imageName) {
-                let imageSrc = 'assets/images/gallery/' + imageName + '.jpg';
-                  $scope.$root.$broadcast('modalOpen', {
-                    show: 'image',
-                    src: imageSrc
-                });
-            };
-              $timeout(() => $scope.$root.$broadcast('ahtlGallery:loaded'));
-        }*/
-
-        function ahtlGalleryDirectiveLink($scope, elem, a, ctrl) {
-            /*console.log($(elem).find('img'));
-              $scope.$on('ahtlGallery:loaded', alignImages);*/
+        function ahtlGalleryDirectiveLink($scope) {
             var imagesInGallery = 20;
 
             for (var i = 0; i < 20; i++) {
                 var img = $('<div class="item"><img src="assets/images/gallery/preview' + (i + 1) + '.jpg" width="300"></div>');
-                img.find('img').on('load', imageLoaded);
+                img.find('img').on('load', imageLoaded).on('click', imageClicked.bind(null, i));
                 $('[gallery-container]').append(img);
             }
 
             var imagesLoaded = 0;
             function imageLoaded() {
                 imagesLoaded++;
-                console.log(imagesLoaded);
 
                 if (imagesLoaded === imagesInGallery) {
-                    console.log('align');
+                    if ($("html").hasClass("ie8")) {
+                        return;
+                    }
+
                     alignImages();
                 }
+            }
+
+            function imageClicked(image) {
+                var imageSrc = 'assets/images/gallery/' + ++image + '.jpg';
+
+                $scope.$apply(function () {
+                    $scope.$root.$broadcast('modalOpen', {
+                        show: 'image',
+                        src: imageSrc
+                    });
+                });
             }
 
             function alignImages() {
@@ -819,15 +749,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     columnWidth: '.item',
                     itemSelector: '.item',
                     gutter: '.gutter-sizer',
-                    transitionDuration: '0.2s',
-                    initLayout: true
+                    transitionDuration: '0.2s'
                 });
 
-                /*masonry.on('layoutComplete', onLayoutComplete);
-                  masonry.layout();
-                  function onLayoutComplete() {
-                    $timeout(() => $(container).css('opacity', '1'), 0);
-                }*/
+                masonry.on('layoutComplete', onLayoutComplete);
+
+                masonry.layout();
+
+                function onLayoutComplete() {
+                    $timeout(function () {
+                        return $(container).css('opacity', '1');
+                    }, 0);
+                }
             }
         }
     }
@@ -1117,14 +1050,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         guestcommentsService.getGuestComments().then(function (response) {
+            if (!response || !response.data) {
+                _this.loadCommentsError = true;
+                return;
+            }
             _this.comments = response.data;
-            console.log(response);
         });
 
         this.addComment = function () {
             var _this2 = this;
 
             guestcommentsService.sendComment(this.formData).then(function (response) {
+                if (!response) {
+                    _this2.loadCommentsError = true;
+                    return;
+                }
+
                 _this2.comments.push({ 'name': _this2.formData.name, 'comment': _this2.formData.comment });
                 _this2.openForm = false;
                 _this2.formData = null;
@@ -1141,7 +1082,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     function reverse() {
         return function (items) {
-            //to errors
             return items.slice().reverse();
         };
     }
@@ -1175,8 +1115,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             return response;
         }
 
-        function onReject(response) {
-            return response;
+        function onReject() {
+            $log.error('Cant get ' + backendPathsConstant.hotels);
+            $rootScope.$broadcast('displayError', { show: true });
+
+            return null;
         }
 
         function sendComment(comment) {
@@ -1198,8 +1141,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 return response;
             }
 
-            function onReject(response) {
-                return response;
+            function onReject() {
+                $log.error('Cant get ' + backendPathsConstant.hotels);
+                $rootScope.$broadcast('displayError', { show: true });
+
+                return null;
             }
         }
     }
@@ -1209,11 +1155,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
-    angular.module('ahotelApp').controller('HeaderController', HeaderController);
+    angular.module('ahotelApp').controller('HeaderAuthController', HeaderAuthController);
 
-    HeaderController.$inject = ['authService'];
+    HeaderAuthController.$inject = ['authService'];
 
-    function HeaderController(authService) {
+    function HeaderAuthController(authService) {
         this.signOut = function () {
             authService.signOut();
         };
@@ -1384,9 +1330,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		};
 
 		function link() {
-			var header = new HeaderTransitionsService('.l-header', '.nav__item-container');
+			var header = new HeaderTransitionsService('[data-header]', '[data-header-item]');
 
-			header.animateTransition('.sub-nav', {
+			header.animateTransition('[data-header-subnav]', {
 				cssEnumerableRule: 'height',
 				delay: 300 }).recalculateHeightOnClick('[data-autoheight-trigger]', '[data-autoheight-on]').fixHeaderElement('.nav', 'js_nav--fixed', 'js_l-header--relative', {
 				onMinScrolltop: 88,
@@ -1407,7 +1353,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var _this = this;
 
         resortService.getResort({ prop: '_trend', value: true }).then(function (response) {
-            //todo if not response
             _this.hotels = response;
         });
     }
@@ -1434,7 +1379,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 if (data.show === 'image') {
                     $scope.src = data.src;
                     $scope.show.img = true;
-                    //$scope.$apply();//todo apply?
                     elem.css('display', 'block');
                 }
 
@@ -1457,13 +1401,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     }
                 }
 
+                if (data.show === 'text') {
+                    $scope.show.text = true;
+                    $scope.show.header = data.header;
+                    $scope.show.message = data.message;
+                    elem.css('display', 'block');
+                }
+
                 function initMap() {
                     var myLatlng = { lat: data.coord.lat, lng: data.coord.lng };
 
                     var map = new google.maps.Map(document.getElementsByClassName('modal__map')[0], {
                         title: data.name,
                         map: map,
-                        zoom: 4,
+                        mapTypeId: 'roadmap',
+                        zoom: 8,
                         center: myLatlng
                     });
 
@@ -1474,7 +1426,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     });
 
                     marker.addListener('click', function () {
-                        map.setZoom(10);
+                        map.setZoom(12);
                         map.setCenter(this.getPosition());
                     });
                 }
@@ -1590,6 +1542,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         var hotels = {};
         resortService.getResort().then(function (response) {
+            if (!response) {
+                _this.error = true;
+                return;
+            }
+
             hotels = response;
             _this.hotels = hotels;
 
@@ -1612,7 +1569,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             $scope.$broadcast('showHotelCountChanged', _this.getShowHotelCount);
         });
 
-        this.openMap = function (hotelName, hotelCoord, hotel) {
+        this.openMap = function (hotelName, hotelCoord) {
             var data = {
                 show: 'map',
                 name: hotelName,
@@ -1782,6 +1739,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.hotels = null;
 
         resortService.getResort().then(function (response) {
+            if (!response) {
+                return;
+            }
             _this.hotels = response;
             search.call(_this);
         });
@@ -1813,8 +1773,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 hotel._matches = result[hotel._id].matchesCounter;
                 return hotel;
             });
-
-            console.log(this.searchResults);
         }
     }
 })();
@@ -1825,9 +1783,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     angular.module('ahotelApp').directive('ahtlTop3', ahtlTop3Directive);
 
-    ahtlTop3Directive.$inject = ['top3Service', 'hotelDetailsConstant'];
+    ahtlTop3Directive.$inject = ['resortService', 'hotelDetailsConstant'];
 
-    function ahtlTop3Directive(top3Service, hotelDetailsConstant) {
+    function ahtlTop3Directive(resortService, hotelDetailsConstant) {
         AhtlTop3Controller.$inject = ["$scope", "$element", "$attrs"];
         return {
             restrict: 'E',
@@ -1839,7 +1797,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         function AhtlTop3Controller($scope, $element, $attrs) {
             var _this = this;
 
-            this.details = hotelDetailsConstant.mustHave;
+            this.details = hotelDetailsConstant.mustHaves;
             this.resortType = $attrs.ahtlTop3type;
             this.resort = null;
 
@@ -1854,44 +1812,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 return detailClassName + isResortIncludeDetailClassName;
             };
 
-            top3Service.getTop3Places(this.resortType).then(function (response) {
-                _this.resort = response.data;
-                console.log(_this.resort);
-            });
-        }
-    }
-})();
-'use strict';
-
-(function () {
-    'use strict';
-
-    angular.module('ahotelApp').factory('top3Service', top3Service);
-
-    top3Service.$inject = ['$http', 'backendPathsConstant'];
-
-    function top3Service($http, backendPathsConstant) {
-        return {
-            getTop3Places: getTop3Places
-        };
-
-        function getTop3Places(type) {
-            return $http({
-                method: 'GET',
-                url: backendPathsConstant.top3,
-                params: {
-                    action: 'get',
-                    type: type
+            resortService.getResort({ prop: 'type', value: this.resortType }).then(function (response) {
+                if (!response) {
+                    return;
                 }
-            }).then(onResolve, onReject);
-        }
+                _this.resort = response;
 
-        function onResolve(response) {
-            return response;
-        }
-
-        function onReject(response) {
-            return response;
+                if (_this.resortType === 'Hotel') {
+                    _this.resort = _this.resort.filter(function (hotel) {
+                        return hotel._showInTop === true;
+                    });
+                }
+            });
         }
     }
 })();
@@ -1911,7 +1843,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				if (slidingDirection === 'right') {
 					$(element).animate({ 'left': '100%' }, 500, done);
 				} else {
-					$(element).animate({ 'left': '-200%' }, 500, done); //200? $)
+					$(element).animate({ 'left': '-200%' }, 500, done);
 				}
 			},
 
@@ -2043,7 +1975,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function () {
     'use strict';
 
-    angular.module('ahotelApp').constant('sliderImgPathConstant', ['assets/images/slider/slider1.jpg', 'assets/images/slider/slider2.jpg', 'assets/images/slider/slider3.jpg']);
+    angular.module('ahotelApp').constant('sliderImgPathConstant', ['assets/images/slider/slider1.jpg', 'assets/images/slider/slider2.jpg', 'assets/images/slider/slider3.jpg', 'assets/images/slider/slider4.jpg', 'assets/images/slider/slider5.jpg', 'assets/images/slider/slider6.jpg']);
 })();
 'use strict';
 
