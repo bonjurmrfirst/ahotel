@@ -20,7 +20,11 @@
                         console.log(response);
                         $state.go('auth', {'type': 'login'})
                     } else {
-                        this.validationStatus.userAlreadyExists = true;
+                        if (response.data === 'User already exists') {
+                            this.validationStatus.userAlreadyExists = true;
+                        } else {
+                            return
+                        }
                         console.log(response);
                     }
                 });

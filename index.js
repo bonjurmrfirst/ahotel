@@ -2,10 +2,12 @@ var express = require('express'),
     url = require('url'),
     engine = require('consolidate'),
     bodyParser = require('body-parser'),
+    favicon = require('serve-favicon'),
 
     log = require('./backend/log/log'),
     db = require('./backend/db'),
-    session = require('./backend/session');
+    session = require('./backend/session'),
+    hotels = require('./backend/hotels.js');
 
 var appRoot = process.env.PORT ? '/dist' : '/dist.dev';
 
@@ -18,6 +20,10 @@ app.set('view engine', 'html');
 
 //app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
+
+
+
+app.use(favicon('./favicon.ico'));
 
 app.use(function(req,res,next){
    console.log(req.path);
@@ -107,12 +113,6 @@ app.post('/api/log', function(request, response) {
 /*
 
  */
-
-var favicon = require('serve-favicon');
-
-var hotels = require('./backend/hotels.js');
-
-app.use(favicon('./favicon.ico'));
 
 app.use('/api/hotels', hotels);
 

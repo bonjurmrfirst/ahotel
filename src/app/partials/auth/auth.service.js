@@ -24,7 +24,10 @@
             };
 
             this._onRejected = function(response) {
-                return response.data
+                if (response.data === 'User already exists' || response.data === 'Login or password incorrect') {
+                    return response
+                }
+                $rootScope.$broadcast('displayError', {show: true});
             };
 
             this._tokenKeeper = (function() {
