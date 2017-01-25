@@ -15,7 +15,7 @@ const
 	SETTINGS = require('./gulp_environment/gulp.settings'),
 	SRC_PATH = require('./gulp_environment/gulp.srcPath'),
 	CDN_PATH = require('./gulp_environment/gulp.CDNpath'),
-	FTP_PATH = SETTINGS.ftp.FTPpathIsPresent ? require('./gulp_environment/gulp.FTPpath') : null;
+	FTP_PATH = {};//SETTINGS.ftp.FTPpathIsPresent ? require('./gulp_environment/gulp.FTPpath') : null;
 
 /*
  Dev
